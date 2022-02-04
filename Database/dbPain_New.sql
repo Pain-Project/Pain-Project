@@ -1,12 +1,20 @@
 USE [master]
 GO
+
+IF EXISTS (SELECT*FROM SYS.DATABASES WHERE NAME = 'dbPain')
+begin
+alter database dbPain set single_user with rollback immediate
+DROP DATABASE dbPain
+end
+GO
+
 /****** Object:  Database [dbPain]    Script Date: 04.02.2022 13:03:19 ******/
 CREATE DATABASE [dbPain]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'dbf', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\dbPain.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'dbf', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\dbPain.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
  LOG ON 
-( NAME = N'dbf_log', FILENAME = N'D:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\dbPain_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'dbf_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\dbPain_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
  WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 ALTER DATABASE [dbPain] SET COMPATIBILITY_LEVEL = 150
@@ -258,7 +266,7 @@ CREATE TABLE [dbo].[tb_Task_List](
 	[Date] [datetime] NOT NULL,
 	[Error] [int] NULL,
 	[Size(MB)] [int] NOT NULL,
- CONSTRAINT [PK_tb_Log] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_tb_TaskList] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
@@ -312,17 +320,29 @@ REFERENCES [dbo].[tb_DestinationTypes] ([Id])
 GO
 ALTER TABLE [dbo].[tb_SourceToDest] CHECK CONSTRAINT [FK_tb_SourceToDest_tb_DestinationTypes]
 GO
-ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_ConfigClient] FOREIGN KEY([IdConfigClient])
+ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_TaskList_tb_ConfigClient] FOREIGN KEY([IdConfigClient])
 REFERENCES [dbo].[tb_ConfigClient] ([ID])
 GO
-ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_Log_tb_ConfigClient]
+ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_TaskList_tb_ConfigClient]
 GO
-ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_Error] FOREIGN KEY([Error])
+ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_TaskList_tb_Error] FOREIGN KEY([Error])
 REFERENCES [dbo].[tb_Errors] ([id])
 GO
-ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_Log_tb_Error]
+ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_TaskList_tb_Error]
 GO
 USE [master]
 GO
 ALTER DATABASE [dbPain] SET  READ_WRITE 
 GO
+use dbPain
+go
+
+insert into tb_BackupTypes (backupName) values ('Full')
+insert into tb_BackupTypes (backupName) values ('Dif')
+insert into tb_BackupTypes (backupName) values ('Ink')
+
+insert into tb_DestinationTypes (name) values ('Local')
+insert into tb_DestinationTypes (name) values ('FTP')
+insert into tb_DestinationTypes (name) values ('Network')
+
+insert into tb_Administrator (login,password,accountCreation,admin) values ('admin','admin',GETDATE(),1)
