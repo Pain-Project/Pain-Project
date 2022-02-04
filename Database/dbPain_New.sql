@@ -1,14 +1,6 @@
 USE [master]
 GO
-
-IF EXISTS (SELECT*FROM SYS.DATABASES WHERE NAME = 'dbPain')
-begin
-alter database dbPain set single_user with rollback immediate
-DROP DATABASE dbPain
-end
-GO
-
-/****** Object:  Database [dbPain]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Database [dbPain]    Script Date: 04.02.2022 13:03:19 ******/
 CREATE DATABASE [dbPain]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -90,7 +82,7 @@ ALTER DATABASE [dbPain] SET QUERY_STORE = OFF
 GO
 USE [dbPain]
 GO
-/****** Object:  Table [dbo].[tb_Administrator]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_Administrator]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,7 +102,7 @@ CREATE TABLE [dbo].[tb_Administrator](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_BackupFormats]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_BackupFormats]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -124,7 +116,7 @@ CREATE TABLE [dbo].[tb_BackupFormats](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_BackupTypes]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_BackupTypes]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,7 +130,7 @@ CREATE TABLE [dbo].[tb_BackupTypes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Client]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_Client]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -154,7 +146,7 @@ CREATE TABLE [dbo].[tb_Client](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Config]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_Config]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +168,7 @@ CREATE TABLE [dbo].[tb_Config](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_ConfigClient]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_ConfigClient]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -192,23 +184,7 @@ CREATE TABLE [dbo].[tb_ConfigClient](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Destination]    Script Date: 04.02.2022 11:25:11 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tb_Destination](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IdSourceToDect] [int] NOT NULL,
-	[Type] [int] NOT NULL,
-	[Path] [nvarchar](max) NOT NULL,
- CONSTRAINT [PK_tb_destination] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tb_DestinationTypes]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_DestinationTypes]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -222,7 +198,7 @@ CREATE TABLE [dbo].[tb_DestinationTypes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Errors]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_Errors]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,25 +212,7 @@ CREATE TABLE [dbo].[tb_Errors](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Log]    Script Date: 04.02.2022 11:25:11 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tb_Log](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IdConfigClient] [int] NOT NULL,
-	[Success] [bit] NOT NULL,
-	[Message] [nvarchar](max) NULL,
-	[Date] [datetime] NOT NULL,
-	[Error] [int] NULL,
- CONSTRAINT [PK_tb_Log] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tb_LoginLog]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_LoginLog]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -262,29 +220,15 @@ GO
 CREATE TABLE [dbo].[tb_LoginLog](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdAdministrator] [int] NOT NULL,
-	[LoginTime] [nchar](10) NOT NULL,
+	[LoginTime] [datetime] NOT NULL,
+	[IpAddress] [nvarchar](20) NOT NULL,
  CONSTRAINT [PK_tb_LoginLog] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tb_Source]    Script Date: 04.02.2022 11:25:11 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[tb_Source](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[IdSourceToDect] [int] NOT NULL,
-	[Path] [nvarchar](max) NOT NULL,
- CONSTRAINT [PK_tb_Source] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[tb_SourceToDest]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_SourceToDest]    Script Date: 04.02.2022 13:03:19 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -292,15 +236,35 @@ GO
 CREATE TABLE [dbo].[tb_SourceToDest](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[IdConfig] [int] NOT NULL,
-	[IdDestination] [int] NOT NULL,
-	[IdSource] [int] NOT NULL,
+	[Source] [nvarchar](max) NOT NULL,
+	[Destination] [nvarchar](max) NOT NULL,
+	[DestType] [int] NOT NULL,
  CONSTRAINT [PK_tb_SourceToDest] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Index [IX_tb_ConfigClient]    Script Date: 04.02.2022 11:25:11 ******/
+/****** Object:  Table [dbo].[tb_Task_List]    Script Date: 04.02.2022 13:03:19 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tb_Task_List](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdConfigClient] [int] NOT NULL,
+	[Success] [bit] NOT NULL,
+	[Message] [nvarchar](max) NULL,
+	[Date] [datetime] NOT NULL,
+	[Error] [int] NULL,
+	[Size(MB)] [int] NOT NULL,
+ CONSTRAINT [PK_tb_Log] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Index [IX_tb_ConfigClient]    Script Date: 04.02.2022 13:03:19 ******/
 CREATE NONCLUSTERED INDEX [IX_tb_ConfigClient] ON [dbo].[tb_ConfigClient]
 (
 	[ID] ASC
@@ -333,59 +297,32 @@ REFERENCES [dbo].[tb_Config] ([Id])
 GO
 ALTER TABLE [dbo].[tb_ConfigClient] CHECK CONSTRAINT [FK_tb_ConfigClient_tb_Config]
 GO
-ALTER TABLE [dbo].[tb_Destination]  WITH CHECK ADD  CONSTRAINT [FK_tb_Destination_tb_SourceToDest] FOREIGN KEY([IdSourceToDect])
-REFERENCES [dbo].[tb_SourceToDest] ([Id])
-GO
-ALTER TABLE [dbo].[tb_Destination] CHECK CONSTRAINT [FK_tb_Destination_tb_SourceToDest]
-GO
-ALTER TABLE [dbo].[tb_Destination]  WITH CHECK ADD  CONSTRAINT [FK_tb_destination_tb_type] FOREIGN KEY([Type])
-REFERENCES [dbo].[tb_DestinationTypes] ([Id])
-GO
-ALTER TABLE [dbo].[tb_Destination] CHECK CONSTRAINT [FK_tb_destination_tb_type]
-GO
-ALTER TABLE [dbo].[tb_Log]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_ConfigClient] FOREIGN KEY([IdConfigClient])
-REFERENCES [dbo].[tb_ConfigClient] ([ID])
-GO
-ALTER TABLE [dbo].[tb_Log] CHECK CONSTRAINT [FK_tb_Log_tb_ConfigClient]
-GO
-ALTER TABLE [dbo].[tb_Log]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_Error] FOREIGN KEY([Error])
-REFERENCES [dbo].[tb_Errors] ([id])
-GO
-ALTER TABLE [dbo].[tb_Log] CHECK CONSTRAINT [FK_tb_Log_tb_Error]
-GO
 ALTER TABLE [dbo].[tb_LoginLog]  WITH CHECK ADD  CONSTRAINT [FK_tb_LoginLog_tb_Administrator] FOREIGN KEY([IdAdministrator])
 REFERENCES [dbo].[tb_Administrator] ([Id])
 GO
 ALTER TABLE [dbo].[tb_LoginLog] CHECK CONSTRAINT [FK_tb_LoginLog_tb_Administrator]
-GO
-ALTER TABLE [dbo].[tb_Source]  WITH CHECK ADD  CONSTRAINT [FK_tb_Source_tb_SourceToDest] FOREIGN KEY([IdSourceToDect])
-REFERENCES [dbo].[tb_SourceToDest] ([Id])
-GO
-ALTER TABLE [dbo].[tb_Source] CHECK CONSTRAINT [FK_tb_Source_tb_SourceToDest]
 GO
 ALTER TABLE [dbo].[tb_SourceToDest]  WITH CHECK ADD  CONSTRAINT [FK_tb_SourceToDest_tb_Config] FOREIGN KEY([IdConfig])
 REFERENCES [dbo].[tb_Config] ([Id])
 GO
 ALTER TABLE [dbo].[tb_SourceToDest] CHECK CONSTRAINT [FK_tb_SourceToDest_tb_Config]
 GO
+ALTER TABLE [dbo].[tb_SourceToDest]  WITH CHECK ADD  CONSTRAINT [FK_tb_SourceToDest_tb_DestinationTypes] FOREIGN KEY([DestType])
+REFERENCES [dbo].[tb_DestinationTypes] ([Id])
+GO
+ALTER TABLE [dbo].[tb_SourceToDest] CHECK CONSTRAINT [FK_tb_SourceToDest_tb_DestinationTypes]
+GO
+ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_ConfigClient] FOREIGN KEY([IdConfigClient])
+REFERENCES [dbo].[tb_ConfigClient] ([ID])
+GO
+ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_Log_tb_ConfigClient]
+GO
+ALTER TABLE [dbo].[tb_Task_List]  WITH CHECK ADD  CONSTRAINT [FK_tb_Log_tb_Error] FOREIGN KEY([Error])
+REFERENCES [dbo].[tb_Errors] ([id])
+GO
+ALTER TABLE [dbo].[tb_Task_List] CHECK CONSTRAINT [FK_tb_Log_tb_Error]
+GO
 USE [master]
 GO
 ALTER DATABASE [dbPain] SET  READ_WRITE 
 GO
-
-
-use dbPain
-go
-
-insert into tb_BackupTypes (backupName) values ('Full')
-insert into tb_BackupTypes (backupName) values ('Dif')
-insert into tb_BackupTypes (backupName) values ('Ink')
-
-insert into tb_DestinationTypes (name) values ('Local')
-insert into tb_DestinationTypes (name) values ('FTP')
-insert into tb_DestinationTypes (name) values ('Network')
-
-insert into tb_Administrator (login,password,accountCreation,admin) values ('admin','admin',GETDATE(),1)
-
-insert into tb_BackupFormats (Format) values ('Archive')
-insert into tb_BackupFormats (Format) values ('Plain text')
