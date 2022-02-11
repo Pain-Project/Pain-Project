@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JVTc9JIF0fHZH3z3Vhk1eO/+Bjc2cEVYgez12rg3mGDjB1rdYubp1fp0xoLAw6pjkBopuUdW1gPAFiMXL/FrQw==",
+  "dgSpecHash": "SFiNor8yxgBW4fGkIdvTL5Vl8QOpmB+29Q1Jn4+PZ6z2Z1Fty/n+1oIJO+21EAsDm07K1/slgJVsaRmQ26qMAw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\troli\\source\\repos\\DatabaseTest\\DatabaseTest\\DatabaseTest.csproj",
+  "projectFilePath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\troli\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\troli\\.nuget\\packages\\google.protobuf\\3.14.0\\google.protobuf.3.14.0.nupkg.sha512",

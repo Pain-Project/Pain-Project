@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj": {}
+    "C:\\Users\\troli\\source\\repos\\ConsoleApp6\\ConsoleApp6\\ConsoleApp6.csproj": {}
   },
   "projects": {
-    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj": {
+    "C:\\Users\\troli\\source\\repos\\ConsoleApp6\\ConsoleApp6\\ConsoleApp6.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
-        "projectName": "DatabaseTest",
-        "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
+        "projectUniqueName": "C:\\Users\\troli\\source\\repos\\ConsoleApp6\\ConsoleApp6\\ConsoleApp6.csproj",
+        "projectName": "ConsoleApp6",
+        "projectPath": "C:\\Users\\troli\\source\\repos\\ConsoleApp6\\ConsoleApp6\\ConsoleApp6.csproj",
         "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\obj\\",
+        "outputPath": "C:\\Users\\troli\\source\\repos\\ConsoleApp6\\ConsoleApp6\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,13 +40,13 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "MySql.EntityFrameworkCore": {
+            "Microsoft.AspNet.WebApi.Client": {
               "target": "Package",
-              "version": "[5.0.10, )"
+              "version": "[5.2.7, )"
             },
-            "Swashbuckle.AspNetCore": {
+            "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[5.6.3, )"
+              "version": "[13.0.1, )"
             }
           },
           "imports": [
@@ -60,9 +60,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

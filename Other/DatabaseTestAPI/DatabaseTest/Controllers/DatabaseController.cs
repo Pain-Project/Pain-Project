@@ -26,13 +26,13 @@ namespace DatabaseTest.Controllers
         }
 
         [HttpPost("PostClient")]
-        public void PostClient(string name, string ip, string mac)
+        public void PostClient(Client clientGet)
         {
-            Client client = new Client() { Name = name, IpAddress = ip, MacAddress = mac };
-            myContext.Clients.Add(client);
+            myContext.Clients.Add(clientGet);
 
             myContext.SaveChanges();
         }
+
         [HttpPost("PostAdmin")]
         public void PostAdmin(string loginName, string password, bool isAdmin, string cronEmail, string name, string Surname, bool darkMode, string email)
         {

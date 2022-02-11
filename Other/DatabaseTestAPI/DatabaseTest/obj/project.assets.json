@@ -1641,11 +1641,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\troli\\source\\repos\\DatabaseTest\\DatabaseTest\\DatabaseTest.csproj",
+      "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
       "projectName": "DatabaseTest",
-      "projectPath": "C:\\Users\\troli\\source\\repos\\DatabaseTest\\DatabaseTest\\DatabaseTest.csproj",
+      "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
       "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\troli\\source\\repos\\DatabaseTest\\DatabaseTest\\obj\\",
+      "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
