@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DatabaseTest.DatabaseTables;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseTest.Controllers
 {
     public class MyContext : DbContext
     {
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
