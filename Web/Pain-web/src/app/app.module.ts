@@ -9,12 +9,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatRadioModule} from "@angular/material/radio";
 import { LoginPageComponent } from './login-page/login-page.component';
 import { PageSkeletonComponent } from './page-skeleton/page-skeleton.component';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { DashboardComponent } from '../Content/dashboard/dashboard.component';
-import { LogsComponent } from '../Content/logs/logs.component';
-import { ConfigsComponent } from '../Content/configs/configs.component';
-import { ClientsComponent } from '../Content/clients/clients.component';
-import { UsersComponent } from '../Content/users/users.component';
+import { NavBarComponent } from './page-skeleton/nav-bar/nav-bar.component';
+import { DashboardComponent } from './page-skeleton/Content/dashboard/dashboard.component';
+import { LogsComponent } from './page-skeleton/Content/logs/logs.component';
+import { ConfigsComponent } from './page-skeleton/Content/configs/configs.component';
+import { ClientsComponent } from './page-skeleton/Content/clients/clients.component';
+import { UsersComponent } from './page-skeleton/Content/users/users.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { UsersComponent } from '../Content/users/users.component';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
