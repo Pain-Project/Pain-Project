@@ -16,7 +16,13 @@ import { ConfigsComponent } from './page-skeleton/Content/configs/configs.compon
 import { ClientsComponent } from './page-skeleton/Content/clients/clients.component';
 import { UsersComponent } from './page-skeleton/Content/users/users.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
-
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatButtonModule} from "@angular/material/button";
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {FormsModule} from "@angular/forms";
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogElementsExampleDialog} from "./page-skeleton/Content/configs/configs.component";
 
 @NgModule({
   declarations: [
@@ -28,7 +34,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     LogsComponent,
     ConfigsComponent,
     ClientsComponent,
-    UsersComponent
+    UsersComponent,
+    DialogElementsExampleDialog,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +45,12 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatProgressSpinnerModule,
     MatRadioModule,
     MatToolbarModule,
+    MatExpansionModule,
+    MatButtonModule,
+    ScrollingModule,
+    MatCheckboxModule,
+    FormsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

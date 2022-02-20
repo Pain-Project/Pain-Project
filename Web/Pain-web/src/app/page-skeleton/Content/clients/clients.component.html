@@ -1,1 +1,61 @@
-<p>clients works!</p>
+<body>
+<div class="container">
+  <div *ngFor="let client of clients">
+    <mat-expansion-panel hideToggle class="configPanel">
+      <mat-expansion-panel-header class="configHeader">
+        <mat-panel-title class="text-uppercase" style="color: #707070">
+          <div class="col-1">
+            {{client.name}}
+          </div>
+          <div *ngIf="client.active" class="col-2">
+            <mat-checkbox (click)="onClick($event)" [(ngModel)]="client.active" style="color: #1C9C24">Active</mat-checkbox>
+          </div>
+          <div *ngIf="!client.active" class="col-2">
+            <mat-checkbox (click)="onClick($event)" [(ngModel)]="client.active" style="color: #E52F2F">Inactive</mat-checkbox>
+          </div>
+          <div class="col" style="font-size: 20px">
+            {{client.ip_Address}}
+          </div>
+          <div class="col" style="font-size: 20px">
+            {{client.mac_Address}}
+          </div>
+          <div class="col">
+            CONFIGS: {{client.configs.length}}
+          </div>
+          <div class="buttons">
+            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="container expand">
+        <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
+          <div *cdkVirtualFor="let config of client.configs" class="configLine">
+            <div class="row">
+              <div class="col text-uppercase">
+                <p>{{config.name}}</p>
+              </div>
+              <div class="col">
+                <p>{{config.creator}}</p>
+              </div>
+              <div class="col">
+                <p>{{config.create_date}}</p>
+              </div>
+              <div class="col">
+                <p>{{config.backup_type}}</p>
+              </div>
+              <div class="col-3">
+                <div class="buttons">
+                  <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+                  <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+
+</body>

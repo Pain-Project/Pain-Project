@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>
+  <div class="row">
+    <div class="col">Add clients</div>
+    <div class="col text-end">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+  </div>
+</h1>
+<div mat-dialog-content>
+  <cdk-virtual-scroll-viewport itemSize="50" class="clientsViewport">
+    <div *cdkVirtualFor="let client of clients" class="clientLine">
+      <div class="row">
+        <div class="col-1">
+          <mat-checkbox  style="color: #1C9C24"></mat-checkbox>
+        </div>
+        <div class="col">
+          <p>{{client.name}}</p>
+        </div>
+        <div class="col">
+          <p>{{client.ip_Address}}</p>
+        </div>
+        <div class="col">
+          <p>{{client.mac_Address}}</p>
+        </div>
+      </div>
+    </div>
+  </cdk-virtual-scroll-viewport>
+  <a href="https://Youtube.com" target="_blank"  class="buttonEDIT" mat-raised-button>SAVE</a>
+  <a href="https://Youtube.com" target="_blank"  class="buttonREM" mat-raised-button>CANCEL</a>
+</div>

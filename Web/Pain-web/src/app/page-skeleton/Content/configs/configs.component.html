@@ -1,1 +1,91 @@
-<p>configs works!</p>
+<body>
+<div class="container">
+  <div *ngFor="let config of configs">
+    <mat-expansion-panel hideToggle class="configPanel">
+      <mat-expansion-panel-header class="configHeader">
+        <mat-panel-title class="text-uppercase" style="color: #707070">
+          <div class="col">
+            {{config.name}}
+          </div>
+          <div class="col">
+            {{config.create_date}}
+          </div>
+          <div class="col">
+            {{config.backup_type}}
+          </div>
+          <div class="buttons">
+            <a (click)="onClick($event); openDialog()" class="buttonADD" mat-raised-button>ADD CLIENTS</a>
+            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="container expand">
+        <div class="row">
+          <div class="col-5">
+            <div class="row">
+              <div class="col-5">
+                <h3>CREATOR:</h3>
+              </div>
+              <div class="col">
+                {{config.creator}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5">
+                <h3>RETENTION:</h3>
+              </div>
+              <div class="col">
+                {{config.retention}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5">
+                <h3>FREQUENCY:</h3>
+              </div>
+              <div class="col">
+                {{config.frequency}}
+              </div>
+            </div>
+          </div>
+          <div class="col-4 sourceDest">
+            <div class="row">
+              <div class="col">
+                <h3>Sources</h3>
+                <cdk-virtual-scroll-viewport itemSize="25" class="sourcesViewport">
+                  <div *cdkVirtualFor="let source of config.sources" class="sourcesList">
+                    {{source}}
+                  </div>
+                </cdk-virtual-scroll-viewport>
+              </div>
+              <div class="col">
+                <h3>Destinations</h3>
+                <cdk-virtual-scroll-viewport itemSize="25" class="sourcesViewport">
+                  <div *cdkVirtualFor="let destination of config.destinations" class="sourcesList">
+                    {{destination}}
+                  </div>
+                </cdk-virtual-scroll-viewport>
+              </div>
+            </div>
+          </div>
+          <div class="col pcList">
+            <cdk-virtual-scroll-viewport itemSize="50" class="pcViewport">
+              <div *cdkVirtualFor="let pc of config.PCs" class="pcList text-uppercase align-content-center">
+                <div class="row">
+                  <div class="col">
+                    <h3>{{pc}}</h3>
+                  </div>
+                  <div class="col">
+                    <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button style="margin-right: 20px">REMOVE CLIENT</a>
+                  </div>
+                </div>
+              </div>
+            </cdk-virtual-scroll-viewport>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+
+</body>

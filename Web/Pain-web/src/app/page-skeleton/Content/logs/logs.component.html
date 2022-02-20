@@ -1,1 +1,29 @@
-<p>logs works!</p>
+<body>
+  <div class="container">
+    <div *ngFor="let log of logs">
+      <mat-expansion-panel hideToggle class="configPanel">
+        <mat-expansion-panel-header class="configHeader">
+          <mat-panel-title class="text-uppercase" style="color: #707070">
+            <div class="col" style="color: #0078D4">
+              {{log.client_name}}
+            </div>
+            <div class="col">
+              {{log.config_name}}
+            </div>
+            <div class="col">
+              {{log.create_date}}
+            </div>
+            <div class="col">
+              {{log.status}}
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="container expand">
+          <div class="col">
+            {{log.message}}
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </div>
+</body>
