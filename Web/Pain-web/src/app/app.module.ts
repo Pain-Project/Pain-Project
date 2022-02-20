@@ -25,6 +25,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogElementsExampleDialog} from "./page-skeleton/Content/configs/configs.component";
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
+
+
 
 
 @NgModule({
@@ -56,7 +59,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

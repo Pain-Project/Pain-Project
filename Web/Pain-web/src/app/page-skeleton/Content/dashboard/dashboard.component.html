@@ -1,1 +1,143 @@
-<p>dashboard works!</p>
+<body style="padding: 5%;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-9">
+                <div class="p-4">
+                    <mat-grid-list cols="3" rowHeight="150px" gutterSize=70px>
+                        <mat-grid-tile colspan=1 rowspan=1 style.background>
+                            <div>
+                                <p class="success-norun-error1 green">SUCCESS</p>
+                                <p class="counts1" style="text-align:center;">123 456</p>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan=1 rowspan=1 style.background>
+                            <div>
+                                <p class="success-norun-error1 orange">NO RUN</p>
+                                <p class="counts1" style="text-align:center;">123 456</p>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan=1 rowspan=1 style.background>
+                            <div>
+                                <p class="success-norun-error1 red">ERROR</p>
+                                <p class="counts1" style="text-align:center;">123 456</p>
+                            </div>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+                <div class="p-4">
+                    <mat-grid-list cols="4" rowHeight="145px" gutterSize=70px>
+                        <mat-grid-tile colspan=1 rowspan=1 style.background>
+                            <div>
+                                <p class="sizelabel blue">BACKUP SIZE</p>
+                                <p class="countssize" style="text-align:center;">123 456</p>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan=3 rowspan=4 style.background class="graf">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col">
+                                        <mat-spinner mode="determinate" value="75" diameter="350" aria-label="Rating"></mat-spinner>
+                                    </div>
+                                    <div class="col">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <p class="problemslabel blue">COMPLETED</p>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="container">
+                                                            <div class="row" *ngFor="let complete of completed">
+                                                                <div class="col">
+                                                                    {{complete.ClientName}}
+                                                                </div>
+                                                                <div class="col">
+                                                                    {{complete.ConfigName}}
+                                                                </div>
+                                                                <div class="col">
+                                                                    {{complete.Time}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <p class="problemslabel orange">AWAITS</p>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="container" >
+                                                            <div class="row" *ngFor="let awaitss of awaits">
+                                                                <div class="col">
+                                                                    {{awaitss.ClientName}}
+                                                                </div>
+                                                                <div class="col">
+                                                                    {{awaitss.ConfigName}}
+                                                                </div>
+                                                                <div class="col">
+                                                                    {{awaitss.Time}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile colspan=1 rowspan=3 style.background>
+                            <div class="container">
+                                <div class="row text-center">
+                                    <p class="blue" style="font-size: xx-large;">LAST 7 DAYS</p>
+                                </div>
+                                <div class="row labelborder">
+                                    <p class="success-norun-error7 green">SUCCESS</p>
+                                    <p class="counts7" style="text-align:center;">123 456</p>
+                                </div>
+                                <div class="row labelborder">
+                                    <p class="success-norun-error7 orange">NO RUN</p>
+                                    <p class="counts7" style="text-align:center;">123 456</p>
+                                </div>
+                                <div class="row labelborder">
+                                    <p class="success-norun-error7 red">ERROR</p>
+                                    <p class="counts7" style="text-align:center;">123 456</p>
+                                </div>
+                            </div>
+
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </div>
+            <div class="p-4 col">
+                <mat-grid-list mat-grid-list cols="1" rowHeight="150px" gutterSize=70px>
+                    <mat-grid-tile colspan=1 rowspan=3 style.background>
+                        <div class="container">
+                            <div class="row">
+                                <p class="problemslabel red">PROBLEMS</p>
+                            </div>
+                            <div class="row">
+                                <div class="container">
+                                    <div class="row" *ngFor="let problem of problems">
+                                        <div class="col">
+                                            {{problem.ClientName}}
+                                        </div>
+                                        <div class="col">
+                                            {{problem.ConfigName}}
+                                        </div>
+                                        <div class="col">
+                                            {{problem.Time}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </div>
+    </div>
+</body>
