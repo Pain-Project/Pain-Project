@@ -1,0 +1,40 @@
+.body{
+  position: relative
+}
+
+.container{
+  background-color: #FFFFFF;
+  border-color: #707070;
+  height: 50em;
+  width: 40em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px #707070;
+}
+.login{
+  background-color: #0078D4;
+  color: #FFFFFF;
+  border-color: #707070;
+  font-size: 20px;
+  width: 7em;
+  height: 3em;
+  margin-top: 15%;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px #707070;
+}
+.example-full-width{
+  width: 30em;
+  margin-left: 2em;
+}
+.nameInput{
+  margin-top: 30%;
+  padding-bottom: 3em;
+  color: #0078D4;
+}
+.passwordInput{
+  color: #0078D4;
+}

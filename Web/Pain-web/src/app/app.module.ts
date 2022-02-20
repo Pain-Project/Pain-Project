@@ -15,7 +15,9 @@ import { LogsComponent } from './page-skeleton/Content/logs/logs.component';
 import { ConfigsComponent } from './page-skeleton/Content/configs/configs.component';
 import { ClientsComponent } from './page-skeleton/Content/clients/clients.component';
 import { UsersComponent } from './page-skeleton/Content/users/users.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     MatProgressSpinnerModule,
     MatRadioModule,
     MatToolbarModule,
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
