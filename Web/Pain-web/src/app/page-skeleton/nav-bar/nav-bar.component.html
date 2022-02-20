@@ -1,16 +1,29 @@
-<div class="container">
+<div class="container-fluid w-75">
   <div class="row">
     <div class="col-9">
       <mat-toolbar class="navbar">
-        <a routerLink="/ui/dashboard">Dashboard</a>
-        <a routerLink="/ui/configs">Configurations</a>
-        <a routerLink="/ui/logs">Logs</a>
-        <a routerLink="/ui/clients">Clients</a>
-        <a routerLink="/ui/users">Users</a>
+        <a routerLinkActive="activeLink" routerLink="/ui/dashboard">Dashboard</a>
+        <a routerLinkActive="activeLink" routerLink="/ui/configs">Configurations</a>
+        <a routerLinkActive="activeLink" routerLink="/ui/logs">Logs</a>
+        <a routerLinkActive="activeLink" routerLink="/ui/clients">Clients</a>
+        <a routerLinkActive="activeLink" routerLink="/ui/users">Users</a>
       </mat-toolbar>
     </div>
-    <div class="col text-end">
-      <button routerLink="">Logout</button>
-    </div>
+        <div class="col text-end">
+          <div class="row ">
+            <div class="col" style="color: #0078D4; font-size: 25px">
+              <i style="margin-right: -1em" class="fa-solid fa-user"></i>
+            </div>
+            <div class="col">
+              <p style="color: #0078D4; font-size: 17px">LoginName</p>
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <a style="text-decoration: none; color: #707070" routerLink=""> Logout</a>
+            </div>
+            <div class="col text-start" style="color: #707070; font-size: 25px">
+              <i class="fa-solid fa-gear"></i>
+            </div>
+          </div>
+        </div>
   </div>
 </div>
+<mat-divider class="divider"></mat-divider>

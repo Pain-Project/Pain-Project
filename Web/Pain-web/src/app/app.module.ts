@@ -23,9 +23,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule} from "@angular/forms";
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogElementsExampleDialog} from "./page-skeleton/Content/configs/configs.component";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -56,7 +55,8 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     MatDialogModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

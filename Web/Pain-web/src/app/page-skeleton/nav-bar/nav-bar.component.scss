@@ -1,0 +1,15 @@
+.navbar a{
+  text-decoration: none;
+  color: #707070;
+  padding-top: 2em;
+}
+.navbar a:hover,.navbar a.activeLink{
+color: #0078D4;
+}
+.divider{
+  background-color: #0078D4;
+  margin-top: 2em;
+}
+.col.text-end{
+  margin-top: 3em;
+}
