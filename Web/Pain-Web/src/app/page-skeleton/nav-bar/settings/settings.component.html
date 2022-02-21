@@ -1,0 +1,75 @@
+<body>
+  <div class="mat-dialog-title">
+    <div class="header">
+      <i class="IconSetting fa-solid fa-gear"></i>
+      <h1>Settings</h1>
+    </div>
+  </div>
+  <div class="mat-dialog-content">
+    <div class="row">
+      <div class="col big left">
+        <div class="header">
+          <i class="IconSetting fa-solid fa-lock"></i>
+          <h2>Account Info</h2>
+        </div>
+        <div class="content">
+          <p style="margin-bottom: 10px">Name: Pavel Novák</p>
+          <p>Login name: pavel.novak</p>
+          <p>Account type: BIG BOSS</p>
+          <p>Email: novak@pavel.cz</p>
+          <p>Create date: 10.4.1998</p>
+        </div>
+        <div class="header">
+          <i class="IconSetting fa-solid fa-gears"></i>
+          <h2>Account Info</h2>
+        </div>
+        <div class="content">
+          <a tabindex="-1" href="">Change password</a>
+          <div></div>
+          <a tabindex="-1" href="">Change email</a>
+        </div>
+      </div>
+      <div class="col big right">
+        <div class="header">
+          <i class="IconSetting fa-solid fa-paper-plane"></i>
+          <h2>Email settings</h2>
+        </div>
+        <div class="content">
+          <p style="float: left;">Frequency: </p>
+          <mat-form-field style=" margin-bottom: 30px" class="DateInput" >
+            <mat-select tabindex="-1" [(ngModel)]="selectedComp" class="SelectDate">
+              <mat-option value="one">Never</mat-option>
+              <mat-option value="two">Daily</mat-option>
+              <mat-option value="three">Weekly</mat-option>
+              <mat-option value="four">Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="header">
+          <i class="IconSetting fa-solid fa-paintbrush"></i>
+          <h2>Theme</h2>
+        </div>
+        <div class="content" style="overflow: hidden">
+          <p style="float:left; margin-right: 1em">Dark mode: </p>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="header">
+          <i class="IconSetting fa-solid fa-database"></i>
+          <h2>Database settings</h2>
+        </div>
+        <div class="content">
+          <p>Delete log frequency: </p>
+          <p>Config update frequency: </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button class="Button cancel" mat-button mat-dialog-close>CANCEL</button>
+    <button class="Button save" mat-button [mat-dialog-close]="true">
+      <i style="font-size: 25px; margin-right: 5px" class="fa-solid fa-floppy-disk"></i>
+      SAVE
+    </button>
+  </mat-dialog-actions>
+</body>

@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatRadioModule} from "@angular/material/radio";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from "@angular/material/radio";
 import { LoginPageComponent } from './login-page/login-page.component';
 import { PageSkeletonComponent } from './page-skeleton/page-skeleton.component';
 import { NavBarComponent } from './page-skeleton/nav-bar/nav-bar.component';
@@ -15,20 +15,26 @@ import { LogsComponent } from './page-skeleton/Content/logs/logs.component';
 import { ConfigsComponent } from './page-skeleton/Content/configs/configs.component';
 import { ClientsComponent } from './page-skeleton/Content/clients/clients.component';
 import { UsersComponent } from './page-skeleton/Content/users/users.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatButtonModule} from "@angular/material/button";
-import {ScrollingModule} from "@angular/cdk/scrolling";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {FormsModule} from "@angular/forms";
-import {MatDialogModule} from '@angular/material/dialog';
-import { DialogElementsExampleDialog} from "./page-skeleton/Content/configs/configs.component";
+import { MatToolbarModule} from "@angular/material/toolbar";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatButtonModule } from "@angular/material/button";
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { FormsModule } from "@angular/forms";
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogElementsExampleDialog } from "./page-skeleton/Content/configs/configs.component";
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
-
+import { SettingsComponent } from './page-skeleton/nav-bar/settings/settings.component';
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSelectModule } from "@angular/material/select";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { MatRippleModule } from "@angular/material/core";
+import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remove-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +48,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ClientsComponent,
     UsersComponent,
     DialogElementsExampleDialog,
+    SettingsComponent,
+    RemoveDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +69,11 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatDividerModule,
     MatGridListModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatSelectModule,
+    NgSelectModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Config} from "../../../../Testing/ConfigInterface";
 import { CONFIGS} from "../../../../Testing/Configs";
 import { CLIENTS} from "../../../../Testing/Clients";
 
-import { MatDialog} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
+import { RemoveDialogComponent } from "../../Shared/remove-dialog/remove-dialog.component";
 
 @Component({
   selector: 'app-configs',
@@ -20,10 +20,31 @@ export class ConfigsComponent implements OnInit {
   onClick(event : any) : void {
     event.stopPropagation();
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogElementsExampleDialog, {
-      width: '800px'
-    })
+  openDialog(type : any): void {
+    if (type== 'Add'){
+      const dialogRef = this.dialog.open(DialogElementsExampleDialog, {
+        panelClass: 'custom-dialog-container',
+        width: '800px'
+      })
+    }
+    else if (type=='Remove'){
+      const dialogRef = this.dialog.open(RemoveDialogComponent, {
+        panelClass: 'custom-dialog-container',
+        width: '500px',
+      })
+      dialogRef.componentInstance.type = 'config';
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == true)
+          alert('Config was successfully removed!')
+      })
+    }
+    else if (type=='RemoveClient'){
+      const dialogRef = this.dialog.open(RemoveDialogComponent, {
+        panelClass: 'custom-dialog-container',
+        width: '500px'
+      })
+      dialogRef.componentInstance.type = 'clientFromConfig';
+    }
   }
 }
 // noinspection AngularMissingOrInvalidDeclarationInModule
@@ -33,6 +54,7 @@ export class ConfigsComponent implements OnInit {
   styleUrls: ['./Dialog-Add-Client.scss']
 })
 export class DialogElementsExampleDialog {
+  searchActive : boolean = false;
   constructor() {
   }
   clients = CLIENTS;

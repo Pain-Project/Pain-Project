@@ -1,0 +1,87 @@
+body, html {
+  background-color: #F6F6F6;
+}
+.header{
+  overflow: hidden;
+}
+.IconSetting{
+  color: #707070;
+  font-size: 25px;
+  float:left;
+  margin-right: 10px;
+  width: 1em;
+}
+.header{
+  margin-top: 0px
+}
+.header h1, .header h2{
+  color: #0078D4;
+  float:left;
+  text-align: center;
+  margin-top: -2px;
+}
+.mat-dialog-title{
+  margin-top: -10px;
+}
+.mat-dialog-content{
+  margin-top: -2em;
+}
+.col.big{
+  border: 1px solid #707070;
+  border-radius: 10px;
+  padding-top: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  background-color: white;
+  box-shadow: gray 5px 5px 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.col.left{
+  margin-right: 10px;
+}
+.col.right{
+  margin-left: 10px;
+}
+.content{
+  margin-left: 3em;
+}
+.content p{
+  margin-bottom: 5px;
+}
+::ng-deep .DateInput{
+  font-size: 18px;
+  width: 5em;
+  height: 25px;
+  margin-top: -20px;
+  margin-left: 1em;
+}
+mat-dialog-actions{
+  margin-top: -1em;
+}
+.Button {
+  color: white;
+  border-radius: 10px;
+  width: 100px;
+  fon-size: 30px;
+}
+.Button.cancel{
+  background-color: #E52F2F;
+  margin-right: 10px;
+}
+.Button.save{
+  background-color: #1C9C24;
+}
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+::ng-deep .mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #0078D4;
+}
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #F6F6F6;
+}
+::ng-deep .mat-slide-toggle-ripple.mat-ripple {
+  display: none;
+}
+

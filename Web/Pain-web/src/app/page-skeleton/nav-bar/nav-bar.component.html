@@ -1,6 +1,12 @@
-<div class="container-fluid w-75">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-9">
+    <div class="col-3" style="margin-top: 3em; margin-left: 1em">
+      <p style="color: #0078D4;font-size: 40px; font-style: italic">
+        Le pain, a.s.
+      </p>
+    </div>
+    <div class="col-6 ">
+<!--    <div class="col-6 offset-md-3">-->
       <mat-toolbar class="navbar">
         <a routerLinkActive="activeLink" routerLink="/ui/dashboard">Dashboard</a>
         <a routerLinkActive="activeLink" routerLink="/ui/configs">Configurations</a>
@@ -9,18 +15,20 @@
         <a routerLinkActive="activeLink" routerLink="/ui/users">Users</a>
       </mat-toolbar>
     </div>
-        <div class="col text-end">
-          <div class="row ">
-            <div class="col" style="color: #0078D4; font-size: 25px">
+        <div class="col user">
+          <div class="row justify-content-end">
+            <div class="col-2" style="color: #0078D4; font-size: 30px">
               <i style="margin-right: -1em" class="fa-solid fa-user"></i>
             </div>
-            <div class="col">
-              <p style="color: #0078D4; font-size: 17px">LoginName</p>
+            <div class="col-4">
+              <p style="color: #0078D4; font-size: 17px">Pavel Novák</p>
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
               <a style="text-decoration: none; color: #707070" routerLink=""> Logout</a>
             </div>
-            <div class="col text-start" style="color: #707070; font-size: 25px">
-              <i class="fa-solid fa-gear"></i>
+            <div class="col-1" style="color: #707070; margin-right: 1em; font-size: 25px">
+              <a (click)="openDialog()" style="cursor: pointer;">
+                <i class="fa-solid fa-gear"></i>
+              </a>
             </div>
           </div>
         </div>

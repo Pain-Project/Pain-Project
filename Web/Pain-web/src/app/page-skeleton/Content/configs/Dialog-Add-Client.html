@@ -1,8 +1,9 @@
 <h1 mat-dialog-title>
   <div class="row">
-    <div class="col">Add clients</div>
-    <div class="col text-end">
-      <i class="fa-solid fa-magnifying-glass"></i>
+    <h1 style="color: #0078D4" class="col">Add clients</h1>
+    <div class="col text-end" style="height: 2em">
+      <input *ngIf="searchActive" style="" class="InputSearch" matInput>
+      <a (click)="searchActive= !searchActive" style="cursor: pointer;"><i style="color: #707070" class="fa-solid fa-magnifying-glass"></i></a>
     </div>
   </div>
 </h1>
@@ -11,12 +12,12 @@
     <div *cdkVirtualFor="let client of clients" class="clientLine">
       <div class="row">
         <div class="col-1">
-          <mat-checkbox  style="color: #1C9C24"></mat-checkbox>
+          <mat-checkbox></mat-checkbox>
         </div>
-        <div class="col">
+        <div class="col-2">
           <p>{{client.name}}</p>
         </div>
-        <div class="col">
+        <div class="col-4">
           <p>{{client.ip_Address}}</p>
         </div>
         <div class="col">
@@ -25,6 +26,8 @@
       </div>
     </div>
   </cdk-virtual-scroll-viewport>
-  <a href="https://Youtube.com" target="_blank"  class="buttonEDIT" mat-raised-button>SAVE</a>
-  <a href="https://Youtube.com" target="_blank"  class="buttonREM" mat-raised-button>CANCEL</a>
 </div>
+<mat-dialog-actions class="Button">
+  <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="true" >SAVE</button>
+  <button class="ButtonCANCEL" mat-button mat-dialog-close>CANCEL</button>
+</mat-dialog-actions>

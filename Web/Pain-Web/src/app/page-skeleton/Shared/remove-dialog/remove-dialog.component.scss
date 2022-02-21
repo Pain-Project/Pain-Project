@@ -1,0 +1,40 @@
+body, html {
+  background-color: #F6F6F6;
+}
+.header{
+  color: #E52F2F;
+  margin-left: 2em;
+  margin-top: 2em;
+}
+.icon {
+  float: left;
+  margin-right: 10px;
+  font-size: 30px;
+}
+.header h1{
+  font-size: 35px;
+}
+.content p{
+  margin-top: 5em;
+  margin-bottom: 5em;
+  text-align: center;
+  font-size: 25px;
+}
+
+.Button {
+  color: white;
+  border-radius: 10px;
+  fon-size: 30px;
+  margin-bottom: 2em;
+}
+.ButtonCANCEL{
+  border-radius: 10px;
+  width: 100px;
+  background-color: #E52F2F;
+}
+.ButtonYES{
+  border-radius: 10px;
+  width: 100px;
+  background-color: #1C9C24;
+  margin-right: 5em;
+}
