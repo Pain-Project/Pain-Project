@@ -1,11 +1,13 @@
-mat-grid-tile {
-    background: #ffffff;
-    border-style: solid;
-    border-width: 2px;
-    border-color: gray;
-    box-shadow: 7px 7px 9px 7px lightgray;
-
-  }
+.gridstyle{
+  background: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: gray;
+  box-shadow: 7px 7px 9px 7px lightgray;
+}
+.addconfiggridstyle{
+  background: #f6f6f6;
+}
 body,html{
   background-color: #f6f6f6;
 }
@@ -15,8 +17,6 @@ body,html{
   border-color: gray;
   margin: 10%;
 }
-
-
 .sevendays{
   padding: 20%;
 }
@@ -63,4 +63,22 @@ color: #1c9c24
 }
 .blue{
   color: #0074d4
+}
+
+.scrollheight{
+  height: 50px;
+}
+.scrollproblems {
+  height: 450px;
+  width: 260px;
+}
+.scrollcompleteawaits {
+  height: 300px;
+  width: 260px;
+}
+.addconfig{
+  text-align:center;
+  font-size: 40px;
+  color: #0074d4;
+  margin: 5%;
 }
