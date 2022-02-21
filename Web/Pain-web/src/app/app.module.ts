@@ -26,6 +26,7 @@ import { DialogElementsExampleDialog} from "./page-skeleton/Content/configs/conf
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 
@@ -42,6 +43,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     ClientsComponent,
     UsersComponent,
     DialogElementsExampleDialog,
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,
