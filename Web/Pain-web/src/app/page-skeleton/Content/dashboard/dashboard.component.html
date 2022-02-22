@@ -3,26 +3,28 @@
         <div class="row">
             <div class="col-9">
                 <div class="p-4">
-                    <mat-grid-list cols="3" rowHeight="150px" gutterSize=70px>
-                        <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
-                            <div>
-                                <p class="success-norun-error1 green">SUCCESS</p>
-                                <p class="counts1" style="text-align:center;">123 456</p>
-                            </div>
-                        </mat-grid-tile>
-                        <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
-                            <div>
-                                <p class="success-norun-error1 orange">NO RUN</p>
-                                <p class="counts1" style="text-align:center;">123 456</p>
-                            </div>
-                        </mat-grid-tile>
-                        <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
-                            <div>
-                                <p class="success-norun-error1 red">ERROR</p>
-                                <p class="counts1" style="text-align:center;">123 456</p>
-                            </div>
-                        </mat-grid-tile>
-                    </mat-grid-list>
+                    <a href="/ui/logs">
+                        <mat-grid-list cols="3" rowHeight="150px" gutterSize=70px class="black">
+                            <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
+                                <div>
+                                    <p class="success-norun-error1 green">SUCCESS</p>
+                                    <p class="counts1" style="text-align:center;">123 456</p>
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
+                                <div>
+                                    <p class="success-norun-error1 orange">NO RUN</p>
+                                    <p class="counts1" style="text-align:center;">123 456</p>
+                                </div>
+                            </mat-grid-tile>
+                            <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
+                                <div>
+                                    <p class="success-norun-error1 red">ERROR</p>
+                                    <p class="counts1" style="text-align:center;">123 456</p>
+                                </div>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+                    </a>
                 </div>
                 <div class="p-4">
                     <mat-grid-list cols="4" rowHeight="145px" gutterSize=70px>
@@ -36,7 +38,8 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col">
-                                        <mat-spinner mode="determinate" value="75" diameter="350" aria-label="Rating"></mat-spinner>
+                                        <mat-spinner mode="determinate" value="75" diameter="350" aria-label="Rating">
+                                        </mat-spinner>
                                     </div>
                                     <div class="col">
                                         <div class="container">
@@ -47,8 +50,9 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="container">
-                                                            <cdk-virtual-scroll-viewport itemSize="50" class="scrollcompleteawaits">
-                                                                <div class="row" *ngFor="let complete of completed" class="scrollheight">
+                                                            <cdk-virtual-scroll-viewport itemSize="72" class="scrollcompleteawaits">
+                                                                <div class="row" *ngFor="let complete of completed"
+                                                                    class="scrollheight">
                                                                     <div class="col">
                                                                         {{complete.ClientName}}
                                                                     </div>
@@ -70,9 +74,10 @@
                                                         <p class="problemslabel orange">AWAITS</p>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="container" >
-                                                            <cdk-virtual-scroll-viewport itemSize="50" class="scrollcompleteawaits">
-                                                                <div class="row" *ngFor="let awaitss of awaits" class="scrollheight">
+                                                        <div class="container">
+                                                            <cdk-virtual-scroll-viewport itemSize="72"class="scrollcompleteawaits">
+                                                                <div class="row" *ngFor="let awaitss of awaits"
+                                                                    class="scrollheight">
                                                                     <div class="col">
                                                                         {{awaitss.ClientName}}
                                                                     </div>
@@ -93,65 +98,70 @@
                                 </div>
                             </div>
                         </mat-grid-tile>
-                        <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle">
-                            <div class="container">
-                                <div class="row text-center">
-                                    <p class="blue" style="font-size: xx-large;">LAST 7 DAYS</p>
+                        <a href="/ui/logs">
+                            <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle black">
+                                <div class="container">
+                                    <div class="row text-center">
+                                        <p class="blue" style="font-size: xx-large;">LAST 7 DAYS</p>
+                                    </div>
+                                    <div class="row labelborder">
+                                        <p class="success-norun-error7 green">SUCCESS</p>
+                                        <p class="counts7" style="text-align:center;">123 456</p>
+                                    </div>
+                                    <div class="row labelborder">
+                                        <p class="success-norun-error7 orange">NO RUN</p>
+                                        <p class="counts7" style="text-align:center;">123 456</p>
+                                    </div>
+                                    <div class="row labelborder">
+                                        <p class="success-norun-error7 red">ERROR</p>
+                                        <p class="counts7" style="text-align:center;">123 456</p>
+                                    </div>
                                 </div>
-                                <div class="row labelborder">
-                                    <p class="success-norun-error7 green">SUCCESS</p>
-                                    <p class="counts7" style="text-align:center;">123 456</p>
-                                </div>
-                                <div class="row labelborder">
-                                    <p class="success-norun-error7 orange">NO RUN</p>
-                                    <p class="counts7" style="text-align:center;">123 456</p>
-                                </div>
-                                <div class="row labelborder">
-                                    <p class="success-norun-error7 red">ERROR</p>
-                                    <p class="counts7" style="text-align:center;">123 456</p>
-                                </div>
-                            </div>
-
-                        </mat-grid-tile>
+                            </mat-grid-tile>
+                        </a>
                     </mat-grid-list>
                 </div>
             </div>
             <div class="p-4 col">
                 <mat-grid-list mat-grid-list cols="1" rowHeight="150px" gutterSize=50px>
-                    <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle">
-                        <div class="container">
-                            <div class="row">
-                                <p class="problemslabel red">PROBLEMS</p>
-                            </div>
-                            <div class="row">
-                                <div class="container">
-                                    <cdk-virtual-scroll-viewport itemSize="50" class="scrollproblems">
-                                        <div class="row" *ngFor="let problem of problems" class="scrollheight">
-                                            <div class="col">
-                                                {{problem.ClientName}}
+                    <a href="/ui/logs">
+                        <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle">
+                            <div class="container">
+                                <div class="row">
+                                    <p class="problemslabel red">PROBLEMS</p>
+                                </div>
+                                <div class="row">
+                                    <div class="container black">
+                                        <cdk-virtual-scroll-viewport itemSize="72" class="scrollproblems">
+                                            <div class="row" *ngFor="let problem of problems" class="scrollheight">
+                                                <div class="col">
+                                                    {{problem.ClientName}}
+                                                </div>
+                                                <div class="col">
+                                                    {{problem.ConfigName}}
+                                                </div>
+                                                <div class="col">
+                                                    {{problem.Time}}
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                {{problem.ConfigName}}
-                                            </div>
-                                            <div class="col">
-                                                {{problem.Time}}
-                                            </div>
-                                        </div>
-                                    </cdk-virtual-scroll-viewport>
+                                        </cdk-virtual-scroll-viewport>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </mat-grid-tile>
-                    <mat-grid-tile colspan=1 rowspan=2 style.background class="addconfiggridstyle">
-                        <div class="container">
-                            <div class="row">
-                                <i class="fa-solid fa-circle-plus fa-8x blue"></i>
+                        </mat-grid-tile>
+                    </a>
+                    <a href="/ui/configs">
+                        <mat-grid-tile colspan=1 rowspan=2 style.background class="addconfiggridstyle">
+                            <div class="container">
+                                <div class="row">
+                                    <i class="fa-solid fa-circle-plus fa-8x blue"></i>
+                                </div>
+                                <div class="row">
+                                    <p class="addconfig">ADD CONFIG</p>
+                                </div>
                             </div>
-                            <div class="row">
-                                <p class="addconfig">ADD CONFIG</p>
-                            </div>
-                        </div>
-                    </mat-grid-tile>
+                        </mat-grid-tile>
+                    </a>
                 </mat-grid-list>
             </div>
         </div>
