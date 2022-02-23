@@ -37,6 +37,13 @@ import { MatSelectModule } from "@angular/material/select";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { MatRippleModule } from "@angular/material/core";
 import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remove-dialog.component';
+import { Stats1dayComponent } from './page-skeleton/Content/dashboard/stats1day/stats1day.component';
+import { Stats7dayComponent } from './page-skeleton/Content/dashboard/stats7day/stats7day.component';
+import { ProblemsComponent } from './page-skeleton/Content/dashboard/problems/problems.component';
+import { AddconfigbuttonComponent } from './page-skeleton/Content/dashboard/addconfigbutton/addconfigbutton.component';
+import { GrafComponent } from './page-skeleton/Content/dashboard/graf/graf.component';
+import { CompletedComponent } from './page-skeleton/Content/dashboard/completed/completed.component';
+import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +60,13 @@ import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remo
     SettingsComponent,
     RemoveDialogComponent,
     ErrorPageComponent,
+    Stats1dayComponent,
+    Stats7dayComponent,
+    ProblemsComponent,
+    AddconfigbuttonComponent,
+    GrafComponent,
+    CompletedComponent,
+    AwaitsComponent,
   ],
   imports: [
     BrowserModule,

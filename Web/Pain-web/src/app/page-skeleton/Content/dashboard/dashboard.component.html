@@ -38,8 +38,8 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col">
-                                        <mat-spinner mode="determinate" value="75" diameter="350" aria-label="Rating">
-                                        </mat-spinner>
+                                        <mat-spinner class="spinner" mode="determinate" value="75" diameter="350" aria-label="Rating">
+                                    </mat-spinner>
                                     </div>
                                     <div class="col">
                                         <div class="container">
@@ -50,17 +50,20 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="container">
-                                                            <cdk-virtual-scroll-viewport itemSize="72" class="scrollcompleteawaits">
+                                                            <cdk-virtual-scroll-viewport itemSize="24"
+                                                                class="scrollcompleteawaits">
                                                                 <div class="row" *ngFor="let complete of completed"
                                                                     class="scrollheight">
-                                                                    <div class="col">
-                                                                        {{complete.ClientName}}
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        {{complete.ConfigName}}
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        {{complete.Time}}
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            {{complete.ClientName}}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{complete.ConfigName}}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{complete.Time}}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </cdk-virtual-scroll-viewport>
@@ -75,17 +78,20 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="container">
-                                                            <cdk-virtual-scroll-viewport itemSize="72"class="scrollcompleteawaits">
+                                                            <cdk-virtual-scroll-viewport itemSize="24"
+                                                                class="scrollcompleteawaits">
                                                                 <div class="row" *ngFor="let awaitss of awaits"
                                                                     class="scrollheight">
-                                                                    <div class="col">
-                                                                        {{awaitss.ClientName}}
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        {{awaitss.ConfigName}}
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        {{awaitss.Time}}
+                                                                    <div class="row">
+                                                                        <div class="col">
+                                                                            {{awaitss.ClientName}}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{awaitss.ConfigName}}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            {{awaitss.Time}}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </cdk-virtual-scroll-viewport>
@@ -132,16 +138,18 @@
                                 </div>
                                 <div class="row">
                                     <div class="container black">
-                                        <cdk-virtual-scroll-viewport itemSize="72" class="scrollproblems">
+                                        <cdk-virtual-scroll-viewport itemSize="24" class="scrollproblems">
                                             <div class="row" *ngFor="let problem of problems" class="scrollheight">
-                                                <div class="col">
-                                                    {{problem.ClientName}}
-                                                </div>
-                                                <div class="col">
-                                                    {{problem.ConfigName}}
-                                                </div>
-                                                <div class="col">
-                                                    {{problem.Time}}
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        {{problem.ClientName}}
+                                                    </div>
+                                                    <div class="col">
+                                                        {{problem.ConfigName}}
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        {{problem.Time}}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </cdk-virtual-scroll-viewport>
