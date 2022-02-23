@@ -1,1 +1,26 @@
-<p>completed works!</p>
+<div class="container">
+    <div class="row">
+        <p class="problemslabel blue">COMPLETED</p>
+    </div>
+    <div class="row">
+        <div class="container">
+            <cdk-virtual-scroll-viewport itemSize="24"
+                class="scrollcompleteawaits">
+                <div class="row" *ngFor="let complete of completed"
+                    class="scrollheight">
+                    <div class="row">
+                        <div class="col">
+                            {{complete.ClientName}}
+                        </div>
+                        <div class="col">
+                            {{complete.ConfigName}}
+                        </div>
+                        <div class="col">
+                            {{complete.Time}}
+                        </div>
+                    </div>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div>
+</div>

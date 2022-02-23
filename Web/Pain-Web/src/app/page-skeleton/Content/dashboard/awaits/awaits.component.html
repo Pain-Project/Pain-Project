@@ -1,1 +1,26 @@
-<p>awaits works!</p>
+<div class="container">
+    <div class="row">
+        <p class="problemslabel orange">AWAITS</p>
+    </div>
+    <div class="row">
+        <div class="container">
+            <cdk-virtual-scroll-viewport itemSize="24"
+                class="scrollcompleteawaits">
+                <div class="row" *ngFor="let awaitss of awaits"
+                    class="scrollheight">
+                    <div class="row">
+                        <div class="col">
+                            {{awaitss.ClientName}}
+                        </div>
+                        <div class="col">
+                            {{awaitss.ConfigName}}
+                        </div>
+                        <div class="col">
+                            {{awaitss.Time}}
+                        </div>
+                    </div>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div>
+</div>

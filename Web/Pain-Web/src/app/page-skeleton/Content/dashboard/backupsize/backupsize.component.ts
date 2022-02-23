@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-stats1day',
-  templateUrl: './stats1day.component.html',
+  selector: 'app-backupsize',
+  templateUrl: './backupsize.component.html',
   styleUrls: ['./../dashboard.component.scss']
 })
-export class Stats1dayComponent implements OnInit {
+export class BackupsizeComponent implements OnInit {
 
   constructor() { }
 

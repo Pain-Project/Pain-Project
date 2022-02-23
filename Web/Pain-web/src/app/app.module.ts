@@ -44,6 +44,7 @@ import { AddconfigbuttonComponent } from './page-skeleton/Content/dashboard/addc
 import { GrafComponent } from './page-skeleton/Content/dashboard/graf/graf.component';
 import { CompletedComponent } from './page-skeleton/Content/dashboard/completed/completed.component';
 import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits.component';
+import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsize/backupsize.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits
     GrafComponent,
     CompletedComponent,
     AwaitsComponent,
+    BackupsizeComponent,
   ],
   imports: [
     BrowserModule,

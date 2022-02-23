@@ -1,8 +1,8 @@
 import { Container } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
+
 import { PROBLEMS } from '../../TestingDashboard/Problems';
-import { COMPLETED } from '../../TestingDashboard/Completed';
-import { AWAITS } from '../../TestingDashboard/Awaits';
+
 
 import { Stats1dayComponent } from './stats1day/stats1day.component';
 import { Stats7dayComponent } from './stats7day/stats7day.component';
@@ -18,10 +18,7 @@ import { AwaitsComponent } from './awaits/awaits.component';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  problems = PROBLEMS;
-  completed = COMPLETED;
-  awaits = AWAITS;
-
+problems = PROBLEMS;
   constructor() { }
   ngOnInit(): void {
   }
