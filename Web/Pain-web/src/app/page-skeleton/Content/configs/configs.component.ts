@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CONFIGS} from "../../../../Testing/Configs";
-import { CLIENTS} from "../../../../Testing/Clients";
 
 import { MatDialog } from "@angular/material/dialog";
-import { RemoveDialogComponent } from "../../Shared/remove-dialog/remove-dialog.component";
+import { RemoveDialogComponent } from "../../../components/dialogs/remove-dialog/remove-dialog.component";
+import { ConfigsService } from "../../../services/configs.service";
+import { Config } from "../../../models/config.model";
+import { Client } from "../../../models/client.model";
+import { ClientsService } from "../../../services/clients.service";
+
 
 @Component({
   selector: 'app-configs',
@@ -12,10 +15,11 @@ import { RemoveDialogComponent } from "../../Shared/remove-dialog/remove-dialog.
 })
 export class ConfigsComponent implements OnInit {
 
-    configs = CONFIGS;
-  constructor( public dialog : MatDialog) { }
+  configs : Config[]  = [];
+  constructor( public dialog : MatDialog, private configService : ConfigsService) { }
 
   ngOnInit(): void {
+    this.configs = this.configService.findAllConfigs();
   }
   onClick(event : any) : void {
     event.stopPropagation();
@@ -53,9 +57,13 @@ export class ConfigsComponent implements OnInit {
   templateUrl: 'Dialog-Add-Client.html',
   styleUrls: ['./Dialog-Add-Client.scss']
 })
-export class DialogElementsExampleDialog {
+
+export class DialogElementsExampleDialog implements OnInit{
   searchActive : boolean = false;
-  constructor() {
+  clients : Client[] = [];
+  ngOnInit() : void {
+    this.clients = this.service.findAllClients();
   }
-  clients = CLIENTS;
+  constructor(private service : ClientsService) {
+  }
 }

@@ -8,16 +8,16 @@
             {{client.name}}
           </div>
           <div *ngIf="client.active" class="col-2">
-            <mat-checkbox class="buttonActive" (click)="onClick($event)" [(ngModel)]="client.active" style="color: #1C9C24">Active</mat-checkbox>
+            <mat-checkbox  (click)="onClick($event)" [(ngModel)]="client.active" style="color: #1C9C24">Active</mat-checkbox>
           </div>
           <div *ngIf="!client.active" class="col-2">
             <mat-checkbox (click)="onClick($event)" [(ngModel)]="client.active" style="color: #E52F2F">Inactive</mat-checkbox>
           </div>
           <div class="col" style="font-size: 20px">
-            {{client.ip_Address}}
+            {{client.ipAddress}}
           </div>
           <div class="col" style="font-size: 20px">
-            {{client.mac_Address}}
+            {{client.macAddress}}
           </div>
           <div class="col">
             CONFIGS: {{client.configs.length}}

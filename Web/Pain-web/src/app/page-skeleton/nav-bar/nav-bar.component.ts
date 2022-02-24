@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from "@angular/material/dialog";
-import { SettingsComponent} from "./settings/settings.component";
+import { SettingsComponent} from "../../components/dialogs/settings-dialog/settings.component";
 
 @Component({
   selector: 'app-nav-bar',

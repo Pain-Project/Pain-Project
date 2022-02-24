@@ -20,7 +20,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatButtonModule } from "@angular/material/button";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogElementsExampleDialog } from "./page-skeleton/Content/configs/configs.component";
 import { MatInputModule } from '@angular/material/input';
@@ -28,15 +28,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
-
-
-import { SettingsComponent } from './page-skeleton/nav-bar/settings/settings.component';
+import { SettingsComponent } from './components/dialogs/settings-dialog/settings.component';
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { MatRippleModule } from "@angular/material/core";
-import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remove-dialog.component';
+import { RemoveDialogComponent } from './components/dialogs/remove-dialog/remove-dialog.component';
+import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add-user-dialog.component';
+import { AddUserFormComponent } from './components/add-user-form/add-user-form.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,8 @@ import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remo
     SettingsComponent,
     RemoveDialogComponent,
     ErrorPageComponent,
+    AddUserDialogComponent,
+    AddUserFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { RemoveDialogComponent } from './page-skeleton/Shared/remove-dialog/remo
     MatIconModule,
     MatSelectModule,
     NgSelectModule,
-    MatRippleModule
+    MatRippleModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +13,8 @@ export class LoginPageComponent implements OnInit {
   name = '';
   password = '';
 
-  constructor() { }
+
+  constructor(private router : Router,) { }
 
   ngOnInit(): void {
   }
@@ -19,6 +22,8 @@ export class LoginPageComponent implements OnInit {
     event.stopPropagation();
   }
   Submit() : void {
-    location.pathname='ui/dashboard';
+    // location.pathname='ui/dashboard';
+    this.router.navigate([ 'ui/dashboard' ]);
+
   }
 }

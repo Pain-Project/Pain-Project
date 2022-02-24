@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CLIENTS} from "../../../../Testing/Clients";
+
+import { Client } from "../../../models/client.model";
+import { ClientsService } from "../../../services/clients.service";
 
 // @use '@angular/material' as mat;
 // $my-palette: mat.$indigo-palette;
@@ -9,10 +11,12 @@ import { CLIENTS} from "../../../../Testing/Clients";
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
-  clients = CLIENTS;
-  constructor() { }
+  clients : Client[] = [];
+
+  constructor(private service : ClientsService) { }
 
   ngOnInit(): void {
+    this.clients  = this.service.findAllClients();
   }
   onClick(event : any) : void {
     event.stopPropagation();

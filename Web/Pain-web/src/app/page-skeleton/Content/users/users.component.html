@@ -1,1 +1,52 @@
-<p>users works!</p>
+<body>
+<div class="container">
+  <div *ngFor="let user of users">
+    <mat-expansion-panel hideToggle class="configPanel">
+      <mat-expansion-panel-header class="configHeader">
+        <mat-panel-title class="text-uppercase" style="color: #707070">
+          <div class="col-2" style="color: #0078D4">
+            {{user.loginName}}
+          </div>
+          <div class="col" style="font-size: 20px">
+            {{user.name}}
+          </div>
+          <div class="col" style="font-size: 20px">
+            {{user.surname}}
+          </div>
+          <div class="col" style="font-size: 20px">
+            {{user.createDate}}
+          </div>
+          <div class="buttons">
+            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="container expand">
+        <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
+          <div *cdkVirtualFor="let log of user.logs" class="configLine">
+            <div class="row">
+              <div class="col text-uppercase">
+                <p>{{log.date}}</p>
+              </div>
+              <div class="col">
+                <p>{{log.ipAddress}}</p>
+              </div>
+              <div class="col">
+                <p>{{log.country}}</p>
+              </div>
+            </div>
+          </div>
+
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <a (click)="openDialog()">
+      <i class="icon fa-solid fa-user-plus"></i>
+    </a>
+  </div>
+</div>
+</body>

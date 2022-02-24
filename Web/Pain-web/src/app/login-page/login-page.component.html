@@ -1,5 +1,4 @@
 <body>
-<form formGroup="Login" (submit)="Submit()" action="ui/dashboard">
 <div class="row">
   <div class="col-1">
     <svg style="color: #0078D4; margin-top: 4em; margin-left: 5em" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128" viewBox="0 0 128 128">
@@ -30,8 +29,7 @@
     <p style="margin-left: -8em; font-size: 15px">Forgot your password?</p>
   </div>
   <div class="example-button-row">
-    <button type="submit"  [disabled]="(name=='' || password=='')" mat-raised-button color="primary" class="login">LOGIN</button>
+    <button (click)="Submit()"  [disabled]="(name=='' || password=='')" mat-raised-button color="primary" class="login">LOGIN</button>
   </div>
 </div>
-</form>
 </body>

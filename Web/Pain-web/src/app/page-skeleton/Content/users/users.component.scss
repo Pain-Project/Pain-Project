@@ -1,0 +1,53 @@
+body {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: #F6F6F6;
+}
+.buttonREM{
+  background-color: #E52F2F;
+  color: white;
+  border-radius: 10px;
+}
+.configPanel{
+  margin-bottom: 2%;
+  background-color: white;
+}
+.configHeader{
+  padding: 30px;
+  font-size: 25px
+}
+.container.expand{
+  border-top: #707070 1px solid;
+  margin-top: 15px;
+  padding-top: 20px;
+  font-size: 20px;
+  color: #707070;
+}
+.configViewport {
+  height: 300px;
+  width: 100%;
+}
+.configLine {
+  height: 50px;
+}
+.icon {
+  color: black;
+  font-size: 50px;
+  margin-top: 1rem;
+}
+a :hover {
+  cursor: pointer;
+}
+.card {
+  bottom: -1em;
+  right: -1em;
+  //left: 10em;
+  //top: 0;
+  position: fixed;
+  border-radius: 10px;
+  width: 15rem;
+  height: 8rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, .15);
+  backdrop-filter: blur(5px);
+}
