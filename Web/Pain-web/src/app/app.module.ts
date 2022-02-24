@@ -37,6 +37,14 @@ import { MatRippleModule } from "@angular/material/core";
 import { RemoveDialogComponent } from './components/dialogs/remove-dialog/remove-dialog.component';
 import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add-user-dialog.component';
 import { AddUserFormComponent } from './components/add-user-form/add-user-form.component';
+import { Stats1dayComponent } from './page-skeleton/Content/dashboard/stats1day/stats1day.component';
+import { Stats7dayComponent } from './page-skeleton/Content/dashboard/stats7day/stats7day.component';
+import { ProblemsComponent } from './page-skeleton/Content/dashboard/problems/problems.component';
+import { AddconfigbuttonComponent } from './page-skeleton/Content/dashboard/addconfigbutton/addconfigbutton.component';
+import { GrafComponent } from './page-skeleton/Content/dashboard/graf/graf.component';
+import { CompletedComponent } from './page-skeleton/Content/dashboard/completed/completed.component';
+import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits.component';
+import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsize/backupsize.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +63,14 @@ import { AddUserFormComponent } from './components/add-user-form/add-user-form.c
     ErrorPageComponent,
     AddUserDialogComponent,
     AddUserFormComponent,
+    Stats1dayComponent,
+    Stats7dayComponent,
+    ProblemsComponent,
+    AddconfigbuttonComponent,
+    GrafComponent,
+    CompletedComponent,
+    AwaitsComponent,
+    BackupsizeComponent,
   ],
   imports: [
     BrowserModule,
