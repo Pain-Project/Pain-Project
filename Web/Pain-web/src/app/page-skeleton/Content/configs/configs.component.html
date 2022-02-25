@@ -62,7 +62,7 @@
                 <h3>Destinations</h3>
                 <cdk-virtual-scroll-viewport itemSize="25" class="sourcesViewport">
                   <div *cdkVirtualFor="let destination of config.destinations" class="sourcesList">
-                    {{destination}}
+                    {{destination.destination}}
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
