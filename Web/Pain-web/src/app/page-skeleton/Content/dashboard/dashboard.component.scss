@@ -64,17 +64,13 @@ color: #1c9c24
 .blue{
   color: #0074d4
 }
-
-.scrollheight{
-  height: 24px;
-}
 .scrollproblems {
   height: 450px;
   width: 310px;
 }
 .scrollcompleteawaits {
   height: 300px;
-  width: 400px;
+  width: 350px;
 }
 .addconfig{
   text-align:center;
@@ -87,4 +83,10 @@ color: #1c9c24
 }
 .spinner{
   margin-top: 200px;
+}
+.scrollitem{
+  padding: 25%;
+}
+.grayitem {
+  background: rgba(127, 127, 127, 0.3);
 }
