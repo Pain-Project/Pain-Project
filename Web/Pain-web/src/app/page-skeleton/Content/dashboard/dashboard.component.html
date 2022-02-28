@@ -1,4 +1,4 @@
-<body style="padding-left: 5%;padding-right: 5%;">
+<body style="padding-left: 10%;padding-right: 10%;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-9">
@@ -8,30 +8,32 @@
                     </a>
                 </div>
                 <div class="p-4">
-                    <mat-grid-list cols="4" rowHeight="145px" gutterSize=70px>
+                    <mat-grid-list cols="4" rowHeight="120px" gutterSize=50px>
                         <mat-grid-tile colspan=1 rowspan=1 style.background class="gridstyle">
                             <div>
                                 <app-backupsize></app-backupsize>
                             </div>
                         </mat-grid-tile>
-                        <mat-grid-tile colspan=3 rowspan=4 style.background class="graf gridstyle">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col">
-                                        <app-graf></app-graf>
-                                    </div>
-                                    <div class="col">
-                                        <div class="container">
-                                            <div class="row">
-                                                <app-completed></app-completed>
-                                            </div>
-                                            <div class="row">
-                                                <app-awaits></app-awaits>
+                        <mat-grid-tile colspan=3 rowspan=4 style.background class="gridstyle">
+                            <cdk-virtual-scroll-viewport itemSize="100%" style="height: 100%; width: 100%;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <app-graf></app-graf>
+                                        </div>
+                                        <div class="col">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <app-completed></app-completed>
+                                                </div>
+                                                <div class="row">
+                                                    <app-awaits></app-awaits>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </cdk-virtual-scroll-viewport>
                         </mat-grid-tile>
                         <a href="/ui/logs">
                             <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle black">
@@ -42,7 +44,7 @@
                 </div>
             </div>
             <div class="p-4 col">
-                <mat-grid-list mat-grid-list cols="1" rowHeight="150px" gutterSize=50px>
+                <mat-grid-list mat-grid-list cols="1" rowHeight="130px" gutterSize=50px>
                     <a href="/ui/logs">
                         <mat-grid-tile colspan=1 rowspan=3 style.background class="gridstyle">
                             <app-problems></app-problems>

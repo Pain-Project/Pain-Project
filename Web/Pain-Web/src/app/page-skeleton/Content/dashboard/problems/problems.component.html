@@ -2,19 +2,19 @@
     <div class="row">
         <p class="problemslabel red">PROBLEMS</p>
     </div>
-    <div class="row">
+    <div class="row" style="width:320px;">
         <div class="container black">
-            <cdk-virtual-scroll-viewport itemSize="24" class="scrollproblems">
-                <div class="row" *ngFor="let problem of problems" class="scrollheight">
-                    <div class="row">
-                        <div class="col-3">
-                            {{problem.ClientName}}
+            <cdk-virtual-scroll-viewport itemSize="72" class="scrollproblems">
+                <div class="row" *ngFor="let odd = odd;let problem of problems" [class.grayitem]="odd">
+                    <div class="row" style="height: 72px;">
+                        <div class="col">
+                            <p class=" scrollitem">{{problem.ClientName}}</p>
                         </div>
                         <div class="col">
-                            {{problem.ConfigName}}
+                            <p class=" scrollitem">{{problem.ConfigName}}</p>
                         </div>
-                        <div class="col-auto">
-                            {{problem.Time}}
+                        <div class="col">
+                            <p class=" scrollitem">{{problem.Time}}</p>
                         </div>
                     </div>
                 </div>

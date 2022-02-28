@@ -2,21 +2,19 @@
     <div class="row">
         <p class="problemslabel blue">COMPLETED</p>
     </div>
-    <div class="row">
+    <div class="row" style="width:290px;">
         <div class="container">
-            <cdk-virtual-scroll-viewport itemSize="24"
-                class="scrollcompleteawaits">
-                <div class="row" *ngFor="let complete of completed"
-                    class="scrollheight">
-                    <div class="row">
+            <cdk-virtual-scroll-viewport itemSize="72" class="scrollcompleteawaits">
+                <div class="row" *ngFor="let odd = odd;let complete of completed" [class.grayitem]="odd">
+                    <div class="row" style="height: 72px;">
                         <div class="col">
-                            {{complete.ClientName}}
+                            <p class=" scrollitem">{{complete.ClientName}}</p>
                         </div>
                         <div class="col">
-                            {{complete.ConfigName}}
+                            <p class=" scrollitem">{{complete.ConfigName}}</p>
                         </div>
                         <div class="col">
-                            {{complete.Time}}
+                            <p class=" scrollitem">{{complete.Time}}</p>
                         </div>
                     </div>
                 </div>
