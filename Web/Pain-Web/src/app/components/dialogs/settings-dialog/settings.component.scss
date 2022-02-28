@@ -72,6 +72,26 @@ mat-dialog-actions{
 .Button.save{
   background-color: #1C9C24;
 }
+.content.database {
+  p {
+    float: left;
+  }
+  .timeInput {
+    border-radius: 7px;
+    border: #707070 solid 1px;
+    height: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  .ConfigUpdateFreq {
+    margin-top: 2em;
+    input {
+    margin-left: 73px;
+    }
+  }
+}
+input[type="time"]::-webkit-calendar-picker-indicator { background: none; display:none; }
+
 ::ng-deep .mat-form-field-underline {
   display: none;
 }

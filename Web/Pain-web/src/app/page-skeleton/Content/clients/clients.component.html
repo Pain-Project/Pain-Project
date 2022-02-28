@@ -23,7 +23,7 @@
             CONFIGS: {{client.configs.length}}
           </div>
           <div class="buttons">
-            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+            <a (click)="onClick($event); openDialog('client')" class="buttonREM" mat-raised-button>REMOVE</a>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -45,8 +45,8 @@
               </div>
               <div class="col-3">
                 <div class="buttons">
-                  <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
-                  <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonREM" mat-raised-button>REMOVE</a>
+                  <a (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+                  <a (click)="onClick($event); openDialog('configFromClient')" class="buttonREM" mat-raised-button>REMOVE</a>
                 </div>
               </div>
             </div>

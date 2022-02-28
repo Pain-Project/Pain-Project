@@ -18,7 +18,7 @@ export class NavBarComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(SettingsComponent, {
       panelClass: 'custom-dialog-container',
-      width: '800px'
+      width: '1000px'
     })
     dialogRef.afterClosed().subscribe(result => {
       if(result== true)

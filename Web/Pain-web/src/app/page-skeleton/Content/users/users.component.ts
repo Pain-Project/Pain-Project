@@ -3,6 +3,7 @@ import { User } from "../../../models/user.model";
 import { UsersService } from "../../../services/users.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserDialogComponent } from "../../../components/dialogs/add-user-dialog/add-user-dialog.component";
+import {RemoveDialogComponent} from "../../../components/dialogs/remove-dialog/remove-dialog.component";
 
 @Component({
   selector: 'app-users',
@@ -28,6 +29,17 @@ export class UsersComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe( result => {
 
+    })
+  }
+  removeDialog() : void {
+    const dialogRef = this.dialog.open(RemoveDialogComponent, {
+      panelClass: 'custom-dialog-container',
+      width: '500px'
+    })
+    dialogRef.componentInstance.type = 'user';
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true)
+        alert('User was successfully removed!')
     })
   }
 }

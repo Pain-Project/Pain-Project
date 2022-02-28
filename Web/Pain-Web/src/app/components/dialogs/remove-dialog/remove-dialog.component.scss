@@ -3,7 +3,6 @@ body, html {
 }
 .header{
   color: #E52F2F;
-  margin-left: 2em;
   margin-top: 2em;
 }
 .icon {
@@ -20,7 +19,6 @@ body, html {
   text-align: center;
   font-size: 25px;
 }
-
 .Button {
   color: white;
   border-radius: 10px;
@@ -38,3 +36,32 @@ body, html {
   background-color: #1C9C24;
   margin-right: 5em;
 }
+
+
+.configRemove {
+  .header {
+    margin-left: 2em;
+  }
+}
+.clientConfigRemove {
+  .header {
+    i {
+      float: none;
+      display: block;
+    }
+    h1 {
+      text-align: center;
+    }
+  }
+}
+.clientRemove {
+  .header {
+    margin-left: 5em;
+  }
+}
+.userRemove {
+  .header {
+    margin-left: 5em;
+  }
+}
+

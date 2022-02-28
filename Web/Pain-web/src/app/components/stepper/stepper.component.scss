@@ -1,5 +1,11 @@
-.body{
+body{
   background-color: #F6F6F6;
+}
+.mat-stepper-vertical {
+  background-color: #F6F6F6;
+}
+::ng-deep .mat-vertical-content {
+  background-color: white;
 }
 .clientsViewport {
   height: 300px;

@@ -15,9 +15,9 @@
     </mat-dialog-actions>
   </div>
 
-  <div *ngIf="type=='clientFromConfig'" class="configRemove">
+  <div *ngIf="type=='clientFromConfig'" class="clientConfigRemove">
     <div class="mat-dialog-title">
-      <div style="margin-left: 0px" class="header">
+      <div class="header">
         <i style="float: none; display: block;margin: auto;" class="icon fa-solid fa-trash"></i>
         <h1 style="text-align: center;">Remove client <br> from config</h1>
       </div>
@@ -31,15 +31,47 @@
     </mat-dialog-actions>
   </div>
 
-  <div *ngIf="type=='PLACEHOLDER'" class="configRemove">
+  <div *ngIf="type=='client'" class="clientRemove">
     <div class="mat-dialog-title">
       <div class="header">
         <i class="icon fa-solid fa-trash"></i>
-        <h1>Remove configuration</h1>
+        <h1>Remove client</h1>
       </div>
     </div>
     <div class="content mat-dialog-content">
-      <p>Are you sure you want to remove this configuration?</p>
+      <p>Are you sure you want to remove this client from system?</p>
+    </div>
+    <mat-dialog-actions align="center" class="Button">
+      <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="true" >YES</button>
+      <button class="ButtonCANCEL" mat-button mat-dialog-close>CANCEL</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="type=='configFromClient'" class="configClientRemove">
+    <div class="mat-dialog-title">
+      <div class="header">
+        <i class="icon fa-solid fa-trash"></i>
+        <h1>Remove config from client</h1>
+      </div>
+    </div>
+    <div class="content mat-dialog-content">
+      <p>Are you sure you want to remove this config from client?</p>
+    </div>
+    <mat-dialog-actions align="center" class="Button">
+      <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="true" >YES</button>
+      <button class="ButtonCANCEL" mat-button mat-dialog-close>CANCEL</button>
+    </mat-dialog-actions>
+  </div>
+
+  <div *ngIf="type=='user'" class="userRemove">
+    <div class="mat-dialog-title">
+      <div class="header">
+        <i class="icon fa-solid fa-trash"></i>
+        <h1>Remove user</h1>
+      </div>
+    </div>
+    <div class="content mat-dialog-content">
+      <p>Are you sure you want to remove this user?</p>
     </div>
     <mat-dialog-actions align="center" class="Button">
       <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="true" >YES</button>
