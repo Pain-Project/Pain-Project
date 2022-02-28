@@ -1,7 +1,7 @@
 .gridstyle{
   background: #ffffff;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: gray;
   box-shadow: 7px 7px 9px 7px lightgray;
 }
@@ -17,15 +17,9 @@ body,html{
   border-color: gray;
   margin: 10%;
 }
-.sevendays{
-  padding: 20%;
-}
-.graf{
-top: 30px;
-}
 .success-norun-error1{
   text-align:center;
-  font-size: 40px;
+  font-size: 30px;
 }
 .success-norun-error7{
   text-align:center;
@@ -33,7 +27,7 @@ top: 30px;
 }
 .counts1{
   text-align:center;
-  font-size: 30px;
+  font-size: 20px;
 }
 .counts7{
   text-align:center;
@@ -41,17 +35,16 @@ top: 30px;
 }
 .sizelabel{
   text-align:center;
-  font-size: 35px;
+  font-size: 30px;
 }
 .countssize{
   text-align:center;
-  font-size: 25px;
+  font-size: 20px;
 }
 .problemslabel{
   text-align:center;
   font-size: 40px;
 }
-
 .red{
 color: #e52f2f;
 }
@@ -65,12 +58,13 @@ color: #1c9c24
   color: #0074d4
 }
 .scrollproblems {
-  height: 450px;
-  width: 310px;
+  height: 400px;
+  width: 100%;
 }
 .scrollcompleteawaits {
-  height: 300px;
-  width: 350px;
+  height: 220px;
+  width: 130%;
+  right: 40px;
 }
 .addconfig{
   text-align:center;

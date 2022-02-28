@@ -2,7 +2,7 @@
     <div class="row">
         <p class="problemslabel red">PROBLEMS</p>
     </div>
-    <div class="row">
+    <div class="row" style="width:320px;">
         <div class="container black">
             <cdk-virtual-scroll-viewport itemSize="72" class="scrollproblems">
                 <div class="row" *ngFor="let odd = odd;let problem of problems" [class.grayitem]="odd">

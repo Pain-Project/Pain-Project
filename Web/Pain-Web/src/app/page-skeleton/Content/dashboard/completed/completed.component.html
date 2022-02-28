@@ -2,10 +2,9 @@
     <div class="row">
         <p class="problemslabel blue">COMPLETED</p>
     </div>
-    <div class="row">
+    <div class="row" style="width:290px;">
         <div class="container">
-            <cdk-virtual-scroll-viewport itemSize="72"
-                class="scrollcompleteawaits">
+            <cdk-virtual-scroll-viewport itemSize="72" class="scrollcompleteawaits">
                 <div class="row" *ngFor="let odd = odd;let complete of completed" [class.grayitem]="odd">
                     <div class="row" style="height: 72px;">
                         <div class="col">
