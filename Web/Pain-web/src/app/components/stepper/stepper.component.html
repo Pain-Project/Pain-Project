@@ -1,0 +1,227 @@
+<form [formGroup]="form">
+  <mat-vertical-stepper #linearVerticalStepper="matVerticalStepper" formArrayName="formArray" [linear]="true">
+
+<!--FIRST STEP-->
+    <mat-step formGroupName="0" [stepControl]="formArray?.get([0])!">
+      <ng-template matStepLabel>Add clients to your configuration</ng-template>
+      <h1 mat-dialog-title>
+        <div class="row">
+          <h1 style="color: #0078D4; margin-top: 2em" class="col" >Clients</h1>
+          <div class="col text-end" style="height: 2em">
+            <input *ngIf="searchActive"  class="InputSearch" matInput >
+            <a (click)="searchActive= !searchActive" style="cursor: pointer"><i style="color: #707070; margin-right: 200px;  margin-top: 2em" class="fa-solid fa-magnifying-glass"></i></a>
+          </div>
+        </div>
+      </h1>
+      <div mat-dialog-content>
+        <cdk-virtual-scroll-viewport itemSize="50" class="clientsViewport">
+          <div *cdkVirtualFor="let client of clients" class="clientLine">
+            <div class="row">
+              <div class="col-1">
+                <mat-checkbox></mat-checkbox>
+              </div>
+              <div class="col-2">
+                <p>{{client.name}}</p>
+              </div>
+              <div class="col-4">
+                <p>{{client.ipAddress}}</p>
+              </div>
+              <div class="col">
+                <p>{{client.macAddress}}</p>
+              </div>
+            </div>
+          </div>
+        </cdk-virtual-scroll-viewport>
+      </div>
+      <mat-dialog-actions class="Button">
+        <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="true" mat-button matStepperNext>Next</button>
+        <button class="ButtonCANCEL" mat-button mat-dialog-close routerLink="/ui/dashboard">Cancel</button>
+      </mat-dialog-actions>
+    </mat-step>
+
+<!--SECOND STEP-->
+    <mat-step formGroupName="1" [stepControl]="formArray?.get([1])!">
+      <ng-template matStepLabel>
+        <div>Configuration</div>
+      </ng-template>
+    <!--type of backup-->
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="1">Full backup</mat-radio-button>
+        <mat-radio-button value="2">Differential backup</mat-radio-button>
+        <mat-radio-button value="3">Incremental backup</mat-radio-button>
+      </mat-radio-group>
+    <!--retention-->
+      <table class="configurationTable" cellspacing="0" style="margin-top: 5em">
+        <tr>
+          <td>
+            <p style="font-size: 25px; color: #0078D4">Retention</p>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" style="margin-right: 2em; margin-left: 5em; font-size: 17px">
+              <mat-label style="color: #0078D4">Number of backups</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" style="font-size: 17px">
+              <mat-label style=" color: #0078D4">Number of packages</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </td>
+    <!--Backup format-->
+          <td>
+            <p style="font-size: 25px; margin-left: 5em;color: #0078D4">Backup format</p>
+          </td>
+          <td>
+            <mat-radio-group aria-label="Select an option" class="backupFormat">
+              <mat-radio-button value="1">Plain text</mat-radio-button>
+              <mat-radio-button value="2">Archive</mat-radio-button>
+            </mat-radio-group>
+          </td>
+        </tr>
+    <!--Frequency-->
+        <tr>
+          <td>
+            <p style="font-size: 25px; margin-top: 2em;color: #0078D4">Frequency</p>
+          </td>
+          <td>
+            <mat-radio-button value="1" name="group1">Basic</mat-radio-button><br>
+            <mat-radio-button value="2" name="group1">Advanced</mat-radio-button>
+          </td>
+          <td>
+            <mat-radio-button value="3" name="group2">Daily</mat-radio-button><br>
+            <mat-radio-button value="4" name="group2">Weekly</mat-radio-button><br>
+            <mat-radio-button value="5" name="group2">Monthly</mat-radio-button>
+          </td>
+          <div class="days">
+            <td>
+              <div class="checkbox">
+                <mat-checkbox>Monday</mat-checkbox><br>
+                <mat-checkbox>Tuesday</mat-checkbox><br>
+                <mat-checkbox>Wednesday</mat-checkbox><br>
+                <mat-checkbox>Thursday</mat-checkbox><br>
+                <mat-checkbox>Friday</mat-checkbox>
+              </div>
+            </td>
+            <td>
+              <mat-checkbox class="checkSecondColumn">Saturday</mat-checkbox><br>
+              <mat-checkbox class="checkSecondColumn">Sunday</mat-checkbox>
+            </td>
+          </div>
+            <td>
+              <mat-form-field class="example-full-width" appearance="fill" style="margin-left: 5em; font-size: 25px">
+                <mat-label style="color: #0078D4">Start at</mat-label>
+                <input matInput type="time">
+              </mat-form-field>
+            </td>
+        </tr>
+      </table>
+      <div style="margin-left: 100em">
+        <button mat-button matStepperNext class="ButtonYES">Next</button>
+        <button mat-button matStepperPrevious class="ButtonCANCEL" routerLink="/ui/dashboard">Cancel</button>
+      </div>
+    </mat-step>
+
+<!--THIRD STEP-->
+    <mat-step>
+      <ng-template matStepLabel>Source / Destination</ng-template>
+      <table>
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style="margin-top: 3em; margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Source</mat-label>
+              <input matInput placeholder="C:\\.....">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field [style.width.px]=100 style="margin-top: 4.75em; margin-left: 15em">
+              <mat-select tabindex="-1"  class="SelectDate">
+                <mat-option value="one">Drive</mat-option>
+                <mat-option value="two">FTP</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style="margin-top: 3em; margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Destination</mat-label>
+              <input matInput placeholder="X:\\.....">
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style=" margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Source</mat-label>
+              <input matInput placeholder="C:\\.....">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field [style.width.px]=100 style="margin-top: 1.25em; margin-left: 15em">
+              <mat-select tabindex="-1"  class="SelectDate">
+                <mat-option value="one">Drive</mat-option>
+                <mat-option value="two">FTP</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style="margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Destination</mat-label>
+              <input matInput placeholder="X:\\.....">
+            </mat-form-field>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style=" margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Source</mat-label>
+              <input matInput placeholder="C:\\.....">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field [style.width.px]=100 style="margin-top: 1.25em; margin-left: 15em">
+              <mat-select tabindex="-1"  class="SelectDate">
+                <mat-option value="one">Drive</mat-option>
+                <mat-option value="two">FTP</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="example-full-width" appearance="fill" [style.width.px]=700 style="margin-left: 1em; font-size: 17px">
+              <mat-label style="color: #0078D4">Destination</mat-label>
+              <input matInput placeholder="X:\\.....">
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" style="margin-left: 2em">
+              <g id="Icon_feather-plus-circle" data-name="Icon feather-plus-circle" transform="translate(-1.5 -1.5)">
+                <path id="Path_18" data-name="Path 18" d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                <path id="Path_19" data-name="Path 19" d="M18,12V24" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                <path id="Path_20" data-name="Path 20" d="M12,18H24" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+              </g>
+            </svg>
+          </td>
+          <td> </td>
+          <td>
+            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" style="margin-left: 2em">
+              <g id="Icon_feather-plus-circle" data-name="Icon feather-plus-circle" transform="translate(-1.5 -1.5)">
+                <path id="Path_18" data-name="Path 18" d="M33,18A15,15,0,1,1,18,3,15,15,0,0,1,33,18Z" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                <path id="Path_19" data-name="Path 19" d="M18,12V24" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                <path id="Path_20" data-name="Path 20" d="M12,18H24" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+              </g>
+            </svg>
+          </td>
+        </tr>
+      </table>
+      <div style="margin-left: 100em">
+        <button mat-button matStepperNext class="ButtonYES" routerLink="/ui/dashboard">Save</button>
+        <button mat-button matStepperPrevious class="ButtonCANCEL" routerLink="/ui/dashboard">Cancel</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>
+
+

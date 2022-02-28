@@ -45,6 +45,10 @@ import { GrafComponent } from './page-skeleton/Content/dashboard/graf/graf.compo
 import { CompletedComponent } from './page-skeleton/Content/dashboard/completed/completed.component';
 import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits.component';
 import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsize/backupsize.component';
+import { AddConfigComponent } from './page-skeleton/Content/add-config/add-config.component';
+import { StepperComponent } from './components/stepper/stepper.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { EditConfigComponent } from './page-skeleton/Content/edit-config/edit-config.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +75,9 @@ import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsiz
     CompletedComponent,
     AwaitsComponent,
     BackupsizeComponent,
+    AddConfigComponent,
+    StepperComponent,
+    EditConfigComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +103,7 @@ import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsiz
     NgSelectModule,
     MatRippleModule,
     ReactiveFormsModule,
+    MatStepperModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

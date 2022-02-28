@@ -15,7 +15,7 @@
           </div>
           <div class="buttons">
             <a (click)="onClick($event); openDialog('Add')" class="buttonADD" mat-raised-button>ADD CLIENTS</a>
-            <a href="https://Youtube.com" target="_blank" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+            <a routerLink="/ui/edit-config" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
             <a (click)="onClick($event); openDialog('Remove')" class="buttonREM" mat-raised-button>REMOVE</a>
           </div>
         </mat-panel-title>

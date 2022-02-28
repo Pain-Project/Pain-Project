@@ -10,6 +10,8 @@ import { ConfigsComponent } from "./page-skeleton/Content/configs/configs.compon
 import { UsersComponent } from "./page-skeleton/Content/users/users.component";
 import { LogsComponent } from "./page-skeleton/Content/logs/logs.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
+import {AddConfigComponent} from "./page-skeleton/Content/add-config/add-config.component";
+import {EditConfigComponent} from "./page-skeleton/Content/edit-config/edit-config.component";
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -21,6 +23,8 @@ const routes: Routes = [
       {path: 'clients', component: ClientsComponent},
       {path: 'configs', component: ConfigsComponent},
       {path: 'users', component: UsersComponent},
+      {path: 'add-config', component: AddConfigComponent},
+      {path: 'edit-config', component: EditConfigComponent},
     ]
 
   },
