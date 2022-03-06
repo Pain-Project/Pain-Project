@@ -6,14 +6,18 @@
   box-shadow: 7px 7px 9px 7px lightgray;
 }
 .addconfiggridstyle{
-  background: #f6f6f6;
+  background-color: transparent;
 }
 body,html{
   background-color: #f6f6f6;
 }
+body{
+  padding-left: 10%;
+  padding-right: 10%;
+}
 .labelborder{
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: gray;
   margin: 10%;
 }
@@ -43,7 +47,7 @@ body,html{
 }
 .problemslabel{
   text-align:center;
-  font-size: 40px;
+  font-size: 30px;
 }
 .red{
 color: #e52f2f;
@@ -76,11 +80,43 @@ color: #1c9c24
   color: black;
 }
 .spinner{
-  margin-top: 200px;
+  margin-top: 40%;
 }
 .scrollitem{
-  padding: 25%;
+  padding-top: 4%;
+  margin-left: 1%;
 }
 .grayitem {
   background: rgba(127, 127, 127, 0.3);
+}
+.itemheight{
+  height: 50px;
+}
+.problemswidth {
+  width:320px;
+}
+.graf{
+  height: 100%; 
+  width: 100%;
+}
+.centeredtext{
+  text-align:center;
+}
+.stats7dayshead {
+  font-size: 30px;
+}
+.percent {
+  margin-top: 10%;
+  font-size: 55px;
+  text-align: center;
+}
+.comp-awaits-width {
+  width:100%;
+  margin-left: 3%;
+}
+.comp-awaits{
+  margin-top: 5%;
+}
+.app-problems{
+  margin-top: 10%;
 }
