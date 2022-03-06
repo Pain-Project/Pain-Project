@@ -11,13 +11,16 @@ import {RemoveDialogComponent} from "../../../components/dialogs/remove-dialog/r
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-
+  sum = 10;
+  searchedUser : string = '';
   users : User[] = [];
-  constructor( private service : UsersService, private dialog : MatDialog) { }
-
+  constructor( private service : UsersService, private dialog : MatDialog) {}
 
   ngOnInit(): void {
     this.users = this.service.findAllUsers();
+  }
+  onScrollDown(ev: any) {
+    this.sum += 10;
   }
   onClick(event : any) : void {
     event.stopPropagation();

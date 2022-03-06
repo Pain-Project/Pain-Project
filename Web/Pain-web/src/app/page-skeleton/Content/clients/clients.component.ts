@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import { Client } from "../../../models/client.model";
 import { ClientsService } from "../../../services/clients.service";
-import {MatDialog} from "@angular/material/dialog";
-import {RemoveDialogComponent} from "../../../components/dialogs/remove-dialog/remove-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { RemoveDialogComponent } from "../../../components/dialogs/remove-dialog/remove-dialog.component";
+import { InterfaceClientsCanDeactivate } from "../../../Guards/interface-clients-can-deactivate";
 
-// @use '@angular/material' as mat;
-// $my-palette: mat.$indigo-palette;
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss']
 })
-export class ClientsComponent implements OnInit {
+export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
+  sum = 10;
+  isDirty : boolean = false;
+  searchedClient : string = '';
+  filterValue : string = 'none';
   clients : Client[] = [];
 
-  constructor(private service : ClientsService, public dialog : MatDialog) { }
+
+  constructor(private service : ClientsService, public dialog : MatDialog) {}
 
   ngOnInit(): void {
     this.clients  = this.service.findAllClients();
@@ -23,6 +27,13 @@ export class ClientsComponent implements OnInit {
   onClick(event : any) : void {
     event.stopPropagation();
   }
+  canDeactivate(): boolean {
+    return !this.isDirty;
+  }
+  onScrollDown(ev: any) {
+    this.sum += 10;
+  }
+
   openDialog(type : any) : void {
     if (type=='client') {
       const dialogRef = this.dialog.open(RemoveDialogComponent, {
@@ -46,5 +57,5 @@ export class ClientsComponent implements OnInit {
           alert('Config was successfully removed!')
       })
     }
-}
+  }
 }

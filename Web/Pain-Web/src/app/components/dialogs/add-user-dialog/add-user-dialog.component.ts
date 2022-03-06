@@ -25,10 +25,9 @@ export class AddUserDialogComponent implements OnInit {
       password: [ user.password, Validators.required ],
       confirmPassword: [ user.password, Validators.required ],
       reports: [ user.reports, Validators.required ],
-      bigBoss: [ user.bigBoss, Validators.required ],
     });
   }
-  public saveUser() : void {
+  public submit() : void {
     alert('User saved!');
   }
 }

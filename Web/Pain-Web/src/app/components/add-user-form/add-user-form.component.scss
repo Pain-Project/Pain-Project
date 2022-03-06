@@ -6,6 +6,15 @@ label {
 .row {
   margin-top: 2em;
 }
+input, select {
+  color: var(--Font-color);
+  background-color: var(--Background-secondary);
+  &:focus {
+    color: var(--Font-color);
+    background-color: var(--Background-secondary);
+  }
+}
+
 .row.first, .row.second {
   input {
     border-radius: 7px;
@@ -14,6 +23,7 @@ label {
   }
 }
 .row.third {
+  margin-left: 1vw;
   margin-bottom: 5px;
   .col.input{
     margin-top: 1em;
@@ -41,15 +51,15 @@ label {
     border-radius: 10px;
   }
   .submit {
-    background-color: #1c9c24;
+    background-color: var(--Submit);
     &:hover, &:focus {
-      background-color: #17801d;
+      background-color: var(--SubmitFocus);
     }
   }
   .cancel {
-    background-color: #E52F2F;
+    background-color: var(--Cancel);
     &:hover, &:focus {
-      background-color: #c22929;
+      background-color: var(--CancelFocus);
 
     }
   }

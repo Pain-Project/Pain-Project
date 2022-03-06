@@ -20,12 +20,4 @@ export class LogsService {
   public findAllLogs() : Log[] {
     return this.LOGS;
   }
-  public findAllErrors() : Log[] {
-    let errors : Log[] = [];
-    for (let log of this.LOGS) {
-      if (log.status === 'ERROR')
-        errors.push(log);
-    }
-    return errors;
-  }
 }

@@ -6,7 +6,6 @@ interface Log {
 
 export class User {
   public name : string = '';
-  public bigBoss : boolean = false;
   public surname : string = '';
   public loginName : string = '';
   public createDate : string = '';
