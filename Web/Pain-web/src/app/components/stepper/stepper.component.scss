@@ -1,3 +1,71 @@
+.row h1{
+  color: #0078D4;
+  margin-top: 2em;
+}
+.configurationTable{
+  margin-top: 5em
+
+}
+.configurationTable p{
+  font-size: 25px;
+  color: #0078D4;
+}
+.example-full-widthL, .example-full-widthR{
+  font-size: 17px
+}
+.example-full-widthL{
+  margin-right: 2em;
+  margin-left: 5em;
+}
+.backupFormatHeader{
+  font-size: 25px;
+  margin-left: 5em;
+  color: #0078D4;
+}
+.frequencyHeader{
+  font-size: 25px;
+  margin-top: 2em;
+  color: #0078D4;
+}
+.example-full-width{
+  margin-left: 5em;
+  font-size: 25px
+}
+.buttons{
+  margin-left: 100em
+}
+.example-full-widthSrc{
+  margin-top: 3em;
+  margin-left: 1em;
+  font-size: 17px;
+}
+.noFirstScr{
+  margin-top: 0;
+}
+.example-full-widthDstType{
+  margin-top: 4.75em;
+  margin-left: 15em
+}
+.NoFirstDestType{
+  margin-top: 1.25em
+}
+.example-full-widthDst{
+  margin-top: 3em;
+  margin-left: 1em;
+  font-size: 17px
+}
+.NoFirstDest{
+  margin-top: 0;
+}
+mat-label{
+  color: #0078D4;
+}
+.thirdStepButtons{
+  margin-left: 100em
+}
+.plusIcon{
+  margin-left: 2em
+}
 .mat-stepper-vertical {
   background-color: #F6F6F6;
 }
@@ -98,4 +166,21 @@
 }
 ::ng-deep .mat-checkbox-frame{
   border-color: #0078D4;
+}
+
+.cronInput{
+  height: 2em;
+  width: 5em;
+  font-size: 4em;
+}
+::ng-deep .inputWrapper .mat-form-field-wrapper{
+  width: 7em;
+  margin-right: 2em;
+}
+.inputWrapper mat-label{
+  font-size: 17px;
+}
+.col-1{
+  margin-top: 5.30em;
+  margin-right: 1em;
 }

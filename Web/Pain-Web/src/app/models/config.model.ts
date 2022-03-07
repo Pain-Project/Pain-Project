@@ -1,4 +1,4 @@
-interface Destination {
+export interface Destination {
   type: string;
   destination: string;
 }

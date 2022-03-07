@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import {AbstractControl, FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
-import {Config} from "../../models/config.model";
+import {Config, Destination} from "../../models/config.model";
 import {Client} from "../../models/client.model";
 import {ClientsService} from "../../services/clients.service";
 
@@ -13,6 +13,15 @@ export class StepperComponent implements OnInit {
   clients : Client[] = [];
   retentionSwitch = false;
   frequentionBasic = true;
+  frequetnionType = 'basic'
+
+  //full ; diff ; inc
+  backup = 'full'
+
+  //daily ; weekly ; monthly
+  frequention = 'daily'
+
+  PlainText = true;
   searchActive = false;
   @Input()
   public form :FormGroup;
@@ -22,8 +31,14 @@ export class StepperComponent implements OnInit {
   public Formevent: EventEmitter<void> = new EventEmitter<void>()
 
   public config: Config = new Config();
-
-
+  tempSources :string[] = [""]
+  public addSource() :void{
+    this.tempSources.push("")
+  }
+  tempDest :Destination[] = [{type :"drive",destination :""}]
+  public addDest() :void{
+    this.tempDest.push({type :"drive",destination :""})
+  }
   constructor(private fb: FormBuilder, private service : ClientsService) {}
   //get formArray(): AbstractControl | null { return this.form.get('formArray'); }
 
