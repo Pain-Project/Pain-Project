@@ -12,7 +12,7 @@ import { InterfaceClientsCanDeactivate } from "../../../Guards/interface-clients
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
-  sum = 10;
+  sum = 15;
   isDirty : boolean = false;
   searchedClient : string = '';
   filterValue : string = 'none';
@@ -31,7 +31,7 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
     return !this.isDirty;
   }
   onScrollDown(ev: any) {
-    this.sum += 10;
+    this.sum += 15;
   }
 
   openDialog(type : any) : void {

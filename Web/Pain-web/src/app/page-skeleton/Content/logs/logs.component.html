@@ -13,8 +13,8 @@
   <div class="container"
        infinite-scroll
        (scrolled)="onScrollDown($event)">
-    <div *ngFor="let log of logs | LogsLogFilter: searchedLog : filterValue | slice:0:sum">
-      <mat-expansion-panel hideToggle class="configPanel">
+    <div *ngFor="let log of logs  | LogsLogFilter: searchedLog : filterValue | slice:0:sum">
+      <mat-expansion-panel [expanded]="expandNumber===log.id" [attr.data-index]="log.id" [attr.id]="log.id" hideToggle class="configPanel">
         <mat-expansion-panel-header class="configHeader">
           <mat-panel-title class="text-uppercase LogNameHeader">
             <div class="col ClientName">

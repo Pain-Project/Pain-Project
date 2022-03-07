@@ -3,19 +3,19 @@
 
 <!--FIRST STEP-->
     <mat-step formGroupName="0" [stepControl]="formArray?.get([0])!">
-      <ng-template matStepLabel>Add clients to your configuration</ng-template>
+      <ng-template matStepLabel><div class="headerTitle">Add clients to your configuration</div></ng-template>
       <h1 mat-dialog-title>
         <div class="row">
           <h1 class="col" >Clients</h1>
           <div class="col text-end">
-            <input *ngIf="searchActive"  class="InputSearch" matInput >
+            <input *ngIf="searchActive" [formControl]="searchClient" class="InputSearch" matInput >
             <a (click)="searchActive= !searchActive" style="cursor: pointer"><i style="color: #707070; margin-right: 200px;  margin-top: 2em" class="fa-solid fa-magnifying-glass"></i></a>
           </div>
         </div>
       </h1>
       <div mat-dialog-content>
         <cdk-virtual-scroll-viewport itemSize="50" class="clientsViewport">
-          <div *cdkVirtualFor="let client of clients" class="clientLine">
+          <div *cdkVirtualFor="let client of clients | AddClientSearch:searchClient.value" class="clientLine">
             <div class="row">
               <div class="col-1">
                 <mat-checkbox></mat-checkbox>
@@ -42,7 +42,7 @@
 <!--SECOND STEP-->
     <mat-step formGroupName="1" [stepControl]="formArray?.get([1])!">
       <ng-template matStepLabel>
-        <div>Configuration</div>
+        <div class="headerTitle">Configuration</div>
       </ng-template>
     <!--type of backup-->
       <mat-radio-group aria-label="Select an option">
@@ -182,7 +182,7 @@
 
 <!--THIRD STEP-->
     <mat-step>
-      <ng-template matStepLabel>Source / Destination</ng-template>
+      <ng-template matStepLabel><div class="headerTitle">Source / Destination</div></ng-template>
       <div class="row">
         <div class="col">
           <div *ngFor="let source of tempSources">
@@ -201,7 +201,7 @@
         </div>
         <div class="col">
           <div class="row"  *ngFor="let dest of tempDest">
-            <div class="col-1">
+            <div class="col-1 selectDest">
               <mat-form-field  [style.width.px]=100>
                 <mat-select tabindex="-1"  class="SelectDate">
                   <mat-option value="drive">Drive</mat-option>

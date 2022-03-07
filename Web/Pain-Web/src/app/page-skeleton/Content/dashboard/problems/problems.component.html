@@ -6,15 +6,15 @@
         <div class="container black">
             <cdk-virtual-scroll-viewport itemSize="72" class="scrollproblems">
                 <div class="row" *ngFor="let odd = odd;let problem of problems" [class.grayitem]="odd">
-                    <div class="row itemheight scrollitem">
+                    <div (click)="scroll(problem.id)" class="row itemheight scrollitem">
                         <div class="col-3">
-                            <p>{{problem.ClientName}}</p>
+                            <p>{{problem.client_name}}</p>
                         </div>
                         <div class="col-3">
-                            <p>{{problem.ConfigName}}</p>
+                            <p>{{problem.config_name}}</p>
                         </div>
                         <div class="col">
-                            <p class="centeredtext">{{problem.Time}}</p>
+                            <p class="centeredtext">{{format_time(problem.create_date)}}</p>
                         </div>
                     </div>
                 </div>

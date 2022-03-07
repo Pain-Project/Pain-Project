@@ -12,7 +12,7 @@ import { AddClientDialogComponent } from "../../../components/dialogs/add-client
   styleUrls: ['./configs.component.scss']
 })
 export class ConfigsComponent implements OnInit {
-  sum = 10;
+  sum = 15;
   searchedClient : string = '';
   configs : Config[]  = [];
 
@@ -22,7 +22,7 @@ export class ConfigsComponent implements OnInit {
     this.configs = this.configService.findAllConfigs();
   }
   onScrollDown(ev: any) {
-    this.sum += 10;
+    this.sum += 15;
   }
   onClick(event : any) : void {
     event.stopPropagation();

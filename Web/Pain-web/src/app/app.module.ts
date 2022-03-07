@@ -56,7 +56,7 @@ import { LogsLogFilter } from "./components/pipes/Logs-LogFilter";
 import { ClientsClientFilter } from "./components/pipes/Clients-ClientFilter";
 import { UsersUserSearch } from "./components/pipes/Users-UserSearch";
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
-
+import { AddClientSearch } from "./components/pipes/AddClient-ClientSearch";
 
 @NgModule({
   declarations: [
@@ -91,6 +91,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     LogsLogFilter,
     ClientsClientFilter,
     UsersUserSearch,
+    AddClientSearch,
   ],
     imports: [
         BrowserModule,

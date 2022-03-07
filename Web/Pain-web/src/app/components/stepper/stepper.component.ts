@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import {AbstractControl, FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
-import {Config, Destination} from "../../models/config.model";
-import {Client} from "../../models/client.model";
-import {ClientsService} from "../../services/clients.service";
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
+import { Config, Destination } from "../../models/config.model";
+import { Client } from "../../models/client.model";
+import { ClientsService } from "../../services/clients.service";
 
 @Component({
   selector: 'app-stepper',
@@ -10,10 +10,10 @@ import {ClientsService} from "../../services/clients.service";
   styleUrls: ['./stepper.component.scss']
 })
 export class StepperComponent implements OnInit {
+  searchClient : FormControl = new FormControl('');
   clients : Client[] = [];
   retentionSwitch = false;
   frequentionBasic = true;
-  frequetnionType = 'basic'
 
   //full ; diff ; inc
   backup = 'full'

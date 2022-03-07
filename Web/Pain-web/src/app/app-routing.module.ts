@@ -21,6 +21,7 @@ const routes: Routes = [
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'logs', component: LogsComponent},
+      {path: 'logs/:id', component: LogsComponent},
       {path: 'clients', component: ClientsComponent, canDeactivate: [GuardClientDirtyGuard]},
       {path: 'configs', component: ConfigsComponent},
       {path: 'users', component: UsersComponent},

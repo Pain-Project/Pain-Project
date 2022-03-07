@@ -1,5 +1,5 @@
 .row h1{
-  color: #0078D4;
+  color: var(--Font-blue);
   margin-top: 2em;
 }
 .configurationTable{
@@ -8,7 +8,7 @@
 }
 .configurationTable p{
   font-size: 25px;
-  color: #0078D4;
+  color: var(--Font-blue);
 }
 .example-full-widthL, .example-full-widthR{
   font-size: 17px
@@ -20,12 +20,12 @@
 .backupFormatHeader{
   font-size: 25px;
   margin-left: 5em;
-  color: #0078D4;
+  color: var(--Font-blue);
 }
 .frequencyHeader{
   font-size: 25px;
   margin-top: 2em;
-  color: #0078D4;
+  color: var(--Font-blue);
 }
 .example-full-width{
   margin-left: 5em;
@@ -58,7 +58,7 @@
   margin-top: 0;
 }
 mat-label{
-  color: #0078D4;
+  color: var(--Font-blue);
 }
 .thirdStepButtons{
   margin-left: 100em
@@ -67,10 +67,12 @@ mat-label{
   margin-left: 2em
 }
 .mat-stepper-vertical {
-  background-color: #F6F6F6;
+  background-color: var(--Background-primary);
+  color: var(--Font-color);
 }
 ::ng-deep .mat-vertical-content {
-  background-color: white;
+  background-color: var(--Background-secondary);
+  color: var(--Font-color);
 }
 .clientsViewport {
   height: 300px;
@@ -95,23 +97,29 @@ mat-label{
 .ButtonCANCEL{
   border-radius: 10px;
   width: 100px;
-  background-color: #E52F2F;
+  background-color: var(--Cancel);
   color: white;
   font-size: 15px;
+  &:focus, &:hover {
+    background-color: var(--CancelFocus);
+  }
 }
 .ButtonYES{
   border-radius: 10px;
   width: 100px;
-  background-color: #1C9C24;
+  background-color: var(--Submit);
   margin-right: 5em;
   color: white;
   font-size: 15px;
+  &:focus, &:hover {
+    background-color: var(--SubmitFocus);
+  }
 }
 .InputSearch{
   font-size: 20px;
-  color: #707070;
-  border: gray 1px solid;
-  box-shadow: gray 5px 5px 10px;
+  color: var(--Font-color);
+  border: var(--Shadow) 1px solid;
+  box-shadow: var(--Shadow) 5px 5px 10px;
   margin-right: 1em;
 }
 ::ng-deep .mat-step-header .mat-step-icon-selected {
@@ -142,7 +150,8 @@ mat-label{
 ::ng-deep .mat-step-header{
   margin-right: 1%;
   margin-left: 1%;
-  background-color:#FFFFFF;
+  background-color:var(--Background-secondary);
+  color: white;
   margin-top: 2em;
   padding: 50px;
   border-radius: 10px;
@@ -165,7 +174,7 @@ mat-label{
   margin-left: 5em;
 }
 ::ng-deep .mat-checkbox-frame{
-  border-color: #0078D4;
+  color: var(--Font-blue);;
 }
 
 .cronInput{
@@ -180,7 +189,17 @@ mat-label{
 .inputWrapper mat-label{
   font-size: 17px;
 }
-.col-1{
+.col-1.selectDest{
   margin-top: 5.30em;
   margin-right: 1em;
+}
+::ng-deep .mat-select-value {
+  color: var(--Font-color);
+  font-size: 20px;
+}
+.headerTitle {
+  color: var(--Font-color);
+}
+::ng-deep .mat-checkbox .mat-checkbox-background {
+  border: var(--AddUserIcon) solid 1px;
 }
