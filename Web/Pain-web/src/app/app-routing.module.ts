@@ -10,8 +10,9 @@ import { ConfigsComponent } from "./page-skeleton/Content/configs/configs.compon
 import { UsersComponent } from "./page-skeleton/Content/users/users.component";
 import { LogsComponent } from "./page-skeleton/Content/logs/logs.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
-import {AddConfigComponent} from "./page-skeleton/Content/add-config/add-config.component";
-import {EditConfigComponent} from "./page-skeleton/Content/edit-config/edit-config.component";
+import { AddConfigComponent } from "./page-skeleton/Content/add-config/add-config.component";
+import { EditConfigComponent } from "./page-skeleton/Content/edit-config/edit-config.component";
+import { GuardClientDirtyGuard } from "./Guards/guard-client-dirty.guard";
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
@@ -20,7 +21,7 @@ const routes: Routes = [
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'logs', component: LogsComponent},
-      {path: 'clients', component: ClientsComponent},
+      {path: 'clients', component: ClientsComponent, canDeactivate: [GuardClientDirtyGuard]},
       {path: 'configs', component: ConfigsComponent},
       {path: 'users', component: UsersComponent},
       {path: 'add-config', component: AddConfigComponent},

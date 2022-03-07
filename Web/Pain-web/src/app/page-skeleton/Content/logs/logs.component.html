@@ -1,10 +1,23 @@
 <body>
-  <div class="container">
-    <div *ngFor="let log of logs">
+  <div class="col text-end Filter">
+    <select [(ngModel)]="filterValue" class="InputSearch" matSelect name="Filter" id="filter">
+      <option value="none">None</option>
+      <option value="ok">OK</option>
+      <option value="no run">NO RUN</option>
+      <option value="error">ERROR</option>
+    </select>
+    <i class="fa-solid fa-filter"></i>
+    <input [(ngModel)]="searchedLog" type="text" name="search" class="InputSearch">
+    <i matSuffix class="fa-solid fa-magnifying-glass"></i>
+  </div>
+  <div class="container"
+       infinite-scroll
+       (scrolled)="onScrollDown($event)">
+    <div *ngFor="let log of logs | LogsLogFilter: searchedLog : filterValue | slice:0:sum">
       <mat-expansion-panel hideToggle class="configPanel">
         <mat-expansion-panel-header class="configHeader">
-          <mat-panel-title class="text-uppercase" style="color: #707070">
-            <div class="col" style="color: #0078D4">
+          <mat-panel-title class="text-uppercase LogNameHeader">
+            <div class="col ClientName">
               {{log.client_name}}
             </div>
             <div class="col">
@@ -19,7 +32,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="container expand">
-          <div class="col">
+          <div class="col message">
             {{log.message}}
           </div>
         </div>

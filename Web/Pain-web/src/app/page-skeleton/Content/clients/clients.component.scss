@@ -1,29 +1,81 @@
 body {
   padding-top: 5%;
   padding-bottom: 5%;
-  background-color: #F6F6F6;
+  background-color: var(--Background-primary);
+}
+.ClientNameHeader {
+  color: var(--Font-color);
+}
+.ip, .mac {
+  font-size: 20px;
+}
+.Filter {
+  position: absolute;
+  right: 20px;
+  top: 150px;
+  select {
+    background-color: var(--Background-secondary);
+    color: var(--Font-color);
+    width: 120px;
+  }
+  .fa-magnifying-glass, .fa-filter {
+    margin-left: -10px;
+    margin-right: 2vw;
+    font-size: 20px;
+    color: var(--Font-color);
+  }
+}
+.InputSearch{
+  background-color: var(--Background-secondary);
+  color: var(--Font-color);
+  font-size: 20px;
+  border: var(--Shadow) 1px solid;
+  box-shadow: var(--Shadow) 5px 5px 10px;
+  margin-right: 1em;
+  border-radius: 7px;
+  &:focus {
+    outline: none;
+  }
+}
+.Save {
+  position: fixed;
+  right: 30px;
+  bottom: 50px;
+  .buttonEDIT {
+    width: 130px;
+    font-size: 30px;
+  }
 }
 .buttonEDIT{
   margin-right: 30px;
-  background-color: #1C9C24;
+  background-color: var(--Submit);
   color: white;
   border-radius: 10px;
+  &:focus, &:hover {
+    background-color: var(--SubmitFocus);
+  }
 }
 .buttonREM{
-  background-color: #E52F2F;
+  background-color: var(--Cancel);
+
   color: white;
   border-radius: 10px;
+  &:focus, &:hover {
+    background-color: var(--CancelFocus);
+  }
 }
 .configPanel{
   margin-bottom: 2%;
-  background-color: white;
+  color: var(--Font-color);
+  background-color: var(--Background-secondary);
+
 }
 .configHeader{
   padding: 30px;
   font-size: 25px
 }
 .container.expand{
-  border-top: #707070 1px solid;
+  border-top:var(--Font-color) 1px solid;
   margin-top: 15px;
   padding-top: 20px;
 }
@@ -36,9 +88,18 @@ body {
 }
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
   opacity: 0.03 !important;
-  background-color: #1C9C24!important;
+  background-color: var(--Submit);
 }
 ::ng-deep .mat-ripple { display: none; }
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-  background-color: #1C9C24;
+  background-color: var(--Submit);
+}
+::ng-deep .mat-checkbox .mat-checkbox-background {
+  border: var(--AddUserIcon) solid 1px;
+}
+.ActiveCheck {
+  color: var(--Submit);
+}
+.InactiveCheck {
+  color: var(--Cancel);
 }

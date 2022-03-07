@@ -2,19 +2,19 @@
     <div class="row">
         <p class="problemslabel orange">AWAITS</p>
     </div>
-    <div class="row" style="width:290px;">
+    <div class="row comp-awaits-width">
         <div class="container">
             <cdk-virtual-scroll-viewport itemSize="72" class="scrollcompleteawaits">
                 <div class="row" *ngFor="let odd = odd;let awaitss of awaits" [class.grayitem]="odd">
-                    <div class="row" style="height: 72px;">
-                        <div class="col">
-                            <p class=" scrollitem">{{awaitss.ClientName}}</p>
+                    <div class="row itemheight scrollitem">
+                        <div class="col-3">
+                            <p>{{awaitss.ClientName}}</p>
+                        </div>
+                        <div class="col-3">
+                            <p>{{awaitss.ConfigName}}</p>
                         </div>
                         <div class="col">
-                            <p class=" scrollitem">{{awaitss.ConfigName}}</p>
-                        </div>
-                        <div class="col">
-                            <p class=" scrollitem">{{awaitss.Time}}</p>
+                            <p class="centeredtext">{{awaitss.Time}}</p>
                         </div>
                     </div>
                 </div>

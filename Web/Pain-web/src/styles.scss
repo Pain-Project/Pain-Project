@@ -40,14 +40,17 @@ $Pain-Web-theme: mat.define-light-theme((
 
 //font
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+@import 'src/_themes.scss';
+
 html, body {
-  height: 100%; background-color: #F6F6F6;
+  height: 100%; background-color: var(--Background-primary);
 }
 body {
   margin: 0; font-family: 'Poppins', sans-serif;
 }
 
 .custom-dialog-container .mat-dialog-container{
-  background-color: #F6F6F6;
+  background-color: var(--Background-primary);
   border-radius: 10px;
 }

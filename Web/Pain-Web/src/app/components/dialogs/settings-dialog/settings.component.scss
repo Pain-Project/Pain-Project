@@ -1,11 +1,12 @@
 body, html {
-  background-color: #F6F6F6;
+  background-color: var(--Background-primary);
 }
+
 .header{
   overflow: hidden;
 }
 .IconSetting{
-  color: #707070;
+  color: var(--Font-blue);
   font-size: 25px;
   float:left;
   margin-right: 10px;
@@ -15,7 +16,7 @@ body, html {
   margin-top: 0px
 }
 .header h1, .header h2{
-  color: #0078D4;
+  color: var(--Font-blue);
   float:left;
   text-align: center;
   margin-top: -2px;
@@ -25,23 +26,32 @@ body, html {
 }
 .mat-dialog-content{
   margin-top: -2em;
+  .content {
+    margin-bottom: 10px;
+  }
 }
 .col.big{
-  border: 1px solid #707070;
+  border: 1px solid var(--Font-color);
   border-radius: 10px;
   padding-top: 1em;
   margin-bottom: 1em;
   padding-bottom: 1em;
-  background-color: white;
-  box-shadow: gray 5px 5px 10px;
+  background-color: var(--Background-secondary);
+  box-shadow: var(--Shadow) 5px 5px 10px;
   margin-right: 10px;
   margin-left: 10px;
+  p {
+    color: var(--Font-color);
+  }
 }
 .col.left{
   margin-right: 10px;
 }
 .col.right{
   margin-left: 10px;
+  .content p {
+    float: left;
+  }
 }
 .content{
   margin-left: 3em;
@@ -55,6 +65,11 @@ body, html {
   height: 25px;
   margin-top: -20px;
   margin-left: 1em;
+  margin-bottom: 30px;
+
+}
+::ng-deep .mat-select-value {
+  color: var(--Font-color);
 }
 mat-dialog-actions{
   margin-top: -1em;
@@ -66,11 +81,17 @@ mat-dialog-actions{
   fon-size: 30px;
 }
 .Button.cancel{
-  background-color: #E52F2F;
   margin-right: 10px;
+  background-color: var(--Cancel);
+  &:hover, &:focus {
+    background-color: var(--CancelFocus);
+  }
 }
 .Button.save{
-  background-color: #1C9C24;
+  background-color: var(--Submit);
+  &:hover, &:focus {
+    background-color: var(--SubmitFocus);
+  }
 }
 .content.database {
   p {
@@ -78,7 +99,7 @@ mat-dialog-actions{
   }
   .timeInput {
     border-radius: 7px;
-    border: #707070 solid 1px;
+    border: var(--Font-color) solid 1px;
     height: 2em;
     padding-left: 1em;
     padding-right: 1em;
@@ -104,4 +125,7 @@ input[type="time"]::-webkit-calendar-picker-indicator { background: none; displa
 ::ng-deep .mat-slide-toggle-ripple.mat-ripple {
   display: none;
 }
-
+.fa-floppy-disk {
+  font-size: 25px;
+  margin-right: 5px;
+}

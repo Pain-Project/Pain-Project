@@ -8,13 +8,18 @@ import {LogsService} from "../../../services/logs.service";
   styleUrls: ['./logs.component.scss']
 })
 export class LogsComponent implements OnInit {
-
+  sum = 10;
+  searchedLog : string = '';
   logs : Log[] = [];
+  filterValue : string = 'none';
 
-  constructor( private service : LogsService) {  }
+  constructor( private service : LogsService) {}
 
   ngOnInit(): void {
     this.logs =  this.service.findAllLogs();
+  }
+  onScrollDown(ev: any) {
+    this.sum += 10;
   }
   onClick(event : any) : void {
     event.stopPropagation();

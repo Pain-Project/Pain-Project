@@ -4,9 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { RemoveDialogComponent } from "../../../components/dialogs/remove-dialog/remove-dialog.component";
 import { ConfigsService } from "../../../services/configs.service";
 import { Config } from "../../../models/config.model";
-import { Client } from "../../../models/client.model";
-import { ClientsService } from "../../../services/clients.service";
-
+import { AddClientDialogComponent } from "../../../components/dialogs/add-client-dialog/add-client-dialog.component";
 
 @Component({
   selector: 'app-configs',
@@ -14,21 +12,30 @@ import { ClientsService } from "../../../services/clients.service";
   styleUrls: ['./configs.component.scss']
 })
 export class ConfigsComponent implements OnInit {
-
+  sum = 10;
+  searchedClient : string = '';
   configs : Config[]  = [];
-  constructor( public dialog : MatDialog, private configService : ConfigsService) { }
+
+  constructor( public dialog : MatDialog, private configService : ConfigsService) {}
 
   ngOnInit(): void {
     this.configs = this.configService.findAllConfigs();
+  }
+  onScrollDown(ev: any) {
+    this.sum += 10;
   }
   onClick(event : any) : void {
     event.stopPropagation();
   }
   openDialog(type : any): void {
     if (type== 'Add'){
-      const dialogRef = this.dialog.open(DialogElementsExampleDialog, {
+      const dialogRef = this.dialog.open(AddClientDialogComponent, {
         panelClass: 'custom-dialog-container',
         width: '800px'
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.length != 0)
+          alert(result);
       })
     }
     else if (type=='Remove'){
@@ -48,22 +55,10 @@ export class ConfigsComponent implements OnInit {
         width: '500px'
       })
       dialogRef.componentInstance.type = 'clientFromConfig';
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == true)
+          alert('Client was successfully removed!')
+      })
     }
-  }
-}
-// noinspection AngularMissingOrInvalidDeclarationInModule
-@Component({
-  selector: 'dialog-elements-example-dialog',
-  templateUrl: 'Dialog-Add-Client.html',
-  styleUrls: ['./Dialog-Add-Client.scss']
-})
-
-export class DialogElementsExampleDialog implements OnInit{
-  searchActive : boolean = false;
-  clients : Client[] = [];
-  ngOnInit() : void {
-    this.clients = this.service.findAllClients();
-  }
-  constructor(private service : ClientsService) {
   }
 }

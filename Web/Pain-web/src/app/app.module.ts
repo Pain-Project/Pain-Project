@@ -20,9 +20,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatButtonModule } from "@angular/material/button";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogElementsExampleDialog } from "./page-skeleton/Content/configs/configs.component";
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -49,6 +48,15 @@ import { AddConfigComponent } from './page-skeleton/Content/add-config/add-confi
 import { StepperComponent } from './components/stepper/stepper.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { EditConfigComponent } from './page-skeleton/Content/edit-config/edit-config.component';
+import { AddClientDialogComponent } from './components/dialogs/add-client-dialog/add-client-dialog.component';
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { ConfigsClientSearch } from "./components/pipes/Configs-ClientSearch";
+import { ConfigsConfigSearch } from "./components/pipes/Configs-ConfigSearch";
+import { LogsLogFilter } from "./components/pipes/Logs-LogFilter";
+import { ClientsClientFilter } from "./components/pipes/Clients-ClientFilter";
+import { UsersUserSearch } from "./components/pipes/Users-UserSearch";
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+
 
 @NgModule({
   declarations: [
@@ -61,7 +69,6 @@ import { EditConfigComponent } from './page-skeleton/Content/edit-config/edit-co
     ConfigsComponent,
     ClientsComponent,
     UsersComponent,
-    DialogElementsExampleDialog,
     SettingsComponent,
     RemoveDialogComponent,
     ErrorPageComponent,
@@ -78,33 +85,41 @@ import { EditConfigComponent } from './page-skeleton/Content/edit-config/edit-co
     AddConfigComponent,
     StepperComponent,
     EditConfigComponent,
+    AddClientDialogComponent,
+    ConfigsClientSearch,
+    ConfigsConfigSearch,
+    LogsLogFilter,
+    ClientsClientFilter,
+    UsersUserSearch,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    MatButtonModule,
-    ScrollingModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatDividerModule,
-    MatGridListModule,
-    MatSlideToggleModule,
-    MatIconModule,
-    MatSelectModule,
-    NgSelectModule,
-    MatRippleModule,
-    ReactiveFormsModule,
-    MatStepperModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
+        MatToolbarModule,
+        MatExpansionModule,
+        MatButtonModule,
+        ScrollingModule,
+        MatCheckboxModule,
+        FormsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatDividerModule,
+        MatGridListModule,
+        MatSlideToggleModule,
+        MatIconModule,
+        MatSelectModule,
+        NgSelectModule,
+        MatRippleModule,
+        ReactiveFormsModule,
+        MatStepperModule,
+        Ng2SearchPipeModule,
+        InfiniteScrollModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

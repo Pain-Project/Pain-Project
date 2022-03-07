@@ -1,9 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3" style="margin-top: 3em; margin-left: 1em">
-      <p style="color: #0078D4;font-size: 40px; font-style: italic">
-        Le pain, a.s.
-      </p>
+    <div class="col-3 brand">
+      <p>Le pain, a.s.</p>
     </div>
     <div class="col-6 ">
 <!--    <div class="col-6 offset-md-3">-->
@@ -17,21 +15,21 @@
     </div>
         <div class="col user">
           <div class="row justify-content-end">
-            <div class="col-2" style="color: #0078D4; font-size: 30px">
-              <i style="margin-right: -1em" class="fa-solid fa-user"></i>
+            <div class="col-2 userIcon">
+              <i class="fa-solid fa-user"></i>
             </div>
-            <div class="col-4">
-              <p style="color: #0078D4; font-size: 17px">Pavel Novák</p>
+            <div class="col-4 name">
+              <p>{{name}} {{surname}}</p>
               <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <a style="text-decoration: none; color: #707070" routerLink=""> Logout</a>
+              <a routerLink=""> Logout</a>
             </div>
-            <div class="col-1" style="color: #707070; margin-right: 1em; font-size: 25px">
-              <a (click)="openDialog()" style="cursor: pointer;">
-                <i class="fa-solid fa-gear"></i>
+            <div class="col-1 settings" >
+              <a (click)="openDialog()" >
+                <i  class="fa-solid fa-gear"></i>
               </a>
             </div>
           </div>
         </div>
   </div>
 </div>
-<mat-divider class="divider"></mat-divider>
+  <mat-divider class="divider"></mat-divider>

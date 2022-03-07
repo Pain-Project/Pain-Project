@@ -1,61 +1,74 @@
 <body>
-<div class="container">
-  <div *ngFor="let client of clients">
-    <mat-expansion-panel hideToggle class="configPanel">
-      <mat-expansion-panel-header class="configHeader">
-        <mat-panel-title class="text-uppercase" style="color: #707070">
-          <div class="col-1">
-            {{client.name}}
-          </div>
-          <div *ngIf="client.active" class="col-2">
-            <mat-checkbox  (click)="onClick($event)" [(ngModel)]="client.active" style="color: #1C9C24">Active</mat-checkbox>
-          </div>
-          <div *ngIf="!client.active" class="col-2">
-            <mat-checkbox (click)="onClick($event)" [(ngModel)]="client.active" style="color: #E52F2F">Inactive</mat-checkbox>
-          </div>
-          <div class="col" style="font-size: 20px">
-            {{client.ipAddress}}
-          </div>
-          <div class="col" style="font-size: 20px">
-            {{client.macAddress}}
-          </div>
-          <div class="col">
-            CONFIGS: {{client.configs.length}}
-          </div>
-          <div class="buttons">
-            <a (click)="onClick($event); openDialog('client')" class="buttonREM" mat-raised-button>REMOVE</a>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="container expand">
-        <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
-          <div *cdkVirtualFor="let config of client.configs" class="configLine">
-            <div class="row">
-              <div class="col text-uppercase">
-                <p>{{config.name}}</p>
-              </div>
-              <div class="col">
-                <p>{{config.creator}}</p>
-              </div>
-              <div class="col">
-                <p>{{config.create_date}}</p>
-              </div>
-              <div class="col">
-                <p>{{config.backup_type}}</p>
-              </div>
-              <div class="col-3">
-                <div class="buttons">
-                  <a (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
-                  <a (click)="onClick($event); openDialog('configFromClient')" class="buttonREM" mat-raised-button>REMOVE</a>
+  <div class="col text-end Filter">
+    <select [(ngModel)]="filterValue" class="InputSearch" matSelect name="Filter" id="filter">
+      <option value="none">None</option>
+      <option value="1">ACTIVE</option>
+      <option value="0">INACTIVE</option>
+    </select>
+    <i class="fa-solid fa-filter"></i>
+    <input [(ngModel)]="searchedClient" type="text" name="search" class="InputSearch">
+    <i matSuffix class="fa-solid fa-magnifying-glass"></i>
+  </div>
+  <div class="container content"
+      infinite-scroll
+       (scrolled)="onScrollDown($event)" >
+    <div *ngFor="let client of clients | ClientsClientFilter : searchedClient : filterValue | slice:0:sum">
+      <mat-expansion-panel hideToggle class="configPanel">
+        <mat-expansion-panel-header class="configHeader">
+          <mat-panel-title class="text-uppercase ClientNameHeader">
+            <div class="col-1">
+              {{client.name}}
+            </div>
+            <div *ngIf="client.active" class="col-2">
+              <mat-checkbox class="ActiveCheck" name="clientActive" (click)="onClick($event); isDirty = true" [(ngModel)]="client.active">Active</mat-checkbox>
+            </div>
+            <div *ngIf="!client.active" class="col-2">
+              <mat-checkbox class="InactiveCheck" name="clientActive" (click)="onClick($event); isDirty = true" [(ngModel)]="client.active">Inactive</mat-checkbox>
+            </div>
+            <div class="col ip">
+              {{client.ipAddress}}
+            </div>
+            <div class="col mac">
+              {{client.macAddress}}
+            </div>
+            <div class="col">
+              CONFIGS: {{client.configs.length}}
+            </div>
+            <div class="buttons">
+              <a (click)="onClick($event); openDialog('client')" class="buttonREM" mat-raised-button>REMOVE</a>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="container expand">
+          <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
+            <div *cdkVirtualFor="let config of client.configs" class="configLine">
+              <div class="row">
+                <div class="col text-uppercase">
+                  <p>{{config.name}}</p>
+                </div>
+                <div class="col">
+                  <p>{{config.creator}}</p>
+                </div>
+                <div class="col">
+                  <p>{{config.create_date}}</p>
+                </div>
+                <div class="col">
+                  <p>{{config.backup_type}}</p>
+                </div>
+                <div class="col-3">
+                  <div class="buttons">
+                    <a (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+                    <a (click)="onClick($event); openDialog('configFromClient')" class="buttonREM" mat-raised-button>REMOVE</a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-        </cdk-virtual-scroll-viewport>
-      </div>
-    </mat-expansion-panel>
+          </cdk-virtual-scroll-viewport>
+        </div>
+      </mat-expansion-panel>
+    </div>
   </div>
-</div>
-
+  <div *ngIf="isDirty" class="Save">
+    <button (click)="isDirty = false" mat-raised-button class="buttonEDIT">SAVE</button>
+  </div>
 </body>
