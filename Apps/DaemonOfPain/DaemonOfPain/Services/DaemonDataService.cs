@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DaemonOfPain.Services
 {
-    public class DataService
+    public class DaemonDataService //Zápis a získávání DaemonDat ze souborů.txt
     {
+
     }
 }

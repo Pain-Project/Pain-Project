@@ -1,0 +1,40 @@
+﻿[
+  {
+    "Id": 1,
+    "Cron": "* * * * *",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [ 5, 0 ],
+    "Sources": [ "C:\\Data", "C:\\ProgramFiles" ],
+    "Destinations": [
+      {
+        "DestinationType": "0",
+        "DestinationPath": "D:\\Data"
+      },
+      {
+        "DestinationType": "0",
+        "DestinationPath": "D:\\Data\\Backup"
+      }
+    ],
+    "RetentionStatistik": [ 4, 0 ]
+  },
+  {
+    "Id": 2,
+    "Cron": "* * * * *",
+    "BackupType": 0,
+    "BackupFormat": 1,
+    "Retention": [ 5, 3 ],
+    "Sources": [ "C:\\Data", "C:\\ProgramFiles" ],
+    "Destinations": [
+      {
+        "DestinationType": "0",
+        "DestinationPath": "D:\\Data"
+      },
+      {
+        "DestinationType": "0",
+        "DestinationPath": "D:\\Data\\Backup"
+      }
+    ],
+    "RetentionStatistik": [ 4, 2 ]
+  }
+]
