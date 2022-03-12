@@ -8,7 +8,9 @@ namespace DaemonOfPain
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DaemonDataService dd = new DaemonDataService();
+
+            Console.WriteLine(dd.GetSnapshotByID(1).Items.Count);
         }
     }
 }
