@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ayB90gMj1nQkJeEUAqki6rZ22W8s9CNJDgVvWwasisSvxt+X1rk/c1t7Sb64oYP/VVMzACAluuZweTS8Sw1fpg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\troli\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}
