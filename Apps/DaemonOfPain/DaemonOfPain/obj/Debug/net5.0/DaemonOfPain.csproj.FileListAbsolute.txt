@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.exe
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.deps.json
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.runtimeconfig.json
@@ -16,3 +17,23 @@ H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\Da
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.genruntimeconfig.cache
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\Newtonsoft.Json.dll
 H:\DATA\projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.csproj.CopyComplete
+=======
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.exe
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.deps.json
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.runtimeconfig.json
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.runtimeconfig.dev.json
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\ref\DaemonOfPain.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\DaemonOfPain.pdb
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.csproj.AssemblyReference.cache
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.AssemblyInfoInputs.cache
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.AssemblyInfo.cs
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.csproj.CoreCompileInputs.cache
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.csproj.CopyComplete
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\ref\DaemonOfPain.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.pdb
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.genruntimeconfig.cache
+>>>>>>> Stashed changes
