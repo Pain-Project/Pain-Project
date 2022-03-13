@@ -16,8 +16,10 @@ namespace DaemonOfPain
         public string ItemPath { get; set; }
         public _ItemType ItemType { get; set; }
         public string Date { get; set; }
-        public SnapshotItem(string itemPath, _ItemType itemType, string date)
+        public string Root { get; set; }
+        public SnapshotItem(string itemPath, _ItemType itemType, string date, string root)
         {
+            Root = root;
             ItemPath = itemPath;
             ItemType = itemType;
             Date = date;

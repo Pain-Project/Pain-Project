@@ -11,6 +11,91 @@ namespace DaemonOfPain.Services
     {
         private DaemonDataService daemonDataService = new DaemonDataService();
 
+        public void BackupSetup(int idConfig)
+        {
+            Config config = daemonDataService.GetConfigByID(idConfig);
+            //statistiky
+
+            Backup(config);
+
+        }
+        public void Backup(Config config)
+        {
+            Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
+            List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
+            foreach (var item in config.Sources)
+            {
+                newSnapshotList.AddRange(GetSnapshot(item));
+            }
+
+            List<SnapshotItem> changesList = GetChanges(lastSnapshot.Items, newSnapshotList);
+            string folderPath = "";
+            switch(config.BackupType)
+            {
+                case _BackupType.FB:
+                    folderPath = @"\FB_"+config.ConfigName+"_"+DateTime.Now.ToString("s")+"_"+config.RetentionStatistik[0];
+                    break;
+                case _BackupType.DI:
+                    folderPath = @"\DI_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
+                    break;
+                case _BackupType.IN:
+                    folderPath = @"\IN_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
+                    break;
+            }
+
+            foreach (var item in config.Destinations)
+            {
+                DoBackup(changesList, item.DestinationPath + folderPath);
+            }
+            if (config.RetentionStatistik[1] % config.Retention[1] == 0 && config.BackupType == _BackupType.DI)
+            {
+                Snapshot newSnapshot = new Snapshot() { ConfigID = config.Id, Items = changesList };
+                daemonDataService.WriteSnapshot(newSnapshot);
+            }
+            else if(config.BackupType == _BackupType.IN)
+            {
+               
+            }
+        }
+        public void DoBackup(List<SnapshotItem> changesList, string path)
+        {
+            CreateDir(path);
+            foreach (var item in changesList)
+            {
+                if(item.ItemType == _ItemType.FILE)
+                {
+                    string[] root = item.Root.Split('\\');
+
+                }
+                //else
+                //{
+                //    CopyDir(item.ItemPath, path);
+                //}
+            }
+        }
+        private void CreateDir(string path)
+        {
+            DirectoryInfo info = new DirectoryInfo(path);
+            if (!info.Exists)
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+        private void CopyDir(string source, string destination)
+        {
+            DirectoryInfo sourceDir = new DirectoryInfo(source);
+            destination = destination + sourceDir.Name + "\\";
+            DirectoryInfo destinationDir = new DirectoryInfo(destination);
+            if (!destinationDir.Exists) { Directory.CreateDirectory(destinationDir.FullName); }
+            foreach (var item in sourceDir.GetFiles())
+            {
+                item.CopyTo(destination + item.Name);
+            }
+            foreach (var item in sourceDir.GetDirectories())
+            {
+                CopyDir(item.FullName, destination);
+            }
+        }
 
         public List<SnapshotItem> GetSnapshot(string path, List<SnapshotItem> dirEntry = null)
         {
@@ -23,12 +108,12 @@ namespace DaemonOfPain.Services
             FileInfo[] files = dir.GetFiles();
             foreach (var item in subDirs)
             {
-                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FOLDER, Convert.ToString(File.GetLastWriteTime(item.FullName))));
+                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FOLDER, Convert.ToString(File.GetLastWriteTime(item.FullName)), path));
                 GetSnapshot(item.FullName, dirEntry);
             }
             foreach (var item in files)
             {
-                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FILE, Convert.ToString(File.GetLastWriteTime(item.FullName))));
+                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FILE, Convert.ToString(File.GetLastWriteTime(item.FullName)), path));
             }
             return dirEntry;
         }

@@ -8,9 +8,9 @@ namespace DaemonOfPain
     {
         static void Main(string[] args)
         {
-            DaemonDataService dd = new DaemonDataService();
-
-            Console.WriteLine(dd.GetSnapshotByID(1).Items.Count);
+            BackupService b = new BackupService();
+            List<SnapshotItem> items = b.GetSnapshot(@"C:\BackupTesting\test");
+            b.DoBackup(items, @"C:\BackupDest\FB_testovani");
         }
     }
 }
