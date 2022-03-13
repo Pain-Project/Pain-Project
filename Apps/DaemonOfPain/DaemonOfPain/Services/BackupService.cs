@@ -9,6 +9,9 @@ namespace DaemonOfPain.Services
 {
     public class BackupService
     {
+        private DaemonDataService daemonDataService = new DaemonDataService();
+
+
         public List<SnapshotItem> GetSnapshot(string path, List<SnapshotItem> dirEntry = null)
         {
             if (dirEntry == null)

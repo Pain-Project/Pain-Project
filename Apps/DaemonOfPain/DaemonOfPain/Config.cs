@@ -8,14 +8,14 @@ namespace DaemonOfPain
 {
     public enum _BackupType
     {
-        PT,
-        AR
-    }
-    public enum _BackupFormat
-    {
         FB,
         DI,
         IN
+    }
+    public enum _BackupFormat
+    {
+        PT,
+        AR
     }
     public class Config
     {
