@@ -20,6 +20,7 @@ namespace DaemonOfPain
     public class Config
     {
         public int Id { get; set; }
+        public string ConfigName { get; set; }
         public string Cron { get; set; }
         public _BackupType BackupType { get; set; }
         public _BackupFormat BackupFormat { get; set; }

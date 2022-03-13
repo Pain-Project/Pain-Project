@@ -1,1 +1,122 @@
-[{"Id":2,"Cron":"* * * * * dvojka","BackupType":0,"BackupFormat":1,"Retention":[5,3],"Sources":["C:\\Data","C:\\ProgramFiles"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\Data"},{"DestinationType":0,"DestinationPath":"D:\\Data\\Backup"}],"RetentionStatistik":[4,2]},{"Id":3,"Cron":"* 5 5 5 *","BackupType":0,"BackupFormat":1,"Retention":[5],"Sources":["C:\\Data","Blbost"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\Data"}],"RetentionStatistik":[1]},{"Id":9,"Cron":"* 5 5 5 *","BackupType":0,"BackupFormat":1,"Retention":[5],"Sources":["C:\\Data","Blbost"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\Data"}],"RetentionStatistik":[1]},{"Id":1,"Cron":"* 5 5 5 * Nový","BackupType":0,"BackupFormat":1,"Retention":[5],"Sources":["C:\\Data","Blbost"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\Data"}],"RetentionStatistik":[1]},{"Id":5,"Cron":"* 5 5 5 *","BackupType":0,"BackupFormat":1,"Retention":[5],"Sources":["C:\\Data","Blbost"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\Data"}],"RetentionStatistik":[1]}]
+[
+  {
+    "Id": 2,
+    "Name": "Config2",
+    "Cron": "* * * * * dvojka",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5,
+      3
+    ],
+    "Sources": [
+      "C:\\Data",
+      "C:\\ProgramFiles"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data"
+      },
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data\\Backup"
+      }
+    ],
+    "RetentionStatistik": [
+      4,
+      2
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "TestingConfig",
+    "Cron": "* 5 5 5 *",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5
+    ],
+    "Sources": [
+      "C:\\Data",
+      "Blbost"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data"
+      }
+    ],
+    "RetentionStatistik": [
+      1
+    ]
+  },
+  {
+    "Id": 9,
+    "Name": "Devitka",
+    "Cron": "* 5 5 5 *",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5
+    ],
+    "Sources": [
+      "C:\\Data",
+      "Blbost"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data"
+      }
+    ],
+    "RetentionStatistik": [
+      1
+    ]
+  },
+  {
+    "Id": 1,
+    "Name": "Jedna",
+    "Cron": "* 5 5 5 * Nový",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5
+    ],
+    "Sources": [
+      "C:\\BackupTesting"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "C:\\BackupDest"
+      }
+    ],
+    "RetentionStatistik": [
+      0
+    ]
+  },
+  {
+    "Id": 5,
+    "Name": "UrciteNe",
+    "Cron": "* 5 5 5 *",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5
+    ],
+    "Sources": [
+      "C:\\Data",
+      "Blbost"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data"
+      }
+    ],
+    "RetentionStatistik": [
+      1
+    ]
+  }
+]
