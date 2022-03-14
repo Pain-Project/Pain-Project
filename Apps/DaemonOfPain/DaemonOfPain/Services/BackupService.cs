@@ -29,6 +29,8 @@ namespace DaemonOfPain.Services
             }
 
             List<SnapshotItem> changesList = GetChanges(lastSnapshot.Items, newSnapshotList);
+            changesList = SnapshotItemFilter(changesList);
+
             string folderPath = "";
             switch(config.BackupType)
             {
@@ -64,13 +66,13 @@ namespace DaemonOfPain.Services
             {
                 if(item.ItemType == _ItemType.FILE)
                 {
-                    string[] root = item.Root.Split('\\');
+                    File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
 
                 }
-                //else
-                //{
-                //    CopyDir(item.ItemPath, path);
-                //}
+                else
+                {
+                    CopyDir(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
+                }
             }
         }
         private void CreateDir(string path)
@@ -78,26 +80,53 @@ namespace DaemonOfPain.Services
             DirectoryInfo info = new DirectoryInfo(path);
             if (!info.Exists)
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(info.FullName);
             }
         }
         private void CopyDir(string source, string destination)
         {
             DirectoryInfo sourceDir = new DirectoryInfo(source);
-            destination = destination + sourceDir.Name + "\\";
-            DirectoryInfo destinationDir = new DirectoryInfo(destination);
-            if (!destinationDir.Exists) { Directory.CreateDirectory(destinationDir.FullName); }
+            CreateDir(destination);
             foreach (var item in sourceDir.GetFiles())
             {
-                item.CopyTo(destination + item.Name);
+                item.CopyTo(destination +"\\"+ item.Name);
             }
             foreach (var item in sourceDir.GetDirectories())
             {
-                CopyDir(item.FullName, destination);
+                CopyDir(item.FullName, destination + "\\" + item.Name);
             }
         }
+        private List<SnapshotItem> SnapshotItemFilter(List<SnapshotItem> items)
+        {
+            Dictionary<string, SnapshotItem> itemsDic = new Dictionary<string, SnapshotItem>();
+            foreach (var item in items)
+            {
+                itemsDic.Add(item.ItemPath, item);
+            }
+            for (int i = 0; i < itemsDic.Count; i++)
+            {
+                var key = itemsDic.ElementAt(i);
+                string[] parts = key.Value.ItemPath.Split('\\');
+                string path = key.Value.ItemPath.Replace("\\"+parts[parts.Length - 1], "");
+                if(itemsDic.ContainsKey(path))
+                {
+                    i--;
+                    itemsDic.Remove(path);
+                }
+            }
+            List<SnapshotItem> newItems = new List<SnapshotItem>();
+            foreach (var item in itemsDic)
+            {
+                newItems.Add(item.Value);
+            }
+            return newItems;
+        }
 
-        public List<SnapshotItem> GetSnapshot(string path, List<SnapshotItem> dirEntry = null)
+        public List<SnapshotItem> GetSnapshot(string path)
+        {
+            return GetSnapshotCycle(path, path);
+        }
+        private List<SnapshotItem> GetSnapshotCycle(string path, string root, List<SnapshotItem> dirEntry = null)
         {
             if (dirEntry == null)
             {
@@ -108,12 +137,12 @@ namespace DaemonOfPain.Services
             FileInfo[] files = dir.GetFiles();
             foreach (var item in subDirs)
             {
-                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FOLDER, Convert.ToString(File.GetLastWriteTime(item.FullName)), path));
-                GetSnapshot(item.FullName, dirEntry);
+                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FOLDER, Convert.ToString(File.GetLastWriteTime(item.FullName)), root));
+                GetSnapshotCycle(item.FullName, root, dirEntry);
             }
             foreach (var item in files)
             {
-                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FILE, Convert.ToString(File.GetLastWriteTime(item.FullName)), path));
+                dirEntry.Add(new SnapshotItem(item.FullName, _ItemType.FILE, Convert.ToString(File.GetLastWriteTime(item.FullName)), root));
             }
             return dirEntry;
         }
