@@ -29,10 +29,10 @@
 				folderPath = "\FB_configName_datum_RetentionStat[0]"
 				break;
 			case DI:
-				folderPath = "DI_configName_datum_RetentionStat[0]\datum_RetentionStat[1]"
+				folderPath = "\DI_configName_datum_RetentionStat[0]\datum_RetentionStat[1]"
 				break;
 			case IN:
-				folderPath = "IN_configName_datum_RetentionStat[0]\datum_RetentionStat[1]"
+				folderPath = "\IN_configName_datum_RetentionStat[0]\datum_RetentionStat[1]"
 				break;
 		}
 
@@ -60,4 +60,25 @@
 			Copy change to Dest + path;
 		}
 	}
+	
+	
+	C:\BackupTesting\
+	C:\DalsiBackup\
+Co:
+	C:\BackupTesting\test.txt
+	C:\BackupTesting\DalsiFolder\soubor.exe
+	C:\DalsiBackup\sss.txt
+Kam:
+	C:\BackupDest\FB_Test1Config_13.3.2022_1\
+
+Final:
+	Full cesta destinace + rozdělení na složky podle typu a retence + rozdělení na source 
+	C:\BackupDest\FB_Test1Config_13.3.2022_1 \ BackupTesting \ test.txt
+	C:\BackupDest\FB_Test1Config_13.3.2022_1 \ BackupTesting \ DalsiFolder\soubor.exe
+	C:\BackupDest\FB_Test1Config_13.3.2022_1 \ DalsiBackup   \ sss.txt
+
+	
+	
+	
+	
 	

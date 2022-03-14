@@ -1,25 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "H:\\DATA\\projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj": {}
+    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj": {}
   },
   "projects": {
-    "H:\\DATA\\projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj": {
+    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\DATA\\projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+        "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
         "projectName": "DaemonOfPain",
-        "projectPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
-        "packagesPath": "C:\\Users\\frantisek\\.nuget\\packages\\",
-        "outputPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
+        "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+        "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\frantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,12 +55,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.14, 5.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

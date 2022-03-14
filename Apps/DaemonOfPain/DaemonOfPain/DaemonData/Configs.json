@@ -1,7 +1,7 @@
 [
   {
     "Id": 2,
-    "Name": "Config2",
+    "ConfigName": null,
     "Cron": "* * * * * dvojka",
     "BackupType": 0,
     "BackupFormat": 0,
@@ -30,7 +30,7 @@
   },
   {
     "Id": 3,
-    "Name": "TestingConfig",
+    "ConfigName": null,
     "Cron": "* 5 5 5 *",
     "BackupType": 0,
     "BackupFormat": 0,
@@ -48,12 +48,13 @@
       }
     ],
     "RetentionStatistik": [
+      1,
       1
     ]
   },
   {
     "Id": 9,
-    "Name": "Devitka",
+    "ConfigName": null,
     "Cron": "* 5 5 5 *",
     "BackupType": 0,
     "BackupFormat": 0,
@@ -71,16 +72,42 @@
       }
     ],
     "RetentionStatistik": [
-      1
+      1,
+      2
+    ]
+  },
+  {
+    "Id": 5,
+    "ConfigName": null,
+    "Cron": "* 5 5 5 *",
+    "BackupType": 0,
+    "BackupFormat": 0,
+    "Retention": [
+      5
+    ],
+    "Sources": [
+      "C:\\Data",
+      "Blbost"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "D:\\Data"
+      }
+    ],
+    "RetentionStatistik": [
+      1,
+      5
     ]
   },
   {
     "Id": 1,
-    "Name": "Jedna",
+    "ConfigName": "Jedna",
     "Cron": "* 5 5 5 * Nový",
-    "BackupType": 0,
+    "BackupType": 1,
     "BackupFormat": 0,
     "Retention": [
+      3,
       5
     ],
     "Sources": [
@@ -90,33 +117,15 @@
       {
         "DestinationType": 0,
         "DestinationPath": "C:\\BackupDest"
-      }
-    ],
-    "RetentionStatistik": [
-      0
-    ]
-  },
-  {
-    "Id": 5,
-    "Name": "UrciteNe",
-    "Cron": "* 5 5 5 *",
-    "BackupType": 0,
-    "BackupFormat": 0,
-    "Retention": [
-      5
-    ],
-    "Sources": [
-      "C:\\Data",
-      "Blbost"
-    ],
-    "Destinations": [
+      },
       {
         "DestinationType": 0,
-        "DestinationPath": "D:\\Data"
+        "DestinationPath": "C:\\BackupDest2"
       }
     ],
     "RetentionStatistik": [
-      1
+      0,
+      0
     ]
   }
 ]

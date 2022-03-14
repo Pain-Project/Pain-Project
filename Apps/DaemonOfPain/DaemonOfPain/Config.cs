@@ -32,8 +32,8 @@ namespace DaemonOfPain
 
         public Config()
         {
-            Retention = new int[2];
-            RetentionStatistik = new int[2];
+            Retention = new int[2] { 0,0};
+            RetentionStatistik = new int[2] { 0,0};
         }
     }
 }

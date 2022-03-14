@@ -15,8 +15,10 @@ namespace DaemonOfPain.Services
         {
             Config config = daemonDataService.GetConfigByID(idConfig);
             //statistiky
+            this.StatisticControl(config);
 
-            Backup(config);
+
+            //Backup(config);
 
         }
         public void Backup(Config config)
@@ -32,10 +34,10 @@ namespace DaemonOfPain.Services
             changesList = SnapshotItemFilter(changesList);
 
             string folderPath = "";
-            switch(config.BackupType)
+            switch (config.BackupType)
             {
                 case _BackupType.FB:
-                    folderPath = @"\FB_"+config.ConfigName+"_"+DateTime.Now.ToString("s")+"_"+config.RetentionStatistik[0];
+                    folderPath = @"\FB_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
                     break;
                 case _BackupType.DI:
                     folderPath = @"\DI_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
@@ -54,9 +56,9 @@ namespace DaemonOfPain.Services
                 Snapshot newSnapshot = new Snapshot() { ConfigID = config.Id, Items = changesList };
                 daemonDataService.WriteSnapshot(newSnapshot);
             }
-            else if(config.BackupType == _BackupType.IN)
+            else if (config.BackupType == _BackupType.IN)
             {
-               
+
             }
         }
         public void DoBackup(List<SnapshotItem> changesList, string path)
@@ -64,7 +66,7 @@ namespace DaemonOfPain.Services
             CreateDir(path);
             foreach (var item in changesList)
             {
-                if(item.ItemType == _ItemType.FILE)
+                if (item.ItemType == _ItemType.FILE)
                 {
                     File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
 
@@ -146,7 +148,7 @@ namespace DaemonOfPain.Services
             }
             return dirEntry;
         }
-        public List<SnapshotItem> GetChanges (List<SnapshotItem> source, List<SnapshotItem> snapshotToCompare)
+        public List<SnapshotItem> GetChanges(List<SnapshotItem> source, List<SnapshotItem> snapshotToCompare)
         {
             Dictionary<string, SnapshotItem> sourceDic = new Dictionary<string, SnapshotItem>();
             Dictionary<string, SnapshotItem> compareDic = new Dictionary<string, SnapshotItem>();
@@ -181,6 +183,99 @@ namespace DaemonOfPain.Services
                 changedItems.Add(item.Value);
             }
             return changedItems;
+        }
+
+        public void StatisticControl(Config config)
+        {
+            if (config.BackupType == _BackupType.FB)
+            {
+                config.RetentionStatistik[0]++;
+                Console.WriteLine("FB:");
+
+                if (config.RetentionStatistik[0] > config.Retention[0])
+                {
+                    foreach (Destination item in config.Destinations)
+                    {
+                        if (item.DestinationType == DestType.DRIVE)
+                        {
+
+                            string path = @$"{item.DestinationPath}\FB_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
+                            Console.WriteLine(path);
+
+                            DirectoryInfo dirInfo = new DirectoryInfo(path);
+                            if (dirInfo.Exists)
+                            {
+                                //dirInfo.Delete(true);
+                                Console.WriteLine("Deleted");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not found");
+                            }
+                        }
+                        else
+                        {
+                            //FTP
+                        }
+                    }
+                }
+                Console.WriteLine(config.Retention[0]);
+                Console.WriteLine(config.RetentionStatistik[0]);
+            }
+            else
+            {
+                config.RetentionStatistik[1]++;
+                Console.WriteLine("DI / IN:");
+                if (config.RetentionStatistik[1] % (config.Retention[1]) == 1)
+                {
+                    config.RetentionStatistik[0]++;
+
+
+                    Snapshot newSnap = new Snapshot() { ConfigID = config.Id};
+                    this.daemonDataService.WriteSnapshot(newSnap);
+                    Console.WriteLine("Snapshot created");
+
+                    if (config.RetentionStatistik[0] > config.Retention[0])
+                    {
+                        foreach (Destination item in config.Destinations)
+                        {
+                            if (item.DestinationType == DestType.DRIVE)
+                            {
+
+                                string path;
+                                if (config.BackupType == _BackupType.IN)
+                                {
+                                    path = @$"{item.DestinationPath}\IN_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
+                                }
+                                else
+                                {
+                                    path = @$"{item.DestinationPath}\DI_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
+                                }
+                                Console.WriteLine(path);
+
+                                DirectoryInfo dirInfo = new DirectoryInfo(path);
+
+                                if (dirInfo.Exists)
+                                {
+                                    //dirInfo.Delete(true);
+                                    Console.WriteLine("Deleted");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Not found");
+                                }
+                            }
+                            else
+                            {
+                                //FTP
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine(config.Retention[0] + " / " + config.Retention[1]);
+                Console.WriteLine(config.RetentionStatistik[0] + " / " + config.RetentionStatistik[1]);
+            }
+            this.daemonDataService.WriteAllConfigs(new List<Config>() { config });
         }
     }
 }

@@ -10,5 +10,9 @@ namespace DaemonOfPain
     {
         public int ConfigID { get; set; }
         public List<SnapshotItem> Items { get; set; }
+        public Snapshot()
+        {
+            this.Items = new List<SnapshotItem>();
+        }
     }
 }
