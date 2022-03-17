@@ -1,1 +1,101 @@
-[{"ConfigID":2,"Items":[{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2020","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2021","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2022","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2023","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2024","Root":null}]},{"ConfigID":3,"Items":[{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2020","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2021","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2022","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2023","Root":null},{"ItemPath":"C:\\Data","ItemType":0,"Date":"10.4.2024","Root":null}]},{"ConfigID":1,"Items":[]}]
+[
+  {
+    "ConfigID": 2,
+    "Items": [
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2020",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2021",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2022",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2023",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2024",
+        "Root": null
+      }
+    ]
+  },
+  {
+    "ConfigID": 3,
+    "Items": [
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2020",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2021",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2022",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2023",
+        "Root": null
+      },
+      {
+        "ItemPath": "C:\\Data",
+        "ItemType": 0,
+        "Date": "10.4.2024",
+        "Root": null
+      }
+    ]
+  },
+  {
+    "ConfigID": 1,
+    "Items": [
+      {
+        "ItemPath": "C:\\BackupTesting\\Nova\\Nova2",
+        "ItemType": 1,
+        "Date": "14.03.2022 22:44:26",
+        "Root": "C:\\BackupTesting"
+      },
+      {
+        "ItemPath": "C:\\BackupTesting\\Nova\\Divny.txt",
+        "ItemType": 0,
+        "Date": "14.03.2022 22:44:31",
+        "Root": "C:\\BackupTesting"
+      },
+      {
+        "ItemPath": "C:\\BackupTesting\\Testing\\xyasdasd",
+        "ItemType": 1,
+        "Date": "14.03.2022 22:37:37",
+        "Root": "C:\\BackupTesting"
+      },
+      {
+        "ItemPath": "C:\\BackupTesting\\adasdsa.txt",
+        "ItemType": 0,
+        "Date": "13.03.2022 18:23:46",
+        "Root": "C:\\BackupTesting"
+      }
+    ]
+  }
+]

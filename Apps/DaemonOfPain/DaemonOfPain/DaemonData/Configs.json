@@ -104,7 +104,7 @@
     "Id": 1,
     "ConfigName": "Jedna",
     "Cron": "* 5 5 5 * Nový",
-    "BackupType": 1,
+    "BackupType": 0,
     "BackupFormat": 0,
     "Retention": [
       3,

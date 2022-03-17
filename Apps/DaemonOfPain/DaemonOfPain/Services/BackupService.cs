@@ -18,7 +18,7 @@ namespace DaemonOfPain.Services
             this.StatisticControl(config);
 
 
-            //Backup(config);
+            Backup(config);
 
         }
         public void Backup(Config config)
@@ -29,7 +29,7 @@ namespace DaemonOfPain.Services
             {
                 newSnapshotList.AddRange(GetSnapshot(item));
             }
-
+            newSnapshotList = SnapshotItemFilter(newSnapshotList);
             List<SnapshotItem> changesList = GetChanges(lastSnapshot.Items, newSnapshotList);
             changesList = SnapshotItemFilter(changesList);
 
@@ -37,13 +37,13 @@ namespace DaemonOfPain.Services
             switch (config.BackupType)
             {
                 case _BackupType.FB:
-                    folderPath = @"\FB_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
+                    folderPath = @"\FB_" + config.ConfigName + "_" + DateTime.Now.ToString("d") + "_" + config.RetentionStatistik[0];
                     break;
                 case _BackupType.DI:
-                    folderPath = @"\DI_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
+                    folderPath = @"\DI_" + config.ConfigName + "_" + DateTime.Now.ToString("d") + "_" + config.RetentionStatistik[0];
                     break;
                 case _BackupType.IN:
-                    folderPath = @"\IN_" + config.ConfigName + "_" + DateTime.Now.ToString("s") + "_" + config.RetentionStatistik[0];
+                    folderPath = @"\IN_" + config.ConfigName + "_" + DateTime.Now.ToString("d") + "_" + config.RetentionStatistik[0];
                     break;
             }
 
@@ -51,7 +51,7 @@ namespace DaemonOfPain.Services
             {
                 DoBackup(changesList, item.DestinationPath + folderPath);
             }
-            if (config.RetentionStatistik[1] % config.Retention[1] == 0 && config.BackupType == _BackupType.DI)
+            if (config.RetentionStatistik[1] % config.Retention[1] == 1 && config.BackupType == _BackupType.DI)
             {
                 Snapshot newSnapshot = new Snapshot() { ConfigID = config.Id, Items = changesList };
                 daemonDataService.WriteSnapshot(newSnapshot);
@@ -187,6 +187,7 @@ namespace DaemonOfPain.Services
 
         public void StatisticControl(Config config)
         {
+
             if (config.BackupType == _BackupType.FB)
             {
                 config.RetentionStatistik[0]++;
@@ -199,13 +200,27 @@ namespace DaemonOfPain.Services
                         if (item.DestinationType == DestType.DRIVE)
                         {
 
-                            string path = @$"{item.DestinationPath}\FB_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
+                            DirectoryInfo dir = new DirectoryInfo(item.DestinationPath);
+                            DirectoryInfo[] dirs = dir.GetDirectories();
+
+                            string path = "";
+                            foreach (DirectoryInfo directory in dirs)
+                            {
+                                string[] subPaths = directory.FullName.Split('_');
+                                if (subPaths[0].Contains("FB") && 
+                                    subPaths[1] == config.ConfigName && 
+                                    subPaths[subPaths.Length - 1] == (config.RetentionStatistik[0] - config.Retention[0]).ToString())
+                                    path = String.Join("_", subPaths);
+
+                                continue;
+                            }
+
                             Console.WriteLine(path);
 
                             DirectoryInfo dirInfo = new DirectoryInfo(path);
                             if (dirInfo.Exists)
                             {
-                                //dirInfo.Delete(true);
+                                dirInfo.Delete(true);
                                 Console.WriteLine("Deleted");
                             }
                             else
@@ -241,23 +256,28 @@ namespace DaemonOfPain.Services
                         {
                             if (item.DestinationType == DestType.DRIVE)
                             {
+                                DirectoryInfo dir = new DirectoryInfo(item.DestinationPath);
+                                DirectoryInfo[] dirs = dir.GetDirectories();
 
-                                string path;
-                                if (config.BackupType == _BackupType.IN)
+                                string path = "";
+                                foreach (DirectoryInfo directory in dirs)
                                 {
-                                    path = @$"{item.DestinationPath}\IN_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
+                                    string[] subPaths = directory.FullName.Split('_');
+                                    if ((subPaths[0].Contains("DI") || subPaths[0].Contains("IN")) &&
+                                        subPaths[1] == config.ConfigName &&
+                                        subPaths[subPaths.Length - 1] == (config.RetentionStatistik[0] - config.Retention[0]).ToString())
+                                        path = String.Join("_", subPaths);
+
+                                    continue;
                                 }
-                                else
-                                {
-                                    path = @$"{item.DestinationPath}\DI_{config.ConfigName}_{DateTime.Now.ToString("d")}_{config.RetentionStatistik[0] - config.Retention[0]}\";
-                                }
+
                                 Console.WriteLine(path);
 
                                 DirectoryInfo dirInfo = new DirectoryInfo(path);
 
                                 if (dirInfo.Exists)
                                 {
-                                    //dirInfo.Delete(true);
+                                    dirInfo.Delete(true);
                                     Console.WriteLine("Deleted");
                                 }
                                 else
