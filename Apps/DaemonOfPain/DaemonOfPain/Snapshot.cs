@@ -9,10 +9,11 @@ namespace DaemonOfPain
     public class Snapshot
     {
         public int ConfigID { get; set; }
-        public List<SnapshotItem> Items { get; set; }
+        public Dictionary<string, Source> Sources { get; set; }
+
         public Snapshot()
         {
-            this.Items = new List<SnapshotItem>();
+            Sources = new Dictionary<string, Source>();
         }
     }
 }

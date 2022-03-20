@@ -16,5 +16,6 @@ namespace DaemonOfPain
     {
         public string ItemPath { get; set; }
         public _itemChange ItemChange { get; set; }
+        public string ItemSource { get; set; }
     }
 }

@@ -16,29 +16,27 @@ namespace DaemonOfPain
             //    MetadataItem item = new MetadataItem() { ItemChange = _itemChange.ADDED, ItemPath = "C:\\sdaad" };
             //    items.Add(item);
             //}
-            //Metadata metadata = new Metadata() { IdConfig=1, Items = items };
+            //Metadata metadata = new Metadata() { IdConfig = 1, Items = items };
 
             //md.WriteMetadata("C:\\BackupTesting", metadata);
+            //Console.ReadKey();
+            //Metadata metadata2 = md.GetMetadata("C:\\BackupTesting");
 
-            //Metadata metadata = md.GetMetadata("C:\\BackupTesting");
-
-            //foreach (var item in metadata.Items)
+            //foreach (var item in metadata2.Items)
             //{
             //    Console.WriteLine(item.ItemPath);
             //}
 
             //Console.ReadKey();
 
-            //BackupService b = new BackupService();
-            //List<SnapshotItem> items = b.GetSnapshot(@"C:\BackupTesting\SourceDir");
-            //List<SnapshotItem> items2 = b.SnapshotItemFilter(items);
-            //b.DoBackup(items2, @"C:\BackupTesting\DestDir\FB_testovani");
-            //Console.ReadKey();
+           
             BackupService b = new BackupService();
-            //List<SnapshotItem> items = b.GetSnapshot(@"C:\BackupTesting\test");
-            //b.DoBackup(items, @"C:\BackupDest\FB_testovani");
 
-            b.BackupSetup(1);
+            Config config = new Config()
+
+
+            
+            Console.ReadKey();
 
         }
     }
