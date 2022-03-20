@@ -36,7 +36,7 @@ namespace DaemonOfPain.Services
                     //U každého balíčku záloh najdi alespoň jeden soubor s metadaty a ulož do listu "Mlist"
                     foreach (var backupPackageDir in configDir.GetDirectories())
                     {
-                        Mlist.AddRange(MdataService.MetaSearcher(backupPackageDir.FullName, true));
+                        Mlist.AddRange(MdataService.MetaSearcher(backupPackageDir.FullName, true));//true znamená, že jakmile najde jeden jediný záznam, už nehledá dál
                     }
 
 
@@ -52,20 +52,20 @@ namespace DaemonOfPain.Services
                     else
                         SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 2));
 
-                    retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;
+                    retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
 
 
                     if (config.Retention[1] <= SubCompleteMlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
                     {
                         if (config.Retention[0] <= Mlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                         {
-                            if (lastMdata.BackupType == _BackupType.FB)
+                            if (lastMdata.BackupType == _BackupType.FB)//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
                                 Directory.Delete(PathReturner(firstMdata.BackupPath, 1));
                             else
                                 Directory.Delete(PathReturner(firstMdata.BackupPath, 2));
                         }
                     }
-                    else
+                    else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
                     {
                         if (firstMdata.BackupType == _BackupType.FB)
                             throw new Exception();
@@ -73,7 +73,7 @@ namespace DaemonOfPain.Services
                     }
                 }
                 else
-                {
+                {//první spuštění - vytvoří složku pro config
                     Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
                 }
 
@@ -82,7 +82,7 @@ namespace DaemonOfPain.Services
 
 
                 if (backupPath == "")
-                {
+                {// vytváření složky pro balíčky záloh
                     int packageRetention = 1;
                     if (Mlist.Count != 0)
                     {
@@ -114,13 +114,10 @@ namespace DaemonOfPain.Services
             //}
 
 
-
-
-
         }
         public void Backup(Config config, string path, int[] lastRetention)
         {
-            Metadata meta;
+            Metadata meta;//vytvoření metadat
             if (lastRetention[1] == 0)
                 meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 }); 
             else if (config.Retention[1] == lastRetention[1])
@@ -130,14 +127,15 @@ namespace DaemonOfPain.Services
 
 
 
-            if (config.BackupType != _BackupType.FB)
+            if (config.BackupType != _BackupType.FB)//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je prána jako balíček záloh.
                 path = path + "\\" + DateTime.Now.ToString("d") + "_" + DateTime.Now.ToString("h") + "." + DateTime.Now.ToString("m");
 
             
-            Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
+            
             foreach (var item in config.Sources)
             {
-                
+                //vytváří chngesList a sbírá medadata
+                Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
                 List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
                 newSnapshotList = SnapshotItemFilter(newSnapshotList);
                 ChangeReport report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
@@ -145,7 +143,7 @@ namespace DaemonOfPain.Services
                 changesList = SnapshotItemFilter(changesList);
                 meta.Items.AddRange(report.MetadataItem);
 
-                //nutno k cestě přidat název zdoje
+                //nutno k cestě přidat název zdoje//asi už ne
 
                 string[] parts = item.Split("\\");
                 string newPath = parts[parts.Length - 1];
@@ -395,7 +393,7 @@ namespace DaemonOfPain.Services
         //    }
         //    this.daemonDataService.WriteAllConfigs(new List<Config>() { config });
         //}
-        public string PathReturner(string path, int steps)
+        private string PathReturner(string path, int steps)//již funkční//vrátí se o určitý počet složek zpět. př. PathReturner(@"C:\Users\František\Desktop\",2) se vrátí o dvě složky zpět - vrátí => C:\Users
         {
             string[] parts = path.Split("\\");
             for (int i = 0; i < steps; i++)
@@ -405,7 +403,7 @@ namespace DaemonOfPain.Services
             string st = string.Join("\\", parts);
             return st.Trim('\\');
         }
-        private Metadata GetFirstOrLastMetadata(List<Metadata> Mlist, bool first)
+        private Metadata GetFirstOrLastMetadata(List<Metadata> Mlist, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
         {
             if (Mlist.Count != 0)
             {

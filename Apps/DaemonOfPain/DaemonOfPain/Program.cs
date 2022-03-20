@@ -13,13 +13,18 @@ namespace DaemonOfPain
 
             //for (int i = 0; i < 5; i++)
             //{
-            //    MetadataItem item = new MetadataItem() { ItemChange = _itemChange.ADDED, ItemPath = "C:\\sdaad" };
+            //    MetadataItem item = new MetadataItem("C:\\sdaad", _itemChange.ADDED);
             //    items.Add(item);
             //}
-            //Metadata metadata = new Metadata() { IdConfig = 1, Items = items };
+            //Metadata metadata = new Metadata(1, "gg", "", DateTime.Now, _BackupType.FB, new int[2] { 1, 1 }) { Items = items };
 
-            //md.WriteMetadata("C:\\BackupTesting", metadata);
+            //md.WriteMetadata(@"C:\Users\František\Desktop", metadata);
             //Console.ReadKey();
+
+            //List<Metadata> m = md.MetaSearcher(@"C:\Users\František\Desktop\BackupTesting\SourceDir");
+            //Console.ReadKey();
+
+
             //Metadata metadata2 = md.GetMetadata("C:\\BackupTesting");
 
             //foreach (var item in metadata2.Items)
@@ -29,7 +34,7 @@ namespace DaemonOfPain
 
             //Console.ReadKey();
 
-           
+
             BackupService b = new BackupService();
 
             Config config = new Config(666, "Testing", _BackupType.FB);

@@ -28,60 +28,32 @@ namespace DaemonOfPain.Services
         }
 
 
+        //již otestováno - funkční
+        public List<Metadata> MetaSearcher(string path, bool returnFirstRecord = false)//prohledá všechny podsložky a v listu vrátí všechny metadata, na která narazí
+        {                                               //returnFirstRecord znamená, že jakmile najde jeden jediný záznam, už nehledá dál
 
-        public List<Metadata> MetaSearcher(string path, bool returnFirstRecord = false)
+            return MetaSearcherCycle(path, new List<Metadata>(), returnFirstRecord, 5);//5 znamená, že ve stromové struktuře půjde mažimálně 5 podložek hluboko(aby neprohléhával zálohovaná data - ztráta času)
+
+        }
+        private List<Metadata> MetaSearcherCycle(string path, List<Metadata> Mlist, bool returnFirstRecord, int counter)
         {
-            DirectoryInfo directories = new DirectoryInfo(path);
-            List<Metadata> Mlist = new List<Metadata>();
-            foreach (var dir in directories.GetDirectories())
+            if(counter > 0)
             {
-                DirectoryInfo subDirectories = new DirectoryInfo(dir.FullName);
-                foreach (var subDir in subDirectories.GetDirectories())
+                DirectoryInfo directories = new DirectoryInfo(path);
+                if (File.Exists(directories.FullName + "\\Metadata.json"))
                 {
-                    if (File.Exists(subDir.FullName + "\\Metadata.json"))
+                    Mlist.Add(GetMetadata(directories.FullName));
+                    if (returnFirstRecord) { return Mlist; }
+                }
+                foreach (var item in directories.GetDirectories())
+                {
+                    if(!(returnFirstRecord && Mlist.Count>0))
                     {
-                        Mlist.Add(GetMetadata(subDir.FullName + "\\Metadata.json"));
-                        if (returnFirstRecord) { return Mlist; }
-                    }
-                    else
-                    {
-                        DirectoryInfo subSubDirectories = new DirectoryInfo(subDir.FullName);
-                        foreach (var subSubDir in subSubDirectories.GetDirectories())
-                        {
-                            if (File.Exists(subSubDir.FullName + "\\Metadata.json"))
-                            {
-                                Mlist.Add(GetMetadata(subSubDir.FullName + "\\Metadata.json"));
-                                if (returnFirstRecord) { return Mlist; }
-                            }
-                        }
+                        Mlist = MetaSearcherCycle(item.FullName, Mlist, returnFirstRecord, counter - 1);
                     }
                 }
             }
             return Mlist;
         }
-
-        //public string GetConfigPath(Config config, string path)
-        //{
-        //    DirectoryInfo directores = new DirectoryInfo(path);
-        //    foreach (var dir in directores.GetDirectories())
-        //    {
-        //        string[] parts = dir.Name.Split('_');
-        //        if(parts[1] == config.ConfigName) { return dir.FullName; }
-        //    }
-        //    //projdi všehny metadata
-        //    foreach (var dir in directores.GetDirectories())
-        //    {
-        //        List<Metadata> Mlist = MetaSearcher(dir.FullName, true);
-        //        foreach (var item in Mlist)
-        //        {
-        //            if(item.ConfigName == config.ConfigName)
-        //            {
-        //                return dir.FullName;
-        //            }
-        //        }
-        //    }
-        //    return null;
-        //}
-
     }
 }
