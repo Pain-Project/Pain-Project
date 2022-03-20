@@ -15,5 +15,10 @@ namespace DaemonOfPain
     {
         public DestType DestinationType{ get; set; }
         public string DestinationPath{ get; set; }
+        public Destination(string path, DestType destType)
+        {
+            DestinationPath = path;
+            DestinationType = destType;
+        }
     }
 }

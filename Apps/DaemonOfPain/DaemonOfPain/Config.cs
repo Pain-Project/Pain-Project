@@ -29,9 +29,15 @@ namespace DaemonOfPain
         public List<Destination> Destinations { get; set; }
 
 
-        public Config()
+        public Config(int id, string configName, _BackupType backupType)
         {
+            Id = id;
+            ConfigName = configName;
+            BackupType = backupType;
+            Retention = new int[2];
             Retention = new int[2] { 0,0};
+            Sources = new List<string>();
+            Destinations = new List<Destination>();
         }
     }
 }

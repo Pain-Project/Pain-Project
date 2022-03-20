@@ -12,16 +12,18 @@ namespace DaemonOfPain.Services
         private DaemonDataService daemonDataService = new DaemonDataService();
         private MetadataService MdataService = new MetadataService();
 
-        public void BackupSetup(int idConfig)
+        public void BackupSetup(int idConfig, Config config)//později config ostranit a odkomentovat řádek níže
         {
-            Config config = daemonDataService.GetConfigByID(idConfig);
+            //Config config = daemonDataService.GetConfigByID(idConfig);
+
+
             //statistiky
             //this.StatisticControl(config);
 
             foreach (var item in config.Destinations)
             {
                 int[] retention = new int[2];
-                string configDirPath = item + "\\" + config.ConfigName;
+                string configDirPath = item.DestinationPath + "\\" + config.ConfigName;
                 DirectoryInfo configDir = new DirectoryInfo(configDirPath);
                 string backupPath = "";
                 List<Metadata> Mlist = new List<Metadata>();
@@ -72,7 +74,7 @@ namespace DaemonOfPain.Services
                 }
                 else
                 {
-                    Directory.CreateDirectory(item + "\\" + config.ConfigName);
+                    Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
                 }
 
 
@@ -81,19 +83,22 @@ namespace DaemonOfPain.Services
 
                 if (backupPath == "")
                 {
+                    int packageRetention = 1;
                     if (Mlist.Count != 0)
                     {
                         Metadata last = GetFirstOrLastMetadata(Mlist, false);
-                        backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + last.RetentionStats[0];
-                        if (config.BackupType == _BackupType.FB)
-                            backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + last.RetentionStats[0];
-                        if (config.BackupType == _BackupType.IN)
-                            backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + last.RetentionStats[0];
-                        if (config.BackupType == _BackupType.DI)
-                            backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + last.RetentionStats[0];
-
-                        Directory.CreateDirectory(backupPath);
+                        packageRetention = last.RetentionStats[0];
                     }
+                    
+                    backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                    if (config.BackupType == _BackupType.FB)
+                        backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                    else if (config.BackupType == _BackupType.IN)
+                        backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                    else if (config.BackupType == _BackupType.DI)
+                        backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+
+                    Directory.CreateDirectory(backupPath);
                 }
 
                 Backup(config, backupPath, retention);
@@ -128,15 +133,17 @@ namespace DaemonOfPain.Services
             if (config.BackupType != _BackupType.FB)
                 path = path + "\\" + DateTime.Now.ToString("d") + "_" + DateTime.Now.ToString("h") + "." + DateTime.Now.ToString("m");
 
-
+            
             Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
             foreach (var item in config.Sources)
             {
                 
                 List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
                 newSnapshotList = SnapshotItemFilter(newSnapshotList);
-                List<SnapshotItem> changesList = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
+                ChangeReport report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
+                List<SnapshotItem> changesList = report.SnapshotItem;
                 changesList = SnapshotItemFilter(changesList);
+                meta.Items.AddRange(report.MetadataItem);
 
                 //nutno k cestě přidat název zdoje
 
@@ -236,11 +243,11 @@ namespace DaemonOfPain.Services
             }
             return dirEntry;
         }
-        public List<SnapshotItem> GetChanges(List<SnapshotItem> source, List<SnapshotItem> snapshotToCompare)
+        public ChangeReport GetChanges(List<SnapshotItem> source, List<SnapshotItem> snapshotToCompare)
         {
             Dictionary<string, SnapshotItem> sourceDic = new Dictionary<string, SnapshotItem>();
             Dictionary<string, SnapshotItem> compareDic = new Dictionary<string, SnapshotItem>();
-            List<SnapshotItem> changedItems = new List<SnapshotItem>();
+            ChangeReport report = new ChangeReport();
             foreach (var item in source)
             {
                 sourceDic.Add(item.ItemPath, item);
@@ -256,7 +263,8 @@ namespace DaemonOfPain.Services
                     SnapshotItem s = sourceDic[item.ItemPath];
                     if (item.ItemType != _ItemType.FOLDER && item.Date != s.Date)
                     {
-                        changedItems.Add(item);
+                        report.SnapshotItem.Add(item);
+                        report.MetadataItem.Add(new MetadataItem(item.ItemPath, _itemChange.EDITED));
                     }
 
                     compareDic.Remove(item.ItemPath);
@@ -264,13 +272,15 @@ namespace DaemonOfPain.Services
                 catch
                 {
                     //zde by bylo možné odchytávat soubory, které byly odstraněny
+                    report.MetadataItem.Add(new MetadataItem(item.ItemPath, _itemChange.REMOVED));
                 }
             }
             foreach (var item in compareDic)
             {
-                changedItems.Add(item.Value);
+                report.SnapshotItem.Add(item.Value);
+                report.MetadataItem.Add(new MetadataItem(item.Value.ItemPath, _itemChange.ADDED));
             }
-            return changedItems;
+            return report;
         }
 
         //public void StatisticControl(Config config)
