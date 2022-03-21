@@ -1,6 +1,7 @@
 ﻿using DaemonOfPain.Services;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DaemonOfPain
 {
@@ -32,20 +33,35 @@ namespace DaemonOfPain
             //    Console.WriteLine(item.ItemPath);
             //}
 
-            //Console.ReadKey();
+            //Console.ReadKey(); 
 
 
             BackupService b = new BackupService();
 
-            Config config = new Config(667, "Testing2", _BackupType.DI);
+            Config config = new Config(666, "Testing2", _BackupType.IN);
             config.Retention[0] = 3;
-            config.Retention[1] = 5;
+            config.Retention[1] = 4;
             config.Sources.Add(@"C:\Users\František\Desktop\BackupTesting\SourceDir");
             config.Destinations.Add(new Destination(@"C:\Users\František\Desktop\BackupTesting\DestDir", DestType.DRIVE));
 
-            b.BackupSetup(666, config);
-            
-            Console.ReadKey();
+
+            //Config config = new Config(663, "Testing3", _BackupType.DI);
+            //config.Retention[0] = 3;
+            //config.Retention[1] = 4;
+            //config.Sources.Add(@"C:\Users\František\Desktop\BackupTesting\SourceDir");
+            //config.Destinations.Add(new Destination(@"C:\Users\František\Desktop\BackupTesting\DestDir", DestType.DRIVE));
+
+            //int count = 15;
+            //for (int i = 0; i < count; i++)
+            //{
+            //    b.BackupSetup(config);
+            //    Thread.Sleep(2000);
+            //    Console.WriteLine(i);
+            //}
+
+
+            b.BackupSetup(config);
+
 
         }
     }

@@ -13,13 +13,9 @@ namespace DaemonOfPain.Services
         private MetadataService MdataService = new MetadataService();
         private List<Metadata> SubCompleteMlist = new List<Metadata>();
 
-        public void BackupSetup(int idConfig, Config config)//později config ostranit a odkomentovat řádek níže
+        public void BackupSetup(Config config)//později config ostranit a odkomentovat řádek níže
         {
             //Config config = daemonDataService.GetConfigByID(idConfig);
-
-
-            //statistiky
-            //this.StatisticControl(config);
 
             foreach (var item in config.Destinations)
             {
@@ -32,26 +28,18 @@ namespace DaemonOfPain.Services
                 if (Directory.Exists(configDirPath))//Existuje složka s configem?
                 {
 
-
-
                     //U každého balíčku záloh najdi alespoň jeden soubor s metadaty a ulož do listu "Mlist"
                     foreach (var backupPackageDir in configDir.GetDirectories())
                     {
                         Mlist.AddRange(MdataService.MetaSearcher(backupPackageDir.FullName, true));//true znamená, že jakmile najde jeden jediný záznam, už nehledá dál
                     }
 
-
-
-
                     //Z vytvořeného listu "Mlist" vyber nejnovější záznam a získej z podsložek tohoto záznamu veškerá metadata
                     Metadata firstMdata = GetFirstOrLastMetadata(Mlist, true);
                     Metadata lastMdata = GetFirstOrLastMetadata(Mlist, false);
 
 
-                    if (lastMdata.BackupType == _BackupType.FB)
-                        this.SubCompleteMlist = MdataService.MetaSearcher(lastMdata.BackupPath);
-                    else
-                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 1));
+                    this.SubCompleteMlist = MdataService.MetaSearcher(lastMdata.BackupPath);
 
                     retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
 
@@ -60,17 +48,14 @@ namespace DaemonOfPain.Services
                     {
                         if (config.Retention[0] <= Mlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                         {
-                            if (lastMdata.BackupType == _BackupType.FB)//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
-                                Directory.Delete(firstMdata.BackupPath, true);
-                            else
-                                Directory.Delete(PathReturner(firstMdata.BackupPath, 1),true);
+                            Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
                         }
                     }
                     else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
                     {
                         if (firstMdata.BackupType == _BackupType.FB)
                             throw new Exception();
-                        backupPath = PathReturner(firstMdata.BackupPath, 1);
+                        backupPath = lastMdata.BackupPath;
                     }
                 }
                 else
@@ -78,9 +63,6 @@ namespace DaemonOfPain.Services
                     Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
 
                 }
-
-
-
 
 
                 if (backupPath == "")
@@ -109,15 +91,6 @@ namespace DaemonOfPain.Services
 
                 Backup(config, backupPath, retention);
             }
-            //if (config.RetentionStatistik[1] % config.Retention[1] == 1 && config.BackupType == _BackupType.DI)
-            //{
-            //    Snapshot newSnapshot = new Snapshot() { ConfigID = config.Id, Items = changesList };
-            //    daemonDataService.WriteSnapshot(newSnapshot);
-            //}
-            //else if (config.BackupType == _BackupType.IN)
-            //{
-
-            //}
 
 
         }
@@ -132,14 +105,18 @@ namespace DaemonOfPain.Services
                 meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]+1 });
 
 
+            
+            if (config.BackupType != _BackupType.FB)
+            {//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je prána jako balíček záloh.
 
-            if (config.BackupType != _BackupType.FB)//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je prána jako balíček záloh.
-                path = path + "\\" + DateTime.Now.ToString("d") + "_" + DateTime.Now.ToString("h") + "." + DateTime.Now.ToString("m");
+                path = path + "\\" + DateTime.Now.ToString("d")+DateTime.Now.ToString("_H.mm.ss");
+            }
 
 
             Dictionary<string, Source> changesDictionary = new Dictionary<string, Source>();
 
             Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
+
             foreach (var item in config.Sources)
             {
                 //vytváří chngesList a sbírá medadata
@@ -176,7 +153,7 @@ namespace DaemonOfPain.Services
                 DoBackup(changesList, path + "\\" + newPath);
 
             }
-            MdataService.WriteMetadata(meta.BackupPath, meta);
+            MdataService.WriteMetadata(path, meta);
             if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
             {
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
@@ -187,7 +164,7 @@ namespace DaemonOfPain.Services
                 Dictionary<string, Source> lastChangesDictionary = lastSnapshot.Sources;
                 foreach (KeyValuePair<string, Source> item in changesDictionary)
                 {
-                    lastChangesDictionary[item.Key] = item.Value;
+                    lastChangesDictionary[item.Key].Items = item.Value.Items;
                 }
 
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = lastChangesDictionary };
@@ -201,6 +178,8 @@ namespace DaemonOfPain.Services
             {
                 if (item.ItemType == _ItemType.FILE)
                 {
+                    if (!Directory.Exists(path + item.ItemPath.Replace(item.Root, "")))
+                        Directory.CreateDirectory(path + PathReturner(item.ItemPath,1).Replace(item.Root, ""));
                     File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
 
                 }
@@ -321,118 +300,7 @@ namespace DaemonOfPain.Services
             return report;
         }
 
-        //public void StatisticControl(Config config)
-        //{
-
-        //    if (config.BackupType == _BackupType.FB)
-        //    {
-        //        config.RetentionStatistik[0]++;
-        //        Console.WriteLine("FB:");
-
-        //        if (config.RetentionStatistik[0] > config.Retention[0])
-        //        {
-        //            foreach (Destination item in config.Destinations)
-        //            {
-        //                if (item.DestinationType == DestType.DRIVE)
-        //                {
-
-        //                    DirectoryInfo dir = new DirectoryInfo(item.DestinationPath);
-        //                    DirectoryInfo[] dirs = dir.GetDirectories();
-
-        //                    string path = "";
-        //                    foreach (DirectoryInfo directory in dirs)
-        //                    {
-        //                        string[] subPaths = directory.FullName.Split('_');
-        //                        if (subPaths[0].Contains("FB") && 
-        //                            subPaths[1] == config.ConfigName && 
-        //                            subPaths[subPaths.Length - 1] == (config.RetentionStatistik[0] - config.Retention[0]).ToString())
-        //                            path = String.Join("_", subPaths);
-
-        //                        continue;
-        //                    }
-
-        //                    Console.WriteLine(path);
-
-        //                    DirectoryInfo dirInfo = new DirectoryInfo(path);
-        //                    if (dirInfo.Exists)
-        //                    {
-        //                        dirInfo.Delete(true);
-        //                        Console.WriteLine("Deleted");
-        //                    }
-        //                    else
-        //                    {
-        //                        Console.WriteLine("Not found");
-        //                    }
-        //                }
-        //                else
-        //                {
-        //                    //FTP
-        //                }
-        //            }
-        //        }
-        //        Console.WriteLine(config.Retention[0]);
-        //        Console.WriteLine(config.RetentionStatistik[0]);
-        //    }
-        //    else
-        //    {
-        //        config.RetentionStatistik[1]++;
-        //        Console.WriteLine("DI / IN:");
-        //        if (config.RetentionStatistik[1] % (config.Retention[1]) == 1)
-        //        {
-        //            config.RetentionStatistik[0]++;
-
-
-        //            Snapshot newSnap = new Snapshot() { ConfigID = config.Id};
-        //            this.daemonDataService.WriteSnapshot(newSnap);
-        //            Console.WriteLine("Snapshot created");
-
-        //            if (config.RetentionStatistik[0] > config.Retention[0])
-        //            {
-        //                foreach (Destination item in config.Destinations)
-        //                {
-        //                    if (item.DestinationType == DestType.DRIVE)
-        //                    {
-        //                        DirectoryInfo dir = new DirectoryInfo(item.DestinationPath);
-        //                        DirectoryInfo[] dirs = dir.GetDirectories();
-
-        //                        string path = "";
-        //                        foreach (DirectoryInfo directory in dirs)
-        //                        {
-        //                            string[] subPaths = directory.FullName.Split('_');
-        //                            if ((subPaths[0].Contains("DI") || subPaths[0].Contains("IN")) &&
-        //                                subPaths[1] == config.ConfigName &&
-        //                                subPaths[subPaths.Length - 1] == (config.RetentionStatistik[0] - config.Retention[0]).ToString())
-        //                                path = String.Join("_", subPaths);
-
-        //                            continue;
-        //                        }
-
-        //                        Console.WriteLine(path);
-
-        //                        DirectoryInfo dirInfo = new DirectoryInfo(path);
-
-        //                        if (dirInfo.Exists)
-        //                        {
-        //                            dirInfo.Delete(true);
-        //                            Console.WriteLine("Deleted");
-        //                        }
-        //                        else
-        //                        {
-        //                            Console.WriteLine("Not found");
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        //FTP
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        Console.WriteLine(config.Retention[0] + " / " + config.Retention[1]);
-        //        Console.WriteLine(config.RetentionStatistik[0] + " / " + config.RetentionStatistik[1]);
-        //    }
-        //    this.daemonDataService.WriteAllConfigs(new List<Config>() { config });
-        //}
+        
         private string PathReturner(string path, int steps)//již funkční//vrátí se o určitý počet složek zpět. př. PathReturner(@"C:\Users\František\Desktop\",2) se vrátí o dvě složky zpět - vrátí => C:\Users
         {
             string[] parts = path.Split("\\");
