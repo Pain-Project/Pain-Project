@@ -34,8 +34,7 @@ namespace DaemonOfPain
             Id = id;
             ConfigName = configName;
             BackupType = backupType;
-            Retention = new int[2];
-            Retention = new int[2] { 0,0};
+            Retention = new int[2] { 0, 1};
             Sources = new List<string>();
             Destinations = new List<Destination>();
         }

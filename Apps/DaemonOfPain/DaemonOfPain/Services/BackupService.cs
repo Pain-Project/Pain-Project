@@ -11,6 +11,7 @@ namespace DaemonOfPain.Services
     {
         private DaemonDataService daemonDataService = new DaemonDataService();
         private MetadataService MdataService = new MetadataService();
+        private List<Metadata> SubCompleteMlist;
 
         public void BackupSetup(int idConfig, Config config)//později config ostranit a odkomentovat řádek níže
         {
@@ -45,12 +46,12 @@ namespace DaemonOfPain.Services
                     //Z vytvořeného listu "Mlist" vyber nejnovější záznam a získej z podsložek tohoto záznamu veškerá metadata
                     Metadata firstMdata = GetFirstOrLastMetadata(Mlist, true);
                     Metadata lastMdata = GetFirstOrLastMetadata(Mlist, false);
-                    List<Metadata> SubCompleteMlist;
+
 
                     if (lastMdata.BackupType == _BackupType.FB)
-                        SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 1));
+                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 1));
                     else
-                        SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 2));
+                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 2));
 
                     retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
 
@@ -75,6 +76,7 @@ namespace DaemonOfPain.Services
                 else
                 {//první spuštění - vytvoří složku pro config
                     Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
+
                 }
 
 
@@ -83,13 +85,16 @@ namespace DaemonOfPain.Services
 
                 if (backupPath == "")
                 {// vytváření složky pro balíčky záloh
+                    Snapshot snapshot = new Snapshot() { ConfigID = config.Id };
+                    this.daemonDataService.WriteSnapshot(snapshot);
+
                     int packageRetention = 1;
                     if (Mlist.Count != 0)
                     {
                         Metadata last = GetFirstOrLastMetadata(Mlist, false);
                         packageRetention = last.RetentionStats[0];
                     }
-                    
+
                     backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
                     if (config.BackupType == _BackupType.FB)
                         backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
@@ -119,23 +124,24 @@ namespace DaemonOfPain.Services
         {
             Metadata meta;//vytvoření metadat
             if (lastRetention[1] == 0)
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 }); 
+                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 });
             else if (config.Retention[1] == lastRetention[1])
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0]++, 1 }); 
+                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0]++, 1 });
             else
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]++ }); 
+                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]++ });
 
 
 
             if (config.BackupType != _BackupType.FB)//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je prána jako balíček záloh.
                 path = path + "\\" + DateTime.Now.ToString("d") + "_" + DateTime.Now.ToString("h") + "." + DateTime.Now.ToString("m");
 
-            
-            
+
+            Dictionary<string, Source> changesDictionary = new Dictionary<string, Source>();
+
+            Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
             foreach (var item in config.Sources)
             {
                 //vytváří chngesList a sbírá medadata
-                Snapshot lastSnapshot = daemonDataService.GetSnapshotByID(config.Id);
                 List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
                 newSnapshotList = SnapshotItemFilter(newSnapshotList);
                 ChangeReport report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
@@ -143,16 +149,39 @@ namespace DaemonOfPain.Services
                 changesList = SnapshotItemFilter(changesList);
                 meta.Items.AddRange(report.MetadataItem);
 
+                if (!changesDictionary.ContainsKey(item))
+                {
+                    Source src = new Source() { Path = item, Items = changesList };
+                    changesDictionary[item] = src;
+                }
+
                 //nutno k cestě přidat název zdoje//asi už ne
 
                 string[] parts = item.Split("\\");
                 string newPath = parts[parts.Length - 1];
                 while (Directory.Exists(newPath))
                     newPath += "_1";
-                DoBackup(changesList, path+"\\"+ newPath);
+
+
+                DoBackup(changesList, path + "\\" + newPath);
 
             }
+            if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
+            {
+                Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
+                this.daemonDataService.WriteSnapshot(snapshot);
+            }
+            else if (config.BackupType == _BackupType.IN && SubCompleteMlist.Count > 0)
+            {
+                Dictionary<string, Source> lastChangesDictionary = lastSnapshot.Sources;
+                foreach (KeyValuePair<string, Source> item in changesDictionary)
+                {
+                    lastChangesDictionary[item.Key] = item.Value;
+                }
 
+                Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = lastChangesDictionary };
+                this.daemonDataService.WriteSnapshot(snapshot);
+            }
         }
         public void DoBackup(List<SnapshotItem> changesList, string path)
         {
@@ -184,7 +213,7 @@ namespace DaemonOfPain.Services
             CreateDir(destination);
             foreach (var item in sourceDir.GetFiles())
             {
-                item.CopyTo(destination +"\\"+ item.Name);
+                item.CopyTo(destination + "\\" + item.Name);
             }
             foreach (var item in sourceDir.GetDirectories())
             {
@@ -202,8 +231,8 @@ namespace DaemonOfPain.Services
             {
                 var key = itemsDic.ElementAt(i);
                 string[] parts = key.Value.ItemPath.Split('\\');
-                string path = key.Value.ItemPath.Replace("\\"+parts[parts.Length - 1], "");
-                if(itemsDic.ContainsKey(path))
+                string path = key.Value.ItemPath.Replace("\\" + parts[parts.Length - 1], "");
+                if (itemsDic.ContainsKey(path))
                 {
                     i--;
                     itemsDic.Remove(path);
