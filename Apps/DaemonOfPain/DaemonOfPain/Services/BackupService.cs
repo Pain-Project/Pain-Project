@@ -11,7 +11,7 @@ namespace DaemonOfPain.Services
     {
         private DaemonDataService daemonDataService = new DaemonDataService();
         private MetadataService MdataService = new MetadataService();
-        private List<Metadata> SubCompleteMlist;
+        private List<Metadata> SubCompleteMlist = new List<Metadata>();
 
         public void BackupSetup(int idConfig, Config config)//později config ostranit a odkomentovat řádek níže
         {
@@ -49,9 +49,9 @@ namespace DaemonOfPain.Services
 
 
                     if (lastMdata.BackupType == _BackupType.FB)
-                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 1));
+                        this.SubCompleteMlist = MdataService.MetaSearcher(lastMdata.BackupPath);
                     else
-                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 2));
+                        this.SubCompleteMlist = MdataService.MetaSearcher(PathReturner(lastMdata.BackupPath, 1));
 
                     retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
 
@@ -61,9 +61,9 @@ namespace DaemonOfPain.Services
                         if (config.Retention[0] <= Mlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                         {
                             if (lastMdata.BackupType == _BackupType.FB)//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
-                                Directory.Delete(PathReturner(firstMdata.BackupPath, 1));
+                                Directory.Delete(firstMdata.BackupPath, true);
                             else
-                                Directory.Delete(PathReturner(firstMdata.BackupPath, 2));
+                                Directory.Delete(PathReturner(firstMdata.BackupPath, 1),true);
                         }
                     }
                     else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
@@ -93,6 +93,7 @@ namespace DaemonOfPain.Services
                     {
                         Metadata last = GetFirstOrLastMetadata(Mlist, false);
                         packageRetention = last.RetentionStats[0];
+                        packageRetention++;
                     }
 
                     backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
@@ -126,9 +127,9 @@ namespace DaemonOfPain.Services
             if (lastRetention[1] == 0)
                 meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 });
             else if (config.Retention[1] == lastRetention[1])
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0]++, 1 });
+                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0]+1, 1 });
             else
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]++ });
+                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]+1 });
 
 
 
@@ -143,8 +144,17 @@ namespace DaemonOfPain.Services
             {
                 //vytváří chngesList a sbírá medadata
                 List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
+                newSnapshotList = GetSnapshot(item);
                 newSnapshotList = SnapshotItemFilter(newSnapshotList);
-                ChangeReport report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
+                ChangeReport report;
+                try
+                {
+                    report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
+                }
+                catch
+                {
+                    report = GetChanges(new List<SnapshotItem>(), newSnapshotList);
+                }
                 List<SnapshotItem> changesList = report.SnapshotItem;
                 changesList = SnapshotItemFilter(changesList);
                 meta.Items.AddRange(report.MetadataItem);
@@ -166,6 +176,7 @@ namespace DaemonOfPain.Services
                 DoBackup(changesList, path + "\\" + newPath);
 
             }
+            MdataService.WriteMetadata(meta.BackupPath, meta);
             if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
             {
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
@@ -283,11 +294,11 @@ namespace DaemonOfPain.Services
             {
                 compareDic.Add(item.ItemPath, item);
             }
-            foreach (var item in snapshotToCompare)
+            foreach (var item in source)
             {
                 try
                 {
-                    SnapshotItem s = sourceDic[item.ItemPath];
+                    SnapshotItem s = compareDic[item.ItemPath];
                     if (item.ItemType != _ItemType.FOLDER && item.Date != s.Date)
                     {
                         report.SnapshotItem.Add(item);
@@ -436,19 +447,19 @@ namespace DaemonOfPain.Services
         {
             if (Mlist.Count != 0)
             {
-                Metadata result = null;
+                Metadata result = Mlist[0];
                 foreach (var meta in Mlist)
                 {
                     if (first)
                     {
                         int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber < 0)
+                        if (resultNumber > 0)
                             result = meta;
                     }
                     else
                     {
                         int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber > 0)
+                        if (resultNumber < 0)
                             result = meta;
                     }
                 }

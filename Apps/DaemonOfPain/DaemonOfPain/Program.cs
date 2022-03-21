@@ -37,7 +37,7 @@ namespace DaemonOfPain
 
             BackupService b = new BackupService();
 
-            Config config = new Config(666, "Testing", _BackupType.FB);
+            Config config = new Config(667, "Testing2", _BackupType.DI);
             config.Retention[0] = 3;
             config.Retention[1] = 5;
             config.Sources.Add(@"C:\Users\František\Desktop\BackupTesting\SourceDir");

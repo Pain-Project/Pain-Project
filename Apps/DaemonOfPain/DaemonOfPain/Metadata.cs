@@ -23,7 +23,7 @@ namespace DaemonOfPain
             BackupPath = backupPath;
             CreateDate = createDate;
             BackupType = backupType;
-
+            Items = new List<MetadataItem>();
         }
 
     }
