@@ -86,6 +86,7 @@ namespace DaemonOfPain.Services
                     else if (config.BackupType == _BackupType.DI)
                         backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + packageRetention;
 
+                    this.SubCompleteMlist.Clear();
                     Directory.CreateDirectory(backupPath);
                 }
 
@@ -164,7 +165,20 @@ namespace DaemonOfPain.Services
                 Dictionary<string, Source> lastChangesDictionary = lastSnapshot.Sources;
                 foreach (KeyValuePair<string, Source> item in changesDictionary)
                 {
-                    lastChangesDictionary[item.Key].Items = item.Value.Items;
+                    for (int i = 0; i < item.Value.Items.Count; i++)
+                    {
+                        if (lastChangesDictionary[item.Key].Items.Contains(item.Value.Items[i]))
+                        {
+                            int index = lastChangesDictionary[item.Key].Items.IndexOf(item.Value.Items[i]);
+                            lastChangesDictionary[item.Key].Items[index] = item.Value.Items[i];
+                        }
+                        else
+                        {
+                            lastChangesDictionary[item.Key].Items.Add(item.Value.Items[i]);
+                        }
+                    }
+
+                    //lastChangesDictionary[item.Key].Items = item.Value.Items;
                 }
 
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = lastChangesDictionary };

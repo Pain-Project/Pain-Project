@@ -1,1 +1,232 @@
-[{"ConfigID":667,"Sources":{}},{"ConfigID":668,"Sources":{}},{"ConfigID":669,"Sources":{"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir":{"Path":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir","Items":[{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\new.xlsx","ItemType":0,"Date":"21.03.2022 20:49:31","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"}]}}},{"ConfigID":663,"Sources":{"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir":{"Path":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir","Items":[{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\m","ItemType":1,"Date":"21.03.2022 20:58:07","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\Uh.txt","ItemType":0,"Date":"12.03.2022 16:57:03","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\haha","ItemType":1,"Date":"21.03.2022 20:58:07","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\f.txt","ItemType":0,"Date":"12.03.2022 16:56:44","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\h.txt","ItemType":0,"Date":"12.03.2022 18:19:23","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\L.txt","ItemType":0,"Date":"12.03.2022 16:56:49","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"}]}}},{"ConfigID":666,"Sources":{"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir":{"Path":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir","Items":[{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\m","ItemType":1,"Date":"21.03.2022 20:58:07","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\Uh.txt","ItemType":0,"Date":"12.03.2022 16:57:03","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\haha","ItemType":1,"Date":"21.03.2022 20:58:07","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\f.txt","ItemType":0,"Date":"12.03.2022 16:56:44","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\h.txt","ItemType":0,"Date":"12.03.2022 18:19:23","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"},{"ItemPath":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\L.txt","ItemType":0,"Date":"12.03.2022 16:56:49","Root":"C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"}]}}}]
+[
+  {
+    "ConfigID": 669,
+    "Sources": {
+      "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir": {
+        "Path": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir",
+        "Items": [
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\new.xlsx",
+            "ItemType": 0,
+            "Date": "21.03.2022 20:49:31",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ConfigID": 663,
+    "Sources": {
+      "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir": {
+        "Path": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir",
+        "Items": [
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\m",
+            "ItemType": 1,
+            "Date": "21.03.2022 20:58:07",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          },
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\gg\\Uh.txt",
+            "ItemType": 0,
+            "Date": "12.03.2022 16:57:03",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          },
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\haha",
+            "ItemType": 1,
+            "Date": "21.03.2022 20:58:07",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          },
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\testik\\f.txt",
+            "ItemType": 0,
+            "Date": "12.03.2022 16:56:44",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          },
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\h.txt",
+            "ItemType": 0,
+            "Date": "12.03.2022 18:19:23",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          },
+          {
+            "ItemPath": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir\\test\\L.txt",
+            "ItemType": 0,
+            "Date": "12.03.2022 16:56:49",
+            "Root": "C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ConfigID": 666,
+    "Sources": {
+      "C:\\BackupTesting": {
+        "Path": "C:\\BackupTesting",
+        "Items": [
+          {
+            "ItemPath": "C:\\BackupTesting\\asdasdsadasd",
+            "ItemType": 1,
+            "Date": "17.03.2022 14:24:23",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nova\\Nova2",
+            "ItemType": 1,
+            "Date": "14.03.2022 22:44:26",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nova\\Divny.txt",
+            "ItemType": 0,
+            "Date": "14.03.2022 22:44:31",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Poslední",
+            "ItemType": 1,
+            "Date": "22.03.2022 0:04:56",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Testing\\xyasdasd",
+            "ItemType": 1,
+            "Date": "14.03.2022 22:37:37",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\asdasdasdasdas.txt",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:04:36",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nejnovejsi",
+            "ItemType": 1,
+            "Date": "22.03.2022 0:05:59",
+            "Root": "C:\\BackupTesting"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "ConfigID": 667,
+    "Sources": {
+    }
+  },
+  {
+    "ConfigID": 668,
+    "Sources": {
+      "C:\\BackupTesting": {
+        "Path": "C:\\BackupTesting",
+        "Items": [
+          {
+            "ItemPath": "C:\\BackupTesting\\asdasdsadasd",
+            "ItemType": 1,
+            "Date": "17.03.2022 14:24:23",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nejnovejsi",
+            "ItemType": 1,
+            "Date": "22.03.2022 0:05:59",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nova\\Nova2",
+            "ItemType": 1,
+            "Date": "14.03.2022 22:44:26",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Nova\\Divny.txt",
+            "ItemType": 0,
+            "Date": "14.03.2022 22:44:31",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Poslední",
+            "ItemType": 1,
+            "Date": "22.03.2022 0:04:56",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\TaktezNovyTEsting\\Nový WinRAR archiv.rar",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:13:01",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\TaktezNovyTEsting\\sdsadassdasda.txt",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:14:15",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\TaktezNovyTEsting\\ydsydysdysdysdysy.txt",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:14:19",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\Testing\\xyasdasd",
+            "ItemType": 1,
+            "Date": "14.03.2022 22:37:37",
+            "Root": "C:\\BackupTesting"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting\\asdasdasdasdas.txt",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:04:36",
+            "Root": "C:\\BackupTesting"
+          }
+        ]
+      },
+      "C:\\BackupTesting2": {
+        "Path": "C:\\BackupTesting2",
+        "Items": [
+          {
+            "ItemPath": "C:\\BackupTesting2\\novy",
+            "ItemType": 1,
+            "Date": "22.03.2022 0:12:49",
+            "Root": "C:\\BackupTesting2"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting2\\adasd.zip",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:15:23",
+            "Root": "C:\\BackupTesting2"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting2\\adsadasddasd.xlsx",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:15:28",
+            "Root": "C:\\BackupTesting2"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting2\\asdasdasdasdasdasdsaagdgsagasgdsagasdgasdg.txt",
+            "ItemType": 0,
+            "Date": "22.03.2022 0:16:52",
+            "Root": "C:\\BackupTesting2"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting2\\asdasdsadasd.txt",
+            "ItemType": 0,
+            "Date": "17.03.2022 18:07:58",
+            "Root": "C:\\BackupTesting2"
+          },
+          {
+            "ItemPath": "C:\\BackupTesting2\\ddasdas.txt",
+            "ItemType": 0,
+            "Date": "17.03.2022 18:08:10",
+            "Root": "C:\\BackupTesting2"
+          }
+        ]
+      }
+    }
+  }
+]

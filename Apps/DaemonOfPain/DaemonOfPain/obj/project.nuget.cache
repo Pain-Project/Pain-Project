@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "e4HLnrLLKvFgxsPyXelJH8a6M003okFDx6q/y7r+G6zosZ0GvFzc/1caqKNKIzTNtri9+kViVtCYAnvtyq+yHQ==",
+  "dgSpecHash": "jc33ZIOp07m3CF3d/z08H4R3RuRTlrdCPV7gi5RDc0mBZBG0omJpGY+X9wmizruN61pco290kXgLzxEoh1krKA==",
   "success": true,
-  "projectFilePath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+  "projectFilePath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\František\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\troli\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\troli\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
   ],
   "logs": []
 }
