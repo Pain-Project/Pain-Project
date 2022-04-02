@@ -1,7 +1,10 @@
-﻿namespace DatabaseTest.DatabaseTables
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DatabaseTest.DatabaseTables
 {
     public class Client
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string IpAddress { get; set; }

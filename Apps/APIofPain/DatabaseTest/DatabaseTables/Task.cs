@@ -9,12 +9,22 @@ namespace DatabaseTest.DatabaseTables
 {
     public class Task
     {
+        [Key]
         public int Id { get; set; }
+        
+        [ForeignKey("Assignment")]
         public int IdAssignment { get; set; }
+        
         public string State { get; set; }
+        
         public string Message { get; set; } //v db Varchar(0)? (úmysl jako max -> nefunguje -> navýšeno na 255 zatím)
+        
         public string Date { get; set; }
+        
         [Column("Size[MB]")]
         public int Size { get; set; } 
+
+
+        public Assignment Assignment { get; set; }
     }
 }

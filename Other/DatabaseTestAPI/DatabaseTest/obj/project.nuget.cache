@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SFiNor8yxgBW4fGkIdvTL5Vl8QOpmB+29Q1Jn4+PZ6z2Z1Fty/n+1oIJO+21EAsDm07K1/slgJVsaRmQ26qMAw==",
+  "dgSpecHash": "r+UqA93oxXGv8sWD//rmRDkrSRkKOe4DwTsu7VYnR4ID2L5lySoagUvsDNWJSRM33P7E7m7ZSAKPS00U07bKYA==",
   "success": true,
   "projectFilePath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Other\\DatabaseTestAPI\\DatabaseTest\\DatabaseTest.csproj",
   "expectedPackageFiles": [
@@ -45,7 +45,8 @@
     "C:\\Users\\troli\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\troli\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\troli\\.nuget\\packages\\system.text.encoding.codepages\\4.4.0\\system.text.encoding.codepages.4.4.0.nupkg.sha512",
-    "C:\\Users\\troli\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
+    "C:\\Users\\troli\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
+    "C:\\Users\\troli\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
   ],
   "logs": []
 }
