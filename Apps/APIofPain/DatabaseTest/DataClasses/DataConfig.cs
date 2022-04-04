@@ -17,7 +17,6 @@ namespace DatabaseTest.DataClasses
         public int RetentionPackageSize { get; set; }
         public List<string> Sources { get; set; }
         public List<DataDestination> Destinations { get; set; }
-        public IEnumerable<int>? ClientIDs { get; set; }
         public Dictionary<int, string>? ClientNames { get; set; }
     }
     public class DataDestination
