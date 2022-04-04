@@ -19,7 +19,7 @@ namespace DatabaseTest.DatabaseTables
         
         public string Message { get; set; } //v db Varchar(0)? (úmysl jako max -> nefunguje -> navýšeno na 255 zatím)
         
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         
         [Column("Size[MB]")]
         public int Size { get; set; } 

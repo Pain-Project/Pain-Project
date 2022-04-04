@@ -1,6 +1,7 @@
 ﻿using DatabaseTest.DatabaseTables;
 using DatabaseTest.DataClasses;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,21 +22,51 @@ namespace DatabaseTest.Controllers
         [HttpGet("todayTasks")]
         public IActionResult GetTodayTasks()
         {
-
-            return null;
+            DateTime today = DateTime.Today;
+            var tasks = from t in context.Tasks
+                        join a in context.Assignments on t.IdAssignment equals a.Id
+                        join cl in context.Clients on a.IdClient equals cl.Id
+                        join co in context.Configs on a.IdConfig equals co.Id
+                        where t.Date >= today && t.Date < today.AddDays(1)
+                        select new
+                        {
+                            TaskId = t.Id,
+                            ConfigName = co.Name,
+                            ClientName = cl.Name,
+                            State = t.State,
+                            Date = t.Date
+                        };
+            return Ok(tasks);
         }
         [HttpGet("getSize")]
-        public IActionResult GetSize()
+        public int GetSize()
         {
-
-            return null;
+            DateTime now = DateTime.Now;
+            var size = from t in context.Tasks
+                       where t.Date <= now && t.Date > now.AddDays(-7)
+                       select t.Size;
+            return size.Sum();
         }
         [HttpGet("sevenDays")]
         public IActionResult GetSevenDays()
         {
-
-            return null;
+            DateTime now = DateTime.Now;
+            var tasks = from t in context.Tasks
+                        join a in context.Assignments on t.IdAssignment equals a.Id
+                        join cl in context.Clients on a.IdClient equals cl.Id
+                        join co in context.Configs on a.IdConfig equals co.Id
+                        where t.Date <= now && t.Date > now.AddDays(-7)
+                        select new
+                        {
+                            TaskId = t.Id,
+                            ConfigName = co.Name,
+                            ClientName = cl.Name,
+                            State = t.State,
+                            Date = t.Date
+                        };
+            return Ok(tasks);
         }
+
 
         //AddConfig
         [HttpPost("addConfig")]
