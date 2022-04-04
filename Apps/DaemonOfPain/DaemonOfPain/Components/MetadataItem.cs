@@ -16,5 +16,11 @@ namespace DaemonOfPain
     {
         public string ItemPath { get; set; }
         public _itemChange ItemChange { get; set; }
+        public string ItemSource { get; set; }
+        public MetadataItem(string itemPath, _itemChange itemChange)
+        {
+            ItemPath = itemPath;
+            ItemChange = itemChange;
+        }
     }
 }

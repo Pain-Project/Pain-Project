@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DaemonOfPain
 {
-    public class Snapshot
+    public class Source
     {
-        public int ConfigID { get; set; }
+        public string Path { get; set; }
         public List<SnapshotItem> Items { get; set; }
-        public Snapshot()
+        public Source()
         {
             this.Items = new List<SnapshotItem>();
         }

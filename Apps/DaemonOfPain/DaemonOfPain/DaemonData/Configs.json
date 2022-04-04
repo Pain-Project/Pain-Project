@@ -1,106 +1,5 @@
 [
   {
-    "Id": 2,
-    "ConfigName": null,
-    "Cron": "* * * * * dvojka",
-    "BackupType": 0,
-    "BackupFormat": 0,
-    "Retention": [
-      5,
-      3
-    ],
-    "Sources": [
-      "C:\\Data",
-      "C:\\ProgramFiles"
-    ],
-    "Destinations": [
-      {
-        "DestinationType": 0,
-        "DestinationPath": "D:\\Data"
-      },
-      {
-        "DestinationType": 0,
-        "DestinationPath": "D:\\Data\\Backup"
-      }
-    ],
-    "RetentionStatistik": [
-      4,
-      2
-    ]
-  },
-  {
-    "Id": 3,
-    "ConfigName": null,
-    "Cron": "* 5 5 5 *",
-    "BackupType": 0,
-    "BackupFormat": 0,
-    "Retention": [
-      5
-    ],
-    "Sources": [
-      "C:\\Data",
-      "Blbost"
-    ],
-    "Destinations": [
-      {
-        "DestinationType": 0,
-        "DestinationPath": "D:\\Data"
-      }
-    ],
-    "RetentionStatistik": [
-      1,
-      1
-    ]
-  },
-  {
-    "Id": 9,
-    "ConfigName": null,
-    "Cron": "* 5 5 5 *",
-    "BackupType": 0,
-    "BackupFormat": 0,
-    "Retention": [
-      5
-    ],
-    "Sources": [
-      "C:\\Data",
-      "Blbost"
-    ],
-    "Destinations": [
-      {
-        "DestinationType": 0,
-        "DestinationPath": "D:\\Data"
-      }
-    ],
-    "RetentionStatistik": [
-      1,
-      2
-    ]
-  },
-  {
-    "Id": 5,
-    "ConfigName": null,
-    "Cron": "* 5 5 5 *",
-    "BackupType": 0,
-    "BackupFormat": 0,
-    "Retention": [
-      5
-    ],
-    "Sources": [
-      "C:\\Data",
-      "Blbost"
-    ],
-    "Destinations": [
-      {
-        "DestinationType": 0,
-        "DestinationPath": "D:\\Data"
-      }
-    ],
-    "RetentionStatistik": [
-      1,
-      5
-    ]
-  },
-  {
     "Id": 1,
     "ConfigName": "Jedna",
     "Cron": "* 5 5 5 * Nový",
@@ -108,10 +7,11 @@
     "BackupFormat": 0,
     "Retention": [
       3,
-      5
+      1
     ],
     "Sources": [
-      "C:\\BackupTesting"
+      "C:\\BackupTesting",
+      "C:\\BackupTesting2"
     ],
     "Destinations": [
       {
@@ -122,10 +22,6 @@
         "DestinationType": 0,
         "DestinationPath": "C:\\BackupDest2"
       }
-    ],
-    "RetentionStatistik": [
-      0,
-      0
     ]
   }
 ]

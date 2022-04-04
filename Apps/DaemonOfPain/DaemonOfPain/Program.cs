@@ -1,6 +1,7 @@
 ﻿using DaemonOfPain.Services;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace DaemonOfPain
 {
@@ -8,38 +9,17 @@ namespace DaemonOfPain
     {
         static void Main(string[] args)
         {
-            MetadataService md = new MetadataService();
-            //List<MetadataItem> items = new List<MetadataItem>();
-
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    MetadataItem item = new MetadataItem() { ItemChange = _itemChange.ADDED, ItemPath = "C:\\sdaad" };
-            //    items.Add(item);
-            //}
-            //Metadata metadata = new Metadata() { IdConfig=1, Items = items };
-
-            //md.WriteMetadata("C:\\BackupTesting", metadata);
-
-            //Metadata metadata = md.GetMetadata("C:\\BackupTesting");
-
-            //foreach (var item in metadata.Items)
-            //{
-            //    Console.WriteLine(item.ItemPath);
-            //}
-
-            //Console.ReadKey();
-
-            //BackupService b = new BackupService();
-            //List<SnapshotItem> items = b.GetSnapshot(@"C:\BackupTesting\SourceDir");
-            //List<SnapshotItem> items2 = b.SnapshotItemFilter(items);
-            //b.DoBackup(items2, @"C:\BackupTesting\DestDir\FB_testovani");
-            //Console.ReadKey();
             BackupService b = new BackupService();
-            //List<SnapshotItem> items = b.GetSnapshot(@"C:\BackupTesting\test");
-            //b.DoBackup(items, @"C:\BackupDest\FB_testovani");
 
-            b.BackupSetup(1);
+            Config config = new Config(668, "Testing10", _BackupType.DI);
+            config.Retention[0] = 3;
+            config.Retention[1] = 4;
+            config.Sources.Add(@"C:\BackupTesting");
+            config.Sources.Add(@"C:\BackupTesting2");
+            config.Destinations.Add(new Destination(@"C:\BackupDest", DestType.DRIVE));
+            config.Destinations.Add(new Destination(@"C:\BackupDest2\Backups", DestType.DRIVE));
 
+            b.BackupSetup(config);
         }
     }
 }
