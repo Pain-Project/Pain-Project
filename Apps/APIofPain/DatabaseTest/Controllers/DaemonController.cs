@@ -17,10 +17,19 @@ namespace test_api2.Controllers
     {
         private MyContext context = new MyContext();
         [HttpPost("AddDaemon")]
-        public void AddDaemon(string ip, string mac, string name)
+        public JsonResult AddDaemon(string ip, string mac, string name)
         {
-            context.Clients.Add(new Client() { Name = name, IpAddress = ip, MacAddress = mac, Active = false });
-            context.SaveChanges();
+            try
+            {
+                Client client = new Client() { Name = name, IpAddress = ip, MacAddress = mac, Active = false };
+                context.Clients.Add(client);
+                context.SaveChanges();
+                return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch (Exception)
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
         }
 
         [HttpGet("GetConfigs")]
@@ -66,8 +75,8 @@ namespace test_api2.Controllers
             }
         }
 
-        [HttpPost]
-        public void SendReport(int idClient, int idConfig, bool success, string message, DateTime date, int size)
+        [HttpPost("sendReport")]
+        public JsonResult SendReport(int idClient, int idConfig, bool success, string message, DateTime date, int size)
         {
             var task = from t in context.Tasks.ToList()
                        join a in context.Assignments on t.IdAssignment equals a.Id
@@ -91,22 +100,20 @@ namespace test_api2.Controllers
             }
             else
             {
-                var result = from t in context.Tasks.ToList()
-                             join a in context.Assignments on t.IdAssignment equals a.Id
-                             where a.IdClient == idClient && a.IdConfig == idConfig
-                             select a.Id;
-                List<int> index = result.ToList();
+                int indexNumber = context.Assignments.Where(x => x.IdConfig == idConfig && x.IdClient == idClient).First().Id;
                 try
                 {
-                    context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = index[0], Date = date, Message = message, Size = size, State = state });
+                    context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = indexNumber, Date = date, Message = message, Size = size, State = state });
+
                 }
                 catch
                 {
-                    throw new Exception("Na server dorazilo potvrzení o záloze od neexistujícího klienta nebo s neexistujícím configem!");
+                    return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
                 }
 
             }
             context.SaveChanges();
+            return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
         }
     }
 }

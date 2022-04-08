@@ -219,12 +219,7 @@ namespace DatabaseTest.Controllers
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
             }
         }
-        //[HttpGet("configByID")]
-        //public JsonResult GetConfigById(int idConfig) //Configs + Clients EDIT
-        //{
 
-        //    return Ok(GetAllConfigs().Where(x => x.Id == idConfig).FirstOrDefault());
-        //}
         [HttpPut("updateConfig")]
         public JsonResult UpdateConfig(int id, DataConfig editedConfig)
         {
