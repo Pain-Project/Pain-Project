@@ -1,4 +1,5 @@
-﻿using DaemonOfPain.Services;
+﻿using ConsoleApp6;
+using DaemonOfPain.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,7 +11,7 @@ namespace DaemonOfPain
         static void Main(string[] args)
         {
             BackupService b = new BackupService();
-
+            var url = await ServerController.);
             Config config = new Config(668, "Testing10", _BackupType.DI);
             config.Retention[0] = 3;
             config.Retention[1] = 4;

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DaemonOfPain.Components;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace DaemonOfPain.Services
         private string configPath = @"..\..\..\DaemonData\Configs.json";
         private string DaemonSettingsPath = @"..\..\..\DaemonData\DaemonSettings.json";
         private string SnapshotsPath = @"..\..\..\DaemonData\Snapshots.json";
+
 
         private List<Config> Configs = new List<Config>();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DaemonOfPain.Components;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,10 +13,13 @@ namespace DaemonOfPain.Services
         private DaemonDataService daemonDataService = new DaemonDataService();
         private MetadataService MdataService = new MetadataService();
         private List<Metadata> SubCompleteMlist = new List<Metadata>();
+        private LocalMetadataService LocalMetadataService = new LocalMetadataService();
+        private MetadataPackage MPackage;
 
         public void BackupSetup(Config config)//později config ostranit a odkomentovat řádek níže
         {
             //Config config = daemonDataService.GetConfigByID(idConfig);
+            MPackage = LocalMetadataService.GetMetadataPackageByID(config.Id);
 
             foreach (var item in config.Destinations)
             {
@@ -23,45 +27,35 @@ namespace DaemonOfPain.Services
                 string configDirPath = item.DestinationPath + "\\" + config.ConfigName;
                 DirectoryInfo configDir = new DirectoryInfo(configDirPath);
                 string backupPath = "";
-                List<Metadata> Mlist = new List<Metadata>();
 
                 if (Directory.Exists(configDirPath))//Existuje složka s configem?
                 {
-
-                    //U každého balíčku záloh najdi alespoň jeden soubor s metadaty a ulož do listu "Mlist"
-                    foreach (var backupPackageDir in configDir.GetDirectories())
-                    {
-                        Mlist.AddRange(MdataService.MetaSearcher(backupPackageDir.FullName, true));//true znamená, že jakmile najde jeden jediný záznam, už nehledá dál
-                    }
-
-                    //Z vytvořeného listu "Mlist" vyber nejnovější záznam a získej z podsložek tohoto záznamu veškerá metadata
-                    Metadata firstMdata = GetFirstOrLastMetadata(Mlist, true);
-                    Metadata lastMdata = GetFirstOrLastMetadata(Mlist, false);
-
-
-                    this.SubCompleteMlist = MdataService.MetaSearcher(lastMdata.BackupPath);
-
-                    retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
-
+                    Metadata firstMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, true), true);
+                    Metadata lastMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, true), false);
 
                     if (config.Retention[1] <= SubCompleteMlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
                     {
-                        if (config.Retention[0] <= Mlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
+                        if (config.Retention[0] <= MPackage.Packages.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                         {
-                            Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
+                            try
+                            {
+                                Directory.Delete(PathReturner(lastMdata.BackupPath, 1), true);//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
+                                MPackage.Packages.Remove(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, false));//odstraní balíček z lokálního úložiště metadat
+                            }
+                            catch { }
                         }
                     }
                     else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
                     {
                         if (firstMdata.BackupType == _BackupType.FB)
                             throw new Exception();
-                        backupPath = lastMdata.BackupPath;
+                        backupPath = PathReturner(lastMdata.BackupPath, 1);
                     }
                 }
                 else
                 {//první spuštění - vytvoří složku pro config
                     Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
-
+                    MPackage = new MetadataPackage() { ConfigID = config.Id };
                 }
 
 
@@ -71,9 +65,9 @@ namespace DaemonOfPain.Services
                     this.daemonDataService.WriteSnapshot(snapshot);
 
                     int packageRetention = 1;
-                    if (Mlist.Count != 0)
+                    if (MPackage.Packages.Count != 0)
                     {
-                        Metadata last = GetFirstOrLastMetadata(Mlist, false);
+                        Metadata last = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, false), false);
                         packageRetention = last.RetentionStats[0];
                         packageRetention++;
                     }
@@ -88,6 +82,7 @@ namespace DaemonOfPain.Services
 
                     this.SubCompleteMlist.Clear();
                     Directory.CreateDirectory(backupPath);
+                    MPackage.Packages.Add(new Package());
                 }
 
                 Backup(config, backupPath, retention);
@@ -155,6 +150,7 @@ namespace DaemonOfPain.Services
 
             }
             MdataService.WriteMetadata(path, meta);
+
             if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
             {
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
@@ -324,30 +320,6 @@ namespace DaemonOfPain.Services
             }
             string st = string.Join("\\", parts);
             return st.Trim('\\');
-        }
-        private Metadata GetFirstOrLastMetadata(List<Metadata> Mlist, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
-        {
-            if (Mlist.Count != 0)
-            {
-                Metadata result = Mlist[0];
-                foreach (var meta in Mlist)
-                {
-                    if (first)
-                    {
-                        int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber > 0)
-                            result = meta;
-                    }
-                    else
-                    {
-                        int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber < 0)
-                            result = meta;
-                    }
-                }
-                return result;
-            }
-            return null;
         }
     }
 }
