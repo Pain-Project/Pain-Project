@@ -1,26 +1,36 @@
 [
   {
-    "Id": 1,
-    "ConfigName": "Jedna",
-    "Cron": "* 5 5 5 * Nový",
-    "BackupType": 0,
-    "BackupFormat": 0,
+    "Id": 29,
+    "Name": "adasda",
+    "Cron": "yy",
+    "BackupType": "FB",
+    "BackupFormat": "PT",
     "Retention": [
-      3,
-      1
+      5,
+      3
     ],
     "Sources": [
-      "C:\\BackupTesting",
-      "C:\\BackupTesting2"
+    ],
+    "Destinations": [
+    ]
+  },
+  {
+    "Id": 38,
+    "Name": "DalsiNovejConfig",
+    "Cron": "* 5 * 8 *",
+    "BackupType": "IN",
+    "BackupFormat": "PT",
+    "Retention": [
+      3,
+      2
+    ],
+    "Sources": [
+      "D:\\BackupTesting\\SourceDir"
     ],
     "Destinations": [
       {
         "DestinationType": 0,
-        "DestinationPath": "C:\\BackupDest"
-      },
-      {
-        "DestinationType": 0,
-        "DestinationPath": "C:\\BackupDest2"
+        "DestinationPath": "D:\\BackupTesting\\DestDir"
       }
     ]
   }

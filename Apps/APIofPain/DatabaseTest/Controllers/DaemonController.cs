@@ -17,11 +17,11 @@ namespace test_api2.Controllers
     {
         private MyContext context = new MyContext();
         [HttpPost("AddDaemon")]
-        public JsonResult AddDaemon(string ip, string mac, string name)
+        public JsonResult AddDaemon(Computer pc)
         {
             try
             {
-                Client client = new Client() { Name = name, IpAddress = ip, MacAddress = mac, Active = false };
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false };
                 context.Clients.Add(client);
                 context.SaveChanges();
                 return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
@@ -32,7 +32,7 @@ namespace test_api2.Controllers
             }
         }
 
-        [HttpGet("GetConfigs")]
+        [HttpGet("GetConfigs/{id}")]
         public JsonResult GetConfigs(int id)
         {
             try
@@ -40,7 +40,7 @@ namespace test_api2.Controllers
                 var configs = from a in context.Assignments.ToList()
                               join c in context.Configs.ToList()
                                on a.IdConfig equals c.Id
-                              where a.IdClient == id && !a.Downloaded
+                              where a.IdClient == id //&& !a.Downloaded
                               select c;
                 List<ConfigForDaemon> daemonConfigs = new List<ConfigForDaemon>();
                 foreach (var item in configs)
@@ -76,15 +76,15 @@ namespace test_api2.Controllers
         }
 
         [HttpPost("sendReport")]
-        public JsonResult SendReport(int idClient, int idConfig, bool success, string message, DateTime date, int size)
+        public JsonResult SendReport(Report report)
         {
             var task = from t in context.Tasks.ToList()
                        join a in context.Assignments on t.IdAssignment equals a.Id
-                       where a.IdClient == idClient && a.IdConfig == idConfig && t.Date == date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
+                       where a.IdClient == report.idClient && a.IdConfig == report.idConfig && t.Date == report.date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
                        select t;
 
             string state;
-            if (success) { state = "Success"; }
+            if (report.success) { state = "Success"; }
             else { state = "Error"; }
 
             List<DatabaseTest.DatabaseTables.Task> taskList = task.ToList();
@@ -93,24 +93,23 @@ namespace test_api2.Controllers
             {
                 foreach (var ContextTask in context.Tasks.Where(x => x.Id == taskList[0].Id))
                 {
-                    ContextTask.Message = message;
+                    ContextTask.Message = report.message;
                     ContextTask.State = state;
-                    ContextTask.Size = size;
+                    ContextTask.Size = report.size;
                 }
             }
             else
             {
-                int indexNumber = context.Assignments.Where(x => x.IdConfig == idConfig && x.IdClient == idClient).First().Id;
+                int indexNumber = context.Assignments.Where(x => x.IdConfig == report.idConfig && x.IdClient == report.idClient).First().Id;
                 try
                 {
-                    context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = indexNumber, Date = date, Message = message, Size = size, State = state });
+                    context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = indexNumber, Date = report.date, Message = report.message, Size = report.size, State = state });
 
                 }
                 catch
                 {
                     return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
                 }
-
             }
             context.SaveChanges();
             return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };

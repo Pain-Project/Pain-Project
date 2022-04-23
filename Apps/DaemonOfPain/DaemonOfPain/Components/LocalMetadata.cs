@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DaemonOfPain.Components
 {
-    public class MetadataPackage
+    public class LocalMetadata
     {
         public int ConfigID { get; set; }
-        public List<Package> Packages { get; set; }
+        public Dictionary<string, List<MetaPackage>> MetadataFromDest { get; set; }//string je cesta destinace
     }
-    public class Package
+    public class MetaPackage
     {
         public List<Metadata> Backups { get; set; }
     }

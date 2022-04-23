@@ -25,6 +25,7 @@ namespace DatabaseTest.DatabaseTables
         public int RetentionPackages { get; set; }
         
         public int RetentionPackageSize { get; set; }
+        
 
 
         public Administrator? Administrator { get; set; }

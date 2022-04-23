@@ -66,12 +66,13 @@ namespace DaemonOfPain.Services
 
         public void WriteAllConfigs(List<Config> data)
         {
+            Configs.Clear();
             foreach (Config newConfig in data)
             {
-                if (this.Configs.Exists(x => x.Id == newConfig.Id))
-                {
-                    this.Configs.Remove(this.Configs.Find(x => x.Id == newConfig.Id));
-                }
+                //if (this.Configs.Exists(x => x.Id == newConfig.Id))
+                //{
+                //    this.Configs.Remove(this.Configs.Find(x => x.Id == newConfig.Id));
+                //}
                 this.Configs.Add(newConfig);
             }
             StreamWriter sw = new StreamWriter(configPath);

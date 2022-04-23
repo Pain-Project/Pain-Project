@@ -20,20 +20,17 @@ namespace DaemonOfPain
     public class Config
     {
         public int Id { get; set; }
-        public string ConfigName { get; set; }
+        public string Name { get; set; }
         public string Cron { get; set; }
         public _BackupType BackupType { get; set; }
         public _BackupFormat BackupFormat { get; set; }
-        public int[] Retention{ get; set; }
+        public int[] Retention { get; set; } = new int[2];
         public List<string> Sources { get; set; }
         public List<Destination> Destinations { get; set; }
 
 
-        public Config(int id, string configName, _BackupType backupType)
+        public Config()
         {
-            Id = id;
-            ConfigName = configName;
-            BackupType = backupType;
             Retention = new int[2] { 0, 1};
             Sources = new List<string>();
             Destinations = new List<Destination>();

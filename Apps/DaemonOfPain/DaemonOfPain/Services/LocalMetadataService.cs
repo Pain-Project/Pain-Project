@@ -12,11 +12,11 @@ namespace DaemonOfPain.Services
     public class LocalMetadataService
     {
         private string MetadataPackagePath = @"..\..\..\DaemonData\BackupMetadata.json";
-        public Package GetFirstOrLastPackage(List<Package> packages, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
+        public MetaPackage GetFirstOrLastPackage(List<MetaPackage> packages, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
         {
             if (packages.Count != 0)
             {
-                Package result = packages[0];
+                MetaPackage result = packages[0];
                 foreach (var meta in packages)
                 {
                     try
@@ -40,7 +40,7 @@ namespace DaemonOfPain.Services
             }
             return null;
         }
-        public Metadata GetFirstOrLastMetadata(Package package, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
+        public Metadata GetFirstOrLastMetadata(MetaPackage package, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
         {
             if (package.Backups.Count != 0)
             {
@@ -64,10 +64,6 @@ namespace DaemonOfPain.Services
             }
             return null;
         }
-        public int GetPackageCount(MetadataPackage package)
-        {
-            return package.Packages.Count;
-        }
         public void DeleteLastPackage()
         {
 
@@ -76,14 +72,14 @@ namespace DaemonOfPain.Services
         {
 
         }
-        public void WriteMetadataPackage(MetadataPackage meta)
+        public void WriteMetadataPackage(LocalMetadata meta)
         {
             StreamReader sr = new StreamReader(MetadataPackagePath);
             string data = sr.ReadToEnd();
             sr.Close();
-            List<MetadataPackage> metapackages = new List<MetadataPackage>();
+            List<LocalMetadata> metapackages = new List<LocalMetadata>();
             if (data != "")
-                metapackages = JsonConvert.DeserializeObject<List<MetadataPackage>>(data);
+                metapackages = JsonConvert.DeserializeObject<List<LocalMetadata>>(data);
             if (metapackages.Exists(x => x.ConfigID == meta.ConfigID))
                 metapackages.Remove(metapackages.Find(x => x.ConfigID == meta.ConfigID));
             metapackages.Add(meta);
@@ -92,14 +88,20 @@ namespace DaemonOfPain.Services
             sw.Write(JsonConvert.SerializeObject(metapackages));
             sw.Close();
         }
-        public MetadataPackage GetMetadataPackageByID(int id)
+        public LocalMetadata GetMetadataPackageByID(int id)
         {
-            StreamReader sr = new StreamReader(MetadataPackagePath);
-            string data = sr.ReadToEnd();
-            sr.Close();
-            List<MetadataPackage> metadatas = JsonConvert.DeserializeObject<List<MetadataPackage>>(data);
-
-            return metadatas.Find(x => x.ConfigID == id);
+            try
+            {
+                StreamReader sr = new StreamReader(MetadataPackagePath);
+                string data = sr.ReadToEnd();
+                sr.Close();
+                List<LocalMetadata> metadatas = new List<LocalMetadata>();
+                metadatas = JsonConvert.DeserializeObject<List<LocalMetadata>>(data);
+                if(metadatas == null) { return null; }
+                return metadatas.Find(x => x.ConfigID == id);
+            }
+            catch (NullReferenceException)
+            { return null; }
         }
     }
 }

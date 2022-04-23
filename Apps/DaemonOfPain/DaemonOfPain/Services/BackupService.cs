@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DaemonOfPain.Config;
 
 namespace DaemonOfPain.Services
 {
@@ -14,33 +15,47 @@ namespace DaemonOfPain.Services
         private MetadataService MdataService = new MetadataService();
         private List<Metadata> SubCompleteMlist = new List<Metadata>();
         private LocalMetadataService LocalMetadataService = new LocalMetadataService();
-        private MetadataPackage MPackage;
+        private LocalMetadata LocalMdata;
+        private List<MetaPackage> PackagesFromDest = new List<MetaPackage>();
+        private MetaPackage BackupFromPackage = new MetaPackage();
 
-        public void BackupSetup(Config config)//později config ostranit a odkomentovat řádek níže
+        public string GetBackupPath(string destination)
         {
-            //Config config = daemonDataService.GetConfigByID(idConfig);
-            MPackage = LocalMetadataService.GetMetadataPackageByID(config.Id);
+            
+
+
+            return "nope";
+        }
+
+
+        public void BackupSetup(int idConfig)
+        {
+            Config config = daemonDataService.GetConfigByID(idConfig);
+            LocalMdata = LocalMetadataService.GetMetadataPackageByID(config.Id);
 
             foreach (var item in config.Destinations)
-            {
+            {   
                 int[] retention = new int[2];
-                string configDirPath = item.DestinationPath + "\\" + config.ConfigName;
+                string configDirPath = item.DestinationPath + "\\" + config.Name;
                 DirectoryInfo configDir = new DirectoryInfo(configDirPath);
                 string backupPath = "";
 
                 if (Directory.Exists(configDirPath))//Existuje složka s configem?
                 {
-                    Metadata firstMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, true), true);
-                    Metadata lastMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, true), false);
+                    PackagesFromDest = LocalMdata.MetadataFromDest[item.DestinationPath];
+                    MetaPackage lastPackage = LocalMetadataService.GetFirstOrLastPackage(PackagesFromDest, true);
+                    Metadata firstMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(PackagesFromDest, true), false);
+                    Metadata lastMdata = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(PackagesFromDest, false), false);
 
-                    if (config.Retention[1] <= SubCompleteMlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
+
+                    if (config.Retention[1] <= PackagesFromDest.Count)//Je počet získaných metadat roven hodnotě v "Retention[1]"? / Počet záloh v nejnovějším balíčku
                     {
-                        if (config.Retention[0] <= MPackage.Packages.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
+                        if (config.Retention[0] <= PackagesFromDest.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                         {
                             try
                             {
                                 Directory.Delete(PathReturner(lastMdata.BackupPath, 1), true);//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
-                                MPackage.Packages.Remove(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, false));//odstraní balíček z lokálního úložiště metadat
+                                PackagesFromDest.Remove(LocalMetadataService.GetFirstOrLastPackage(PackagesFromDest, false));//odstraní balíček z lokálního úložiště metadat
                             }
                             catch { }
                         }
@@ -54,8 +69,8 @@ namespace DaemonOfPain.Services
                 }
                 else
                 {//první spuštění - vytvoří složku pro config
-                    Directory.CreateDirectory(item.DestinationPath + "\\" + config.ConfigName);
-                    MPackage = new MetadataPackage() { ConfigID = config.Id };
+                    Directory.CreateDirectory(item.DestinationPath + "\\" + config.Name);
+                    LocalMdata = new LocalMetadata() { ConfigID = config.Id };
                 }
 
 
@@ -65,9 +80,9 @@ namespace DaemonOfPain.Services
                     this.daemonDataService.WriteSnapshot(snapshot);
 
                     int packageRetention = 1;
-                    if (MPackage.Packages.Count != 0)
+                    if (PackagesFromDest.Count != 0)
                     {
-                        Metadata last = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(MPackage.Packages, false), false);
+                        Metadata last = LocalMetadataService.GetFirstOrLastMetadata(LocalMetadataService.GetFirstOrLastPackage(PackagesFromDest, false), false);
                         packageRetention = last.RetentionStats[0];
                         packageRetention++;
                     }
@@ -82,30 +97,31 @@ namespace DaemonOfPain.Services
 
                     this.SubCompleteMlist.Clear();
                     Directory.CreateDirectory(backupPath);
-                    MPackage.Packages.Add(new Package());
+                    PackagesFromDest.Add(new MetaPackage());
                 }
 
                 Backup(config, backupPath, retention);
+                LocalMdata.MetadataFromDest[item.DestinationPath] = PackagesFromDest;
             }
-
+            LocalMetadataService.WriteMetadataPackage(LocalMdata);
 
         }
         public void Backup(Config config, string path, int[] lastRetention)
         {
             Metadata meta;//vytvoření metadat
             if (lastRetention[1] == 0)
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 });
+                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 });
             else if (config.Retention[1] == lastRetention[1])
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0]+1, 1 });
+                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0] + 1, 1 });
             else
-                meta = new Metadata(config.Id, config.ConfigName, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1]+1 });
+                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1] + 1 });
 
 
-            
+
             if (config.BackupType != _BackupType.FB)
             {//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je prána jako balíček záloh.
 
-                path = path + "\\" + DateTime.Now.ToString("d")+DateTime.Now.ToString("_H.mm.ss");
+                path = path + "\\" + DateTime.Now.ToString("d") + DateTime.Now.ToString("_H.mm.ss");
             }
 
 
@@ -189,7 +205,7 @@ namespace DaemonOfPain.Services
                 if (item.ItemType == _ItemType.FILE)
                 {
                     if (!Directory.Exists(path + item.ItemPath.Replace(item.Root, "")))
-                        Directory.CreateDirectory(path + PathReturner(item.ItemPath,1).Replace(item.Root, ""));
+                        Directory.CreateDirectory(path + PathReturner(item.ItemPath, 1).Replace(item.Root, ""));
                     File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
 
                 }
@@ -310,7 +326,7 @@ namespace DaemonOfPain.Services
             return report;
         }
 
-        
+
         private string PathReturner(string path, int steps)//již funkční//vrátí se o určitý počet složek zpět. př. PathReturner(@"C:\Users\František\Desktop\",2) se vrátí o dvě složky zpět - vrátí => C:\Users
         {
             string[] parts = path.Split("\\");
