@@ -2,7 +2,7 @@
   {
     "Id": 29,
     "Name": "adasda",
-    "Cron": "yy",
+    "Cron": "5 * * * *",
     "BackupType": "FB",
     "BackupFormat": "PT",
     "Retention": [
@@ -10,14 +10,19 @@
       3
     ],
     "Sources": [
+      "C:\\Users\\frantisek\\Desktop\\BackupTesting\\SourceDir"
     ],
     "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "C:\\Users\\frantisek\\Desktop\\BackupTesting\\\\DestDir"
+      }
     ]
   },
   {
     "Id": 38,
     "Name": "DalsiNovejConfig",
-    "Cron": "* 5 * 8 *",
+    "Cron": "2 * * * *",
     "BackupType": "IN",
     "BackupFormat": "PT",
     "Retention": [
@@ -25,12 +30,12 @@
       2
     ],
     "Sources": [
-      "D:\\BackupTesting\\SourceDir"
+      "C:\\Users\\frantisek\\Desktop\\BackupTesting\\SourceDir"
     ],
     "Destinations": [
       {
         "DestinationType": 0,
-        "DestinationPath": "D:\\BackupTesting\\DestDir"
+        "DestinationPath": "C:\\Users\\frantisek\\Desktop\\BackupTesting\\\\DestDir"
       }
     ]
   }

@@ -53,7 +53,7 @@ namespace ConsoleApp6
             try
             {
                 List<APIconfig> respose = await GetConfigs(7);//přepsat!!!!!!!!!!!!!!!!!!získávat z nějaké třídy s daty
-                new DaemonDataService().WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
+                Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
             }
             catch (Exception ex)
             {

@@ -1,22 +1,19 @@
 ﻿using ConsoleApp6;
 using DaemonOfPain.Services;
+using NCrontab;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DaemonOfPain
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            //APIService.Login().GetAwaiter().GetResult();
-            //APIService.GetConfigs().GetAwaiter().GetResult();
-
-
-
-            BackupService b = new BackupService();
-            b.BackupSetup(38);
+            Application app = new Application();
+            await app.StartApplication();
         }
     }
 }
