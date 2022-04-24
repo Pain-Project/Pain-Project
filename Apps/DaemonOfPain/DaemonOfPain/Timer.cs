@@ -22,12 +22,15 @@ namespace DaemonOfPain
 
         private async Task ClientPrepare()
         {
+            //update tabulky tasků
             IJobDetail updateTaskJob = JobBuilder.Create<TaskManager>().Build();
             ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(updateTaskJob, trigger);
 
-
             //dotazování na server
+            IJobDetail connectJob = JobBuilder.Create<APIService>().Build();
+            ITrigger connectTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
+            await scheduler.ScheduleJob(connectJob, connectTrigger);
         }
 
         private async Task StartTimer(List<Config> configs)

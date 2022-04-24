@@ -13,8 +13,11 @@ namespace DatabaseTest
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async System.Threading.Tasks.Task Main(string[] args)
         {
+            //new Tasker().UpdateTaskDatabaseTable();
+            Timer timer = new Timer();
+            await timer.SetUp();
             CreateHostBuilder(args).Build().Run();
         }
 

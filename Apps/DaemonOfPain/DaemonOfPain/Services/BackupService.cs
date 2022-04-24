@@ -16,7 +16,7 @@ namespace DaemonOfPain.Services
         private int GetConfigId(List<Tasks> tasks)
         {
             int id = tasks[0].IdConfig;
-            tasks.RemoveAt(0);
+            TaskManager.TaskList.RemoveAt(0);
             return id;
         }
         public void BackupSetup(List<Tasks> tasks)

@@ -1,4 +1,4 @@
-﻿using ConsoleApp6;
+﻿using DaemonOfPain.Components;
 using DaemonOfPain.Services;
 using System;
 using System.Collections.Generic;
@@ -15,12 +15,28 @@ namespace DaemonOfPain
         public static DaemonDataService DataService { get; set; }
         public APIService API { get; set; }
         public TaskManager TaskManager { get; set; }
+        public static int IdOfThisClient { get; set; }
         public async Task StartApplication()
         {
             DataService = new DaemonDataService();
             Timer = new Timer();
             API = new APIService();
             TaskManager = new TaskManager();
+
+
+            Settings set = DataService.GetSettings();
+            if (set == null)
+            {
+                int newId = await APIService.LoginToServer();
+                DataService.WriteSettings(new Settings() { Id = newId });
+                IdOfThisClient = newId;
+                if (newId == 0)
+                    throw new Exception();//nelze se spojit s databází
+            }
+            else
+            {
+                IdOfThisClient = set.Id;
+            }
 
 
             TaskManager.UpdateTaskList(DataService.GetAllConfigs());

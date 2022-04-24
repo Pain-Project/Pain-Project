@@ -79,5 +79,19 @@ namespace DaemonOfPain.Services
             sw.Write(JsonConvert.SerializeObject(this.Configs));
             sw.Close();
         }
+
+        public void WriteSettings(Settings set)
+        {
+            StreamWriter sw = new StreamWriter(DaemonSettingsPath);
+            sw.Write(JsonConvert.SerializeObject(set));
+            sw.Close();
+        }
+        public Settings GetSettings()
+        {
+            StreamReader sr = new StreamReader(DaemonSettingsPath);
+            string data = sr.ReadToEnd();
+            sr.Close();
+            return JsonConvert.DeserializeObject<Settings>(data);
+        }
     }
 }

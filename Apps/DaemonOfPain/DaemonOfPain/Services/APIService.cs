@@ -3,6 +3,7 @@ using DaemonOfPain.Controller.ClassesToSend;
 using DaemonOfPain.Services;
 using DaemonOfPain.Services.APIClasses;
 using Newtonsoft.Json;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,13 +14,13 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace ConsoleApp6
+namespace DaemonOfPain
 {
-    public class APIService
+    public class APIService : IJob
     {
         static HttpClient client = new HttpClient();
 
-        public static async Task LoginToServer()
+        public static async Task<int> LoginToServer()
         {
             client.BaseAddress = new Uri(@"https://localhost:5001/");
             client.DefaultRequestHeaders.Accept.Clear();
@@ -27,18 +28,20 @@ namespace ConsoleApp6
                 new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
-                var url = await LoginToServer(new Computer());
+                int id = await LoginToServer(new Computer());
+                return id;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return 0;
             }
         }
-        static async Task<Uri> LoginToServer(Computer pc)
+        static async Task<int> LoginToServer(Computer pc)
         {
             HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", pc);
             response.EnsureSuccessStatusCode();
-            return response.Headers.Location;
+            return Convert.ToInt32(response.Content.ReadAsStringAsync().Result);
         }
 
 
@@ -52,7 +55,7 @@ namespace ConsoleApp6
                 new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
-                List<APIconfig> respose = await GetConfigs(7);//přepsat!!!!!!!!!!!!!!!!!!získávat z nějaké třídy s daty
+                List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
             }
             catch (Exception ex)
@@ -93,6 +96,10 @@ namespace ConsoleApp6
             return response.Headers.Location;
         }
 
+        public async Task Execute(IJobExecutionContext context)
+        {
+            await GetConfigs();
+        }
     }
 }
 

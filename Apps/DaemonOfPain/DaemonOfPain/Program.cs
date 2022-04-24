@@ -1,5 +1,4 @@
-﻿using ConsoleApp6;
-using DaemonOfPain.Services;
+﻿using DaemonOfPain.Services;
 using NCrontab;
 using System;
 using System.Collections.Generic;

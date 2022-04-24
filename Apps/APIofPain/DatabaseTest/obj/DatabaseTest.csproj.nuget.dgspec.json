@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
+    "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
   },
   "projects": {
-    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
+    "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "projectUniqueName": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
         "projectName": "DatabaseTest",
-        "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
-        "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
-        "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
+        "projectPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "packagesPath": "C:\\Users\\frantisek\\.nuget\\packages\\",
+        "outputPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\frantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -48,9 +49,17 @@
               "target": "Package",
               "version": "[5.0.10, )"
             },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "ncrontab": {
+              "target": "Package",
+              "version": "[3.3.1, )"
             }
           },
           "imports": [
@@ -71,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     }
