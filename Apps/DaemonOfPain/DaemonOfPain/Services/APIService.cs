@@ -57,6 +57,7 @@ namespace DaemonOfPain
             {
                 List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
+                Console.WriteLine("API2");
             }
             catch (Exception ex)
             {
@@ -98,6 +99,7 @@ namespace DaemonOfPain
 
         public async Task Execute(IJobExecutionContext context)
         {
+            Console.WriteLine("API1");
             await GetConfigs();
         }
     }

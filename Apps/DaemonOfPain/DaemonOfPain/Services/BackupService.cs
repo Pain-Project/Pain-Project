@@ -358,6 +358,7 @@ namespace DaemonOfPain.Services
 
         public Task Execute(IJobExecutionContext context)
         {
+            Console.WriteLine("backup!" + DateTime.Now);
             try
             {
                 this.BackupSetup(TaskManager.TaskList);

@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
+    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
   },
   "projects": {
-    "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
+    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
         "projectName": "DatabaseTest",
-        "projectPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
-        "packagesPath": "C:\\Users\\frantisek\\.nuget\\packages\\",
-        "outputPath": "H:\\DATA\\projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
+        "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
+        "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\frantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -80,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }

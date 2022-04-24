@@ -35,12 +35,18 @@ namespace DaemonOfPain
 
         private async Task StartTimer(List<Config> configs)
         {
+            string cron = "";
             foreach (var item in configs)
             {
                 IJobDetail job = JobBuilder.Create<BackupService>().Build();
                 ITrigger trigger = TriggerBuilder.Create().WithCronSchedule(CronCorrector(item.Cron)).Build();
+                cron = CronCorrector(item.Cron);
                 await scheduler.ScheduleJob(job, trigger);
             }
+            IJobDetail job2 = JobBuilder.Create<Testovator>().Build();
+            ITrigger trigger2 = TriggerBuilder.Create().WithCronSchedule(cron).Build();
+            await scheduler.ScheduleJob(job2, trigger2);
+            Console.WriteLine(cron);
             await scheduler.Start();
         }
 

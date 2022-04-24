@@ -318,3 +318,5 @@ H:\DATA\projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\Datab
 H:\DATA\projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\DatabaseTest.genruntimeconfig.cache
 H:\DATA\projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\NCrontab.dll
 H:\DATA\projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Quartz.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\NCrontab.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Quartz.dll

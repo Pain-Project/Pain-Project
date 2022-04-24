@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj": {}
+    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj": {}
   },
   "projects": {
-    "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj": {
+    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj",
+        "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj",
         "projectName": "test nuget",
-        "projectPath": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj",
-        "packagesPath": "C:\\Users\\frantisek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\obj\\",
+        "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj",
+        "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
+        "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\frantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -51,7 +50,7 @@
             },
             "Quartz": {
               "target": "Package",
-              "version": "[3.3.3, )"
+              "version": "[3.4.0, )"
             },
             "ncrontab": {
               "target": "Package",
@@ -73,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }

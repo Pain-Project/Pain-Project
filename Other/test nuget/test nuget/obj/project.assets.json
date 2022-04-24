@@ -56,7 +56,7 @@
           "lib/netstandard2.0/NCrontab.dll": {}
         }
       },
-      "Quartz/3.3.3": {
+      "Quartz/3.4.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
@@ -298,21 +298,21 @@
         "ncrontab.nuspec"
       ]
     },
-    "Quartz/3.3.3": {
-      "sha512": "waM2gyFQ/JOuvyHmlEnN2jpAiqJAEMEaPq6K6rT/mmLKlW0qvxCIYARDRfWaenJ6qQBHH2/J6cx+bCPVZb8z1Q==",
+    "Quartz/3.4.0": {
+      "sha512": "N8350OAlQhd8zKg0ARFikGjh3bfAW/CF/KVxu2fTIlAALB/oC1eg54n/QAPYR5ryHuYyDr5G8/Qa4k+D/7OFRQ==",
       "type": "package",
-      "path": "quartz/3.3.3",
+      "path": "quartz/3.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net461/Quartz.dll",
-        "lib/net461/Quartz.xml",
+        "lib/net462/Quartz.dll",
+        "lib/net462/Quartz.xml",
         "lib/net472/Quartz.dll",
         "lib/net472/Quartz.xml",
         "lib/netstandard2.0/Quartz.dll",
         "lib/netstandard2.0/Quartz.xml",
         "quartz-logo-small.png",
-        "quartz.3.3.3.nupkg.sha512",
+        "quartz.3.4.0.nupkg.sha512",
         "quartz.nuspec"
       ]
     },
@@ -601,30 +601,28 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Cronos >= 0.7.1",
-      "Quartz >= 3.3.3",
+      "Quartz >= 3.4.0",
       "ncrontab >= 3.3.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\frantisek\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\František\\.nuget\\packages\\": {},
+    "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj",
+      "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj",
       "projectName": "test nuget",
-      "projectPath": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\test nuget.csproj",
-      "packagesPath": "C:\\Users\\frantisek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\frantisek\\source\\repos\\test nuget\\test nuget\\obj\\",
+      "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\test nuget.csproj",
+      "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
+      "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Other\\test nuget\\test nuget\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\frantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -657,7 +655,7 @@
           },
           "Quartz": {
             "target": "Package",
-            "version": "[3.3.3, )"
+            "version": "[3.4.0, )"
           },
           "ncrontab": {
             "target": "Package",
@@ -679,7 +677,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

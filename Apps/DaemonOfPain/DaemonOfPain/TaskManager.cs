@@ -37,6 +37,7 @@ namespace DaemonOfPain
         public Task Execute(IJobExecutionContext context)
         {
             this.UpdateTaskList(Application.DataService.GetAllConfigs());
+            Console.WriteLine("task");
             return Task.CompletedTask;
         }
     }

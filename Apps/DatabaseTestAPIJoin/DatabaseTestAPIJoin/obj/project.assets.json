@@ -6419,19 +6419,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\troli\\.nuget\\packages\\": {}
+    "C:\\Users\\František\\.nuget\\packages\\": {},
+    "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin.csproj",
+      "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin.csproj",
       "projectName": "DatabaseTestAPIJoin",
-      "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin.csproj",
-      "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\obj\\",
+      "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin.csproj",
+      "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
+      "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DatabaseTestAPIJoin\\DatabaseTestAPIJoin\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6476,12 +6481,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.14, 5.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -6490,7 +6489,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

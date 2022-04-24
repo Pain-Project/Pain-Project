@@ -13,14 +13,12 @@ namespace DaemonOfPain
     {
         public Timer Timer { get; set; }
         public static DaemonDataService DataService { get; set; }
-        public APIService API { get; set; }
         public TaskManager TaskManager { get; set; }
         public static int IdOfThisClient { get; set; }
         public async Task StartApplication()
         {
             DataService = new DaemonDataService();
             Timer = new Timer();
-            API = new APIService();
             TaskManager = new TaskManager();
 
 
@@ -37,6 +35,8 @@ namespace DaemonOfPain
             {
                 IdOfThisClient = set.Id;
             }
+
+            await APIService.GetConfigs();
 
 
             TaskManager.UpdateTaskList(DataService.GetAllConfigs());

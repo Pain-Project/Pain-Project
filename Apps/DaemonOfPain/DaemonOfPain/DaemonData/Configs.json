@@ -1,1 +1,1 @@
-[{"Id":29,"Name":"test","Cron":"51,52,53 * * * *","BackupType":2,"BackupFormat":0,"Retention":[5,3],"Sources":["C:\\Users\\frantisek\\Desktop\\BackupTesting\\SourceDir"],"Destinations":[{"DestinationType":0,"DestinationPath":"C:\\Users\\frantisek\\Desktop\\BackupTesting\\DestDir"}]}]
+[{"Id":29,"Name":"test","Cron":"46,47,48 * * * *","BackupType":2,"BackupFormat":0,"Retention":[5,3],"Sources":["D:\\BackupTesting\\SourceDir"],"Destinations":[{"DestinationType":0,"DestinationPath":"D:\\BackupTesting\\DestDir"}]}]
