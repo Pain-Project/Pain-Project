@@ -20,6 +20,8 @@ namespace DaemonOfPain
 
         public void UpdateTaskList (List<Config> configs)
         {
+            if (configs == null)
+                return;
             TaskList.Clear();
             //return schedule.GetNextOccurrence(DateTime.Now);
             foreach (var config in configs)

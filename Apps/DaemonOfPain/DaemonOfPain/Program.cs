@@ -11,10 +11,6 @@ namespace DaemonOfPain
     {
         static async Task Main(string[] args)
         {
-            DateTime n = DateTime.Now;
-            string s = n.ToString(); ;
-
-
             Application app = new Application();
             await app.StartApplication();
         }

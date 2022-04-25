@@ -29,12 +29,14 @@ namespace DaemonOfPain
 
             //dotazování na server
             IJobDetail connectJob = JobBuilder.Create<APIService>().Build();
-            ITrigger connectTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
+            ITrigger connectTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(connectJob, connectTrigger);
         }
 
         private async Task StartTimer(List<Config> configs)
         {
+            if (configs == null)
+                return;
             string cron = "";
             foreach (var item in configs)
             {

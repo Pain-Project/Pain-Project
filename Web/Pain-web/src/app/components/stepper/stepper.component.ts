@@ -5,6 +5,7 @@ import {Client} from "../../models/client.model";
 import {ClientsService} from "../../services/clients.service";
 import {ConfigsService} from "../../services/configs.service";
 import {LoginService} from "../../services/login.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stepper',
@@ -44,7 +45,8 @@ export class StepperComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private service: ClientsService,
               private configService: ConfigsService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private router: Router) {
     // @ts-ignore
     delete this.tempClient[1]
   }
@@ -99,7 +101,7 @@ export class StepperComponent implements OnInit {
       config.destinations.push(destination);
     }
 
-    this.configService.sendConfig(config).subscribe();
+    this.configService.sendConfig(config).subscribe(() => this.router.navigateByUrl('/ui/dashboard'));
   }
 
   private BuildCron(): string {

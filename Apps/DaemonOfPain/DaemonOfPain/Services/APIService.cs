@@ -70,8 +70,9 @@ namespace DaemonOfPain
         }
         static async Task<List<APIconfig>> GetConfigs(int id)
         {
-
             string response = await client.GetStringAsync($"/Daemon/GetConfigs/{id}");
+            //if (response == null)
+            //    return null;
             IEnumerable<APIconfig> config = null;
             config = JsonConvert.DeserializeObject<List<APIconfig>>(response);
             return (List<APIconfig>)config;

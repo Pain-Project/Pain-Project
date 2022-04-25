@@ -25,7 +25,8 @@ namespace DaemonOfPain.Services
             string data = sr.ReadToEnd();
             sr.Close();
 
-            this.Configs = JsonConvert.DeserializeObject<List<Config>>(data);
+            if (JsonConvert.DeserializeObject<List<Config>>(data) != null)
+                this.Configs = JsonConvert.DeserializeObject<List<Config>>(data);
         }
 
         public void WriteSnapshot(Snapshot snap)
@@ -66,7 +67,8 @@ namespace DaemonOfPain.Services
 
         public void WriteAllConfigs(List<Config> data)
         {
-            Configs.Clear();
+                Configs.Clear();
+
             foreach (Config newConfig in data)
             {
                 //if (this.Configs.Exists(x => x.Id == newConfig.Id))
