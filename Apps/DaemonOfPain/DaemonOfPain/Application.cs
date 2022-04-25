@@ -42,7 +42,16 @@ namespace DaemonOfPain
             await Timer.SetUp(DataService.GetAllConfigs());
 
             while (true)
-                Thread.Sleep(10000);
+            {
+                if (DataService.ConfigsWasChanged)
+                {
+                    DataService.ConfigsWasChanged = false;
+                    await Timer.SetUp(DataService.GetAllConfigs());
+                }
+                    
+                Thread.Sleep(5000);
+            }
+                
 
         }
     }

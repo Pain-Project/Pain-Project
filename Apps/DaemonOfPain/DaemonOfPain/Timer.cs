@@ -15,6 +15,8 @@ namespace DaemonOfPain
 
         public async Task SetUp(List<Config> configs)
         {
+            if (scheduler != null)
+                await scheduler.Clear();
             scheduler = await new StdSchedulerFactory().GetScheduler();
             await ClientPrepare();
             await StartTimer(configs);

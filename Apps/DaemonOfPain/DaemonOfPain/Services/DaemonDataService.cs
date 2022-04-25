@@ -18,9 +18,11 @@ namespace DaemonOfPain.Services
 
 
         private List<Config> Configs = new List<Config>();
+        public bool ConfigsWasChanged { get; set; }
 
         public DaemonDataService()
         {
+            ConfigsWasChanged = false;
             StreamReader sr = new StreamReader(configPath);
             string data = sr.ReadToEnd();
             sr.Close();
@@ -67,19 +69,18 @@ namespace DaemonOfPain.Services
 
         public void WriteAllConfigs(List<Config> data)
         {
-                Configs.Clear();
-
-            foreach (Config newConfig in data)
+            if(JsonConvert.SerializeObject(Configs) != JsonConvert.SerializeObject(data))
             {
-                //if (this.Configs.Exists(x => x.Id == newConfig.Id))
-                //{
-                //    this.Configs.Remove(this.Configs.Find(x => x.Id == newConfig.Id));
-                //}
-                this.Configs.Add(newConfig);
+                Configs.Clear();
+                foreach (Config newConfig in data)
+                {
+                    this.Configs.Add(newConfig);
+                }
+                StreamWriter sw = new StreamWriter(configPath);
+                sw.Write(JsonConvert.SerializeObject(this.Configs));
+                sw.Close();
+                Application.DataService.ConfigsWasChanged = true;
             }
-            StreamWriter sw = new StreamWriter(configPath);
-            sw.Write(JsonConvert.SerializeObject(this.Configs));
-            sw.Close();
         }
 
         public void WriteSettings(Settings set)

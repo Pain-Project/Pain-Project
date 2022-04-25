@@ -23,23 +23,27 @@ namespace DatabaseTest.DatabaseTables
         }
         public void RegenerateTaskDatabaseTable()
         {
-            DateTime today = DateTime.Today;
-            var del = from t in context.Tasks
-                      where t.Date > today
-                      select t;
-            foreach (Task item in del)
+            try
             {
-                context.Tasks.Remove(item);
+                DateTime today = DateTime.Now;
+                var del = from t in context.Tasks
+                          where t.Date > today
+                          select t;
+                foreach (Task item in del)
+                {
+                    context.Tasks.Remove(item);
+                }
+                context.SaveChanges();
+                UpdateTaskDatabaseTable();
             }
-            context.SaveChanges();
-            UpdateTaskDatabaseTable();
+            catch { }
         }
         public void UpdateTaskDatabaseTable()
         {
             try
             {
                 //odtranění tasku, které jsou starší 8 dní
-                DateTime today = DateTime.Today;
+                DateTime today = DateTime.Now;
                 var del = from t in context.Tasks
                           where t.Date <= today.AddDays(-8)
                           select t;

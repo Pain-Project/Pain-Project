@@ -156,6 +156,7 @@ namespace DatabaseTest.Controllers
                 context.Configs.Add(newConfig);
 
                 context.SaveChanges();
+                new Tasker().RegenerateTaskDatabaseTable();
                 return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception)
@@ -285,6 +286,7 @@ namespace DatabaseTest.Controllers
                 }
 
                 context.SaveChanges();
+                new Tasker().RegenerateTaskDatabaseTable();
                 return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception)
@@ -300,6 +302,7 @@ namespace DatabaseTest.Controllers
                 Config editConfig = context.Configs.Find(idConfig);
                 context.Configs.Remove(editConfig);
                 context.SaveChanges();
+                new Tasker().RegenerateTaskDatabaseTable();
                 return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception)

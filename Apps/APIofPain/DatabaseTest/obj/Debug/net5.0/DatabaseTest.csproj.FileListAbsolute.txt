@@ -275,3 +275,8 @@ C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin
 C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\NCrontab.dll
 C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Quartz.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\BCrypt.Net-Core.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\JWT.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\NCrontab.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Quartz.dll
