@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Client} from "../../../models/client.model";
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ClientsService} from "../../../services/clients.service";
+import {ConfigsService} from "../../../services/configs.service";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-client-dialog',
@@ -8,26 +9,23 @@ import {ClientsService} from "../../../services/clients.service";
   styleUrls: ['./add-client-dialog.component.scss']
 })
 export class AddClientDialogComponent implements OnInit {
+
   cssClassIcon = 'NotActiveSearch';
   searchActive : boolean = false;
   searchedClient : string = '';
-  clients : Client[] = [];
+  clients : clientAdd[] = [];
 
-  checkedClients : Client[] = [];
-  constructor(private service : ClientsService) { }
+  constructor(private service : ClientsService,
+              private configService: ConfigsService,
+              @Inject(MAT_DIALOG_DATA) public data: number
+              ) { }
 
   ngOnInit(): void {
-    this.clients = this.service.findAllClients();
+    this.configService.clientsByConfig(this.data).subscribe(x => this.clients = x);
   }
 
-  ConfigCheck(isChecked: boolean, checkedClient : Client): void {
-    if (isChecked) {
-      // alert(checkedClient.name);
-      this.checkedClients.push(checkedClient);
-    }
-    else {
-      this.checkedClients = this.checkedClients.filter(x => x != checkedClient);
-    }
+  ConfigCheck(isChecked: boolean, checkedClient : clientAdd): void {
+    checkedClient.active = !checkedClient.active;
 }
 
   ActiveChange() : void {
@@ -36,4 +34,10 @@ export class AddClientDialogComponent implements OnInit {
     this.searchActive= !this.searchActive;
     this.cssClassIcon = this.searchActive ? 'ActiveSearch':'NotActiveSearch'  ;
   }
+}
+
+export interface clientAdd {
+  id : number;
+  name: string;
+  active: boolean;
 }

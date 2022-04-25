@@ -20,8 +20,8 @@
             </div>
             <div class="col-4 name">
               <p>{{name}} {{surname}}</p>
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <a routerLink=""> Logout</a>
+              <i class="fa-solid fa-arrow-right-from-bracket logOut"></i>
+              <a class="logOut" (click)="LogOut()"> Logout</a>
             </div>
             <div class="col-1 settings" >
               <a (click)="openDialog()" >

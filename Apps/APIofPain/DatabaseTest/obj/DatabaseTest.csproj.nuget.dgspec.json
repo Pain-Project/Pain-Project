@@ -40,6 +40,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "BCrypt.Net-Core": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "JWT": {
+              "target": "Package",
+              "version": "[8.9.0, )"
+            },
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.10, )"

@@ -13,6 +13,9 @@
 .example-full-widthL, .example-full-widthR{
   font-size: 17px
 }
+.configNameInput {
+  margin-top: 5em;
+}
 .example-full-widthL{
   margin-right: 2em;
   margin-left: 5em;
@@ -21,6 +24,9 @@
   font-size: 25px;
   margin-left: 5em;
   color: var(--Font-blue);
+}
+.delete-btn {
+  cursor: pointer;
 }
 .frequencyHeader{
   font-size: 25px;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,7 @@ namespace DatabaseTest.DatabaseTables
 
         public string Name { get; set; }
         
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         
         public string Cron { get; set; }
         

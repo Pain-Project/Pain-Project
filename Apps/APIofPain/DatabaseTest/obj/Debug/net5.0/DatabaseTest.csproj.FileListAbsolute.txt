@@ -270,3 +270,6 @@ D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\ref\DatabaseTest.dll
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\DatabaseTest.pdb
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\DatabaseTest.genruntimeconfig.cache
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\BCrypt.Net-Core.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\JWT.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Newtonsoft.Json.dll

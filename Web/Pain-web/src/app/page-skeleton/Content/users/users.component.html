@@ -10,9 +10,6 @@
       <mat-expansion-panel hideToggle class="configPanel">
         <mat-expansion-panel-header class="configHeader">
           <mat-panel-title class="text-uppercase UserNameHeader">
-            <div class="col-2 loginName">
-              {{user.loginName}}
-            </div>
             <div class="col font">
               {{user.name}}
             </div>
@@ -23,22 +20,19 @@
               {{user.createDate}}
             </div>
             <div class="buttons">
-              <a (click)="onClick($event); removeDialog()" class="buttonREM" mat-raised-button>REMOVE</a>
+              <a (click)="onClick($event); removeDialog(user.id)" class="buttonREM" mat-raised-button>REMOVE</a>
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="container expand">
-          <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
+          <cdk-virtual-scroll-viewport *ngIf="user.logs[0] != null" itemSize="50" class="configViewport">
             <div *cdkVirtualFor="let log of user.logs" class="configLine">
               <div class="row">
                 <div class="col text-uppercase">
-                  <p>{{log.date}}</p>
+                  <p>{{log.loginTime}}</p>
                 </div>
                 <div class="col">
                   <p>{{log.ipAddress}}</p>
-                </div>
-                <div class="col">
-                  <p>{{log.country}}</p>
                 </div>
               </div>
             </div>

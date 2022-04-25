@@ -1,9 +1,10 @@
-import { Config } from "./config.model";
+import {Config} from "./config.model";
 
 export class Client {
+  public id: number;
   public name : string = '';
+  public ip : string = '';
+  public mac : string = '';
   public active : boolean = false;
-  public ipAddress : string = '';
-  public macAddress : string = '';
-  public configs : Config[] = [];
+  public configs : Config[];
 }

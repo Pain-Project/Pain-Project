@@ -5,10 +5,17 @@ body {
 }
 .ClientNameHeader {
   color: var(--Font-color);
+  .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 12vw;
+  }
 }
 .ip, .mac {
   font-size: 20px;
 }
+
 .Filter {
   position: absolute;
   right: 20px;
@@ -82,6 +89,12 @@ body {
 .configViewport {
   height: 300px;
   width: 100%;
+  .configName {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 9vw;
+  }
 }
 .configLine {
   height: 50px;

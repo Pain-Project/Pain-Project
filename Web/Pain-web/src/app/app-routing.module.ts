@@ -13,11 +13,12 @@ import { ErrorPageComponent } from "./error-page/error-page.component";
 import { AddConfigComponent } from "./page-skeleton/Content/add-config/add-config.component";
 import { EditConfigComponent } from "./page-skeleton/Content/edit-config/edit-config.component";
 import { GuardClientDirtyGuard } from "./Guards/guard-client-dirty.guard";
+import {AuthGuard} from "./Guards/auth.guard";
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent},
   {
-    path: 'ui', component: PageSkeletonComponent,
+    path: 'ui', component: PageSkeletonComponent, canActivate:[AuthGuard],
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'logs', component: LogsComponent},

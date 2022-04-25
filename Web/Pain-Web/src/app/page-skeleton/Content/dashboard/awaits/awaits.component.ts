@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AWAITS } from '../../../TestingDashboard/Awaits';
+import {DasboardService, dashboardTask} from "../../../../services/dasboard.service";
+import * as moment from "moment/moment";
 
 @Component({
   selector: 'app-awaits',
@@ -7,9 +8,14 @@ import { AWAITS } from '../../../TestingDashboard/Awaits';
   styleUrls: ['./../dashboard.component.scss']
 })
 export class AwaitsComponent implements OnInit {
-  awaits = AWAITS;
-  constructor() { }
-
+  awaits: dashboardTask[] = [];
+  constructor(public service: DasboardService) {
+    this.service.TodayTasks().subscribe(x => this.awaits = x.filter(x => moment(x.date) > moment(Date.now())))
+  }
+  format_time(s : string) {
+    let now = moment(s);
+    return ( now.format("HH:mm") );
+  }
   ngOnInit(): void {
   }
 

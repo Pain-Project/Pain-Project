@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {DasboardService} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-stats7day',
@@ -6,8 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./../dashboard.component.scss']
 })
 export class Stats7dayComponent implements OnInit {
+  success: number = 0;
+  noRun: number = 0;
+  error: number = 0;
 
-  constructor() { }
+  constructor(public service: DasboardService) {
+    this.service.SevenDays().subscribe(x => {
+      x.forEach(value => {
+        if(value.state == 'Success')
+          this.success++;
+        else if (value.state == "NoRun")
+          this.noRun++;
+        else
+          this.error++;
+      })
+    })
+  }
 
   ngOnInit(): void {
   }

@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 import { User } from "../models/user.model";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {SessionsService} from "./sessions.service";
+import {catchError, Observable} from "rxjs";
+import {environment} from "../../environments/environment";
+import {LoginService} from "./login.service";
 
 
 @Injectable({
@@ -7,158 +13,53 @@ import { User } from "../models/user.model";
 })
 
 export class UsersService {
-  private USERS : User[] = [
-    {email: '', password:'', reports:0, name: 'admin', surname: 'admin', loginName:'admin', createDate:'1.1.2001', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '16.5.2021', ipAddress: '192.168.0.1', country: 'GR'},
-        {date: '2.8.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Pavel', surname: 'Novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Foo', surname: 'Bar', loginName:'stringint', createDate:'0.0.0000', logs: [
-        {date: 'DATE', ipAddress: 'ipLMAO', country: 'NULL'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'admin', surname: 'admin', loginName:'admin', createDate:'1.1.2001', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '16.5.2021', ipAddress: '192.168.0.1', country: 'GR'},
-        {date: '2.8.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Pavel', surname: 'Novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Foo', surname: 'Bar', loginName:'stringint', createDate:'0.0.0000', logs: [
-        {date: 'DATE', ipAddress: 'ipLMAO', country: 'NULL'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'admin', surname: 'admin', loginName:'admin', createDate:'1.1.2001', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '16.5.2021', ipAddress: '192.168.0.1', country: 'GR'},
-        {date: '2.8.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Pavel', surname: 'Novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Foo', surname: 'Bar', loginName:'stringint', createDate:'0.0.0000', logs: [
-        {date: 'DATE', ipAddress: 'ipLMAO', country: 'NULL'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'admin', surname: 'admin', loginName:'admin', createDate:'1.1.2001', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '16.5.2021', ipAddress: '192.168.0.1', country: 'GR'},
-        {date: '2.8.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Pavel', surname: 'Novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'Foo', surname: 'Bar', loginName:'stringint', createDate:'0.0.0000', logs: [
-        {date: 'DATE', ipAddress: 'ipLMAO', country: 'NULL'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },
-    {email: '', password:'', reports:0, name: 'pavel', surname: 'novak', loginName:'pavel123', createDate:'12.4.2012', logs: [
-        {date: '12.4.2021', ipAddress: '192.168.0.1', country: 'CZ'},
-        {date: '20.10.2022', ipAddress: '192.168.0.1', country: 'CZ'},
-      ]
-    },];
-  constructor() { }
-public findAllUsers() : User[] {
-    return this.USERS;
+  constructor(private http: HttpClient,
+              private router: Router,
+              private sessions: SessionsService,
+              private logins: LoginService) { }
+  public get options(): {headers: HttpHeaders} {
+    return {
+      headers:  new HttpHeaders({'Authorization': 'Bearer' + this.sessions.token})
+    };
+  }
+  public findAllUsers():Observable<User[]> {
+    return this.http.get<User[]>(environment.api + '/adminPage/allUsers', this.options).pipe(
+      catchError(err => {
+        this.unauthenticated(err);
+        throw new Error((err));
+      })
+    )
+  }
+  public removeUser(idUser: number): Observable<any> {
+    return this.http.delete<any>(environment.api + '/adminPage/removeUser?idUser=' + idUser, this.options).pipe(
+      catchError(err => {
+        this.unauthenticated(err);
+        throw new Error((err));
+      })
+    )
+  }
+
+  public addUser(user: User) : Observable<any> {
+    return this.http.post<any>(environment.api + '/adminPage/addUser', user, this.options).pipe(
+      catchError(err => {
+        this.unauthenticated(err);
+        throw new Error((err));
+      })
+    )
+  }
+  public darkmodeChange(change: boolean) : Observable<any> {
+    let idUser = this.logins.GetLogin().Id;
+    return this.http.put<any>(environment.api + '/adminPage/darkmodeChange?idUser=' + idUser + '&change=' + change, this.options).pipe(
+      catchError(err => {
+        this.unauthenticated(err);
+        throw new Error((err));
+      })
+    )
 }
+  private unauthenticated(err: any) : void {
+    if (err.status === 401) {
+      this.sessions.logout();
+    }
+  }
 
 }

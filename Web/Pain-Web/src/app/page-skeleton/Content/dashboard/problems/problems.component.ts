@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LogsService } from "../../../../services/logs.service";
 import * as moment from "moment/moment";
 import {Router} from "@angular/router";
+import {DasboardService} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-problems',
@@ -10,10 +11,10 @@ import {Router} from "@angular/router";
 })
 export class ProblemsComponent implements OnInit {
 
-  constructor(private logsService : LogsService, private router : Router) { }
+  constructor(private service : DasboardService, private router : Router) { }
   problems : any;
   ngOnInit(): void {
-    this.problems = this.logsService.findAllErrors();
+    this.service.TodayTasks().subscribe(x => this.problems = x.filter(y => y.state == 'Error'))
   }
   format_time(s : string) {
     let now = moment(s);

@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import {LoginService} from "../services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-page-skeleton',
@@ -13,15 +14,22 @@ export class PageSkeletonComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private loginService : LoginService
-  ) { }
+    private loginService : LoginService,
+    private router: Router
+  ) {
+  }
   ngOnInit(): void {
-    if (this.loginService.GetLogin().darkMode)
+
+    this.loginService.SetLogin();
+
+    if (this.loginService.GetLogin().Darkmode)
       this.theme = 'dark-theme';
     else
       this.theme = 'light-theme';
 
     this.initializeTheme();
+    if(this.router.url.endsWith('ui'))
+      this.router.navigate(['ui','dashboard'])
   }
   initializeTheme = (): void =>
     this.renderer.addClass(this.document.body, this.theme);

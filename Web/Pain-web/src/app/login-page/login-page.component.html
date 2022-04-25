@@ -9,27 +9,27 @@
     <h1 style="color: #0078D4; font-size: 50px; margin-top: 1.7em;margin-left: 1em">Le Pain, a.s.</h1>
   </div>
 </div>
-<div class="container">
-  <div class="nameInput">
-    <p style="margin-left: -10em; font-size: 25px" >Name</p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Name</mat-label>
-      <input [(ngModel)]="name" style="font-size: 20px; color: #707070" matInput required>
-    </mat-form-field>
-  </div>
-  <div class="passwordInput">
-    <p style="margin-left: -8em; font-size: 25px">Password</p>
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Password</mat-label>
-      <input [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'" style="font-size: 20px; color: #707070" required>
-      <button type="button" mat-icon-button matSuffix (click)="hide = !hide; buttonOpen($event);" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-    <p style="margin-left: -8em; font-size: 15px">Forgot your password?</p>
-  </div>
-  <div class="example-button-row">
-    <button (click)="Submit()"  [disabled]="(name=='' || password=='')" mat-raised-button color="primary" class="login">LOGIN</button>
-  </div>
-</div>
+  <form [formGroup]="form" (ngSubmit)="Submit()" class="container">
+    <div class="nameInput">
+      <p style="margin-left: -10em; font-size: 25px" >Name</p>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput class="form-control" formControlName="Login" style="font-size: 20px; color: #707070" >
+      </mat-form-field>
+    </div>
+    <div class="passwordInput">
+      <p style="margin-left: -8em; font-size: 25px">Password</p>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput class="form-control" formControlName="Password"  [type]="hide ? 'password' : 'text'" style="font-size: 20px; color: #707070" >
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide; buttonOpen($event);" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <p style="margin-left: -8em; font-size: 15px">Forgot your password?</p>
+    </div>
+    <div class="example-button-row">
+      <button type="submit"  mat-raised-button color="primary" class="login">LOGIN</button>
+    </div>
+  </form>
 </body>

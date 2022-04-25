@@ -8,13 +8,13 @@
                 <div class="row" *ngFor="let odd = odd;let awaitss of awaits" [class.grayitem]="odd">
                     <div class="row itemheight scrollitem">
                         <div class="col-3">
-                            <p>{{awaitss.ClientName}}</p>
+                            <p class="short">{{awaitss.clientName}}</p>
                         </div>
                         <div class="col-3">
-                            <p>{{awaitss.ConfigName}}</p>
+                            <p class="short">{{awaitss.configName}}</p>
                         </div>
                         <div class="col">
-                            <p class="centeredtext">{{awaitss.Time}}</p>
+                            <p class="centeredtext">{{format_time(awaitss.date)}}</p>
                         </div>
                     </div>
                 </div>
