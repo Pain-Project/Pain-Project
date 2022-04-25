@@ -26,6 +26,7 @@
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
+      <p *ngIf="failed" style="color: red">Invalid username or password!</p>
       <p style="margin-left: -8em; font-size: 15px">Forgot your password?</p>
     </div>
     <div class="example-button-row">

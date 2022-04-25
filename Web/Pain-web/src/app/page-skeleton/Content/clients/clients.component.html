@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-3">
                   <div class="buttons">
-                    <a (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+                    <a (click)="onClick($event); editConfig(config.id)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
                     <a (click)="onClick($event); openDialog('configFromClient', client.id, config.id)" class="buttonREM" mat-raised-button>REMOVE</a>
                   </div>
                 </div>

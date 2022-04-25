@@ -246,6 +246,87 @@ namespace DatabaseTest.Controllers
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
             }
         }
+        [HttpGet("getConfigByID")]
+        public JsonResult GetConfigByID(int id)
+        {
+            try
+            {
+                var q =
+                    from pathsArray in (
+                        from srcArray in (
+                            from innerConfigs in context.Configs.ToList()
+                            from innerSources in context.Sources.ToList().Where(x => x.IdConfig == innerConfigs.Id).DefaultIfEmpty()
+                            group innerSources == null ? null : innerSources.Path by innerConfigs.Id into grp
+                            select new { id = grp.Key, sources = grp }
+                        )
+                        from destArray in (
+                            from innerConfigs in context.Configs.ToList()
+                            from innerDestinations in context.Destinations.ToList().Where(x => x.IdConfig == innerConfigs.Id).DefaultIfEmpty()
+                            group innerDestinations by innerConfigs.Id into grp
+                            select new { id = grp.Key, destinations = grp }
+                        ).Where(x => x.id == srcArray.id).DefaultIfEmpty()
+                        select new { id = srcArray.id, srcArray, destArray = destArray.destinations }
+                    )
+                    from outerConfigs in context.Configs.ToList().Where(x => x.Id == pathsArray.srcArray.id && x.Id == id)
+                    from admins in context.Administrators.ToList().Where(x => x.Id == outerConfigs.IdAdministrator).DefaultIfEmpty()
+
+                    from assignments in (
+                        from a in context.Assignments.ToList().DefaultIfEmpty()
+                        from innerClients in context.Clients.ToList().Where(x => x.Id == a.IdClient).DefaultIfEmpty()
+                        group (a?.Client) by a.IdConfig into grp
+                        select new { id = grp.Key, ids = grp == null ? null : grp }
+                    ).Where(x => x.id == outerConfigs.Id).DefaultIfEmpty()
+                    select new
+                    {
+                        ID = outerConfigs.Id,
+                        Name = outerConfigs.Name,
+                        CreateDate = outerConfigs.CreateDate,
+                        Cron = outerConfigs.Cron,
+                        BackupFormat = outerConfigs.BackUpFormat,
+                        BackupType = outerConfigs.BackUpType,
+                        RetentionPackages = outerConfigs.RetentionPackages,
+                        RetentionPackageSize = outerConfigs.RetentionPackageSize,
+                        //AdminName = admins != null ? admins.Name : null,
+                        AdminName = admins?.Name,
+                        Sources = pathsArray.srcArray.sources,
+                        Destinations = pathsArray.destArray,
+                        ////Clients = assignments != null ? assignments.ids.Select(x => new { x.Id, x.Name }) : null
+                        Clients = assignments?.ids.Select(x => new { x.Id, x.Name })
+                    };
+                foreach (var item in q)
+                {
+                    if (item.ID != id)
+                        continue;
+                    List<DataDestination> dests = new List<DataDestination>();
+                    foreach (var dest in item.Destinations)
+                    {
+                        if (dest != null)
+                            dests.Add(new DataDestination() { DestType = dest.DestType, Path = dest.Path });
+                    }
+                    DataConfig data = new DataConfig()
+                    {
+                        Id = item.ID,
+                        Sources = item.Sources.ToList()[0] == null ? new List<string>() : item.Sources.ToList(),
+                        Destinations = dests,
+                        CreateDate = item.CreateDate.ToString("s"),
+                        BackUpFormat = item.BackupFormat,
+                        BackUpType = item.BackupType,
+                        Cron = item.Cron,
+                        Name = item.Name,
+                        RetentionPackages = item.RetentionPackages,
+                        RetentionPackageSize = item.RetentionPackageSize,
+                        AdminName = item.AdminName != null ? item.AdminName : "Deleted User",
+                        ClientNames = item.Clients?.ToDictionary(x => x.Id, x => x.Name)
+                    };
+                    return new JsonResult(data) { StatusCode = (int)HttpStatusCode.OK };
+                }
+                return new JsonResult("Config not found!") { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+            catch (Exception)
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+        }
 
         [HttpPut("updateConfig")]
         public JsonResult UpdateConfig(int id, DataConfig editedConfig)

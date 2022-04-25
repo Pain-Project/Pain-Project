@@ -39,6 +39,10 @@ export class ConfigsService {
       })
     )
   }
+  
+  public findConfigByID(id: number) : Observable<Config> {
+    return this.http.get<Config>(environment.api + '/AdminPage/getConfigByID?id=' + id, this.options);
+  }
 
   public removeConfig(idConfig: number): Observable<any> {
     return this.http.delete<any>(environment.api + '/adminPage/removeConfig?idConfig=' + idConfig, this.options);

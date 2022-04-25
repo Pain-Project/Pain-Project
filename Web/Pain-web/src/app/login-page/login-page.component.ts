@@ -16,6 +16,8 @@ export class LoginPageComponent implements OnInit {
   name = '';
   password = '';
 
+  failed = false;
+
   public form: FormGroup
 
   constructor(
@@ -35,6 +37,6 @@ export class LoginPageComponent implements OnInit {
     event.stopPropagation();
   }
   Submit() : void {
-    this.sessions.login(this.form.value).subscribe( (bool) => bool ? this.router.navigate(['ui', 'dashboard']) : console.log('tohle nn'))
+    this.sessions.login(this.form.value).subscribe( (bool) => bool ? this.router.navigate(['ui', 'dashboard']) : (this.failed = true, this.form.reset()))
   }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
+import {FormGroup, FormControl, FormBuilder, Validators, FormArray, Form} from "@angular/forms";
 import {Config, Destination} from "../../models/config.model";
 import {Client} from "../../models/client.model";
 import {ClientsService} from "../../services/clients.service";
@@ -86,10 +86,11 @@ export class StepperComponent implements OnInit {
 
     config.cron = this.BuildCron();
     config.clientNames = this.tempClient;
+
     config.name = this.Name?.value;
     config.backUpType = secondStep.backupType;
     config.idAdministrator = this.loginService.GetLogin().Id;
-    config.retentionPackageSize = secondStep.packages;
+    config.retentionPackageSize = config.backUpType == 'FB' ?  1: secondStep.packages;
     config.retentionPackages = secondStep.backups;
     config.backUpFormat = secondStep.backupFormat;
 
@@ -101,7 +102,7 @@ export class StepperComponent implements OnInit {
       config.destinations.push(destination);
     }
 
-    this.configService.sendConfig(config).subscribe(() => this.router.navigateByUrl('/ui/dashboard'));
+    this.configService.sendConfig(config).subscribe(() => (this.router.navigateByUrl('/ui/dashboard'), alert('Config was succesfully created!')));
   }
 
   private BuildCron(): string {
@@ -155,7 +156,7 @@ export class StepperComponent implements OnInit {
     return this.fb.group({
       formArray: this.fb.array([
         this.fb.group({
-          clients: [config.clientNames, Validators.required]
+          clients: new FormArray([])
         }),
         this.fb.group({
           backupType: ['FB', Validators.required],
@@ -221,8 +222,6 @@ export class StepperComponent implements OnInit {
   public removeDest(index : number): void {
     this.Dest.removeAt(index);
   }
-
-
 }
 
 export interface SecondStep {

@@ -27,7 +27,7 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
   constructor(private service: ClientsService,
               public dialog: MatDialog,
               private configService: ConfigsService,
-              private router: Router) {
+              private router: Router,) {
   }
 
   activeChange(idClient: number): void {
@@ -56,6 +56,10 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
 
   onScrollDown(ev: any) {
     this.sum += 15;
+  }
+
+  editConfig(id: number) {
+    this.configService.findConfigByID(id).subscribe(x => this.router.navigateByUrl('/ui/edit-config', {state: x}))
   }
 
   openDialog(type: any, idClient: number, idConfig: number): void {

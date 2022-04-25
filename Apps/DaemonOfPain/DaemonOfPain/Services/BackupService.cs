@@ -361,23 +361,24 @@ namespace DaemonOfPain.Services
             try
             {
                 this.BackupSetup(TaskManager.TaskList);
+                try
+                {
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
-            catch
+            catch(Exception ex)
             {
                 try
                 {
-                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error", success = false, size = 0 });
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex, success = false, size = 0 });
                 }
                 catch { }
             }
-            try
-            {
-                await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+           
             //await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
 
             TaskManager.TaskList.RemoveAt(0);

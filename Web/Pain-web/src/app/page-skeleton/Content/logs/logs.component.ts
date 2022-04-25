@@ -3,6 +3,7 @@ import {Log} from "../../../models/log.model";
 import {LogsService} from "../../../services/logs.service";
 import {ActivatedRoute} from "@angular/router";
 import {ConfigsService} from "../../../services/configs.service";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-logs',
@@ -26,7 +27,7 @@ export class LogsComponent implements OnInit {
       this.searchedLog = id;
       this.expandNumber = +id;
     }
-    this.service.findAllLogs().subscribe(x => this.logs = x);
+    this.service.findAllLogs().subscribe(x => this.logs = x.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)));
   }
   onScrollDown(ev: any) {
     this.sum += 15;
