@@ -16,7 +16,6 @@ namespace DaemonOfPain.Services
         private int GetConfigId(List<Tasks> tasks)
         {
             int id = tasks[0].IdConfig;
-            TaskManager.TaskList.RemoveAt(0);
             return id;
         }
         public void BackupSetup(List<Tasks> tasks)
@@ -356,23 +355,32 @@ namespace DaemonOfPain.Services
             return null;
         }
 
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             Console.WriteLine("backup!" + DateTime.Now);
             try
             {
                 this.BackupSetup(TaskManager.TaskList);
-                //send ok report
             }
             catch
             {
                 try
                 {
-                    //send not ok report
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error", success = false, size = 0 });
                 }
                 catch { }
             }
-            return Task.CompletedTask;
+            try
+            {
+                await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            //await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
+
+            TaskManager.TaskList.RemoveAt(0);
         }
     }
 }

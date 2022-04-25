@@ -15,7 +15,7 @@ namespace DatabaseTest
     {
         public static async System.Threading.Tasks.Task Main(string[] args)
         {
-            //new Tasker().UpdateTaskDatabaseTable();
+            new Tasker().RegenerateTaskDatabaseTable();
             Timer timer = new Timer();
             await timer.SetUp();
             CreateHostBuilder(args).Build().Run();

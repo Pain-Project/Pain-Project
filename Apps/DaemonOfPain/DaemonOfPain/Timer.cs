@@ -43,10 +43,6 @@ namespace DaemonOfPain
                 cron = CronCorrector(item.Cron);
                 await scheduler.ScheduleJob(job, trigger);
             }
-            IJobDetail job2 = JobBuilder.Create<Testovator>().Build();
-            ITrigger trigger2 = TriggerBuilder.Create().WithCronSchedule(cron).Build();
-            await scheduler.ScheduleJob(job2, trigger2);
-            Console.WriteLine(cron);
             await scheduler.Start();
         }
 

@@ -20,12 +20,19 @@ namespace DaemonOfPain
     {
         static HttpClient client = new HttpClient();
 
+        private static void Setup()
+        {
+            if(client.BaseAddress == null)
+            {
+                client.BaseAddress = new Uri(@"https://localhost:5001/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+            }
+        }
         public static async Task<int> LoginToServer()
         {
-            client.BaseAddress = new Uri(@"https://localhost:5001/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            Setup();
             try
             {
                 int id = await LoginToServer(new Computer());
@@ -49,10 +56,7 @@ namespace DaemonOfPain
 
         public static async Task GetConfigs()
         {
-            client.BaseAddress = new Uri(@"https://localhost:5001/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            Setup();
             try
             {
                 List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
@@ -73,26 +77,22 @@ namespace DaemonOfPain
             return (List<APIconfig>)config;
         }
         //****************************************************************************************************************
-        public static async Task SendReport()
+        public static async Task SendReport(Report report)
         {
-            client.BaseAddress = new Uri(@"https://localhost:5001/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            Setup();
             try
             {
-                Report report = new Report() { };
-                var url = await SendReport(report);
+                var url = await SendReport2(report);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
-        static async Task<Uri> SendReport(Report report)
+        static async Task<Uri> SendReport2(Report report)
         {
 
-            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", report);
+            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/sendReport", report);
             response.EnsureSuccessStatusCode();
             return response.Headers.Location;
         }

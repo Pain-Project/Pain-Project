@@ -38,7 +38,6 @@ namespace DaemonOfPain
 
             await APIService.GetConfigs();
 
-
             TaskManager.UpdateTaskList(DataService.GetAllConfigs());
             await Timer.SetUp(DataService.GetAllConfigs());
 

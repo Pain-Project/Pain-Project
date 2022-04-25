@@ -21,7 +21,19 @@ namespace DatabaseTest.DatabaseTables
             UpdateTaskDatabaseTable();
             return System.Threading.Tasks.Task.CompletedTask;
         }
-        
+        public void RegenerateTaskDatabaseTable()
+        {
+            DateTime today = DateTime.Today;
+            var del = from t in context.Tasks
+                      where t.Date > today
+                      select t;
+            foreach (Task item in del)
+            {
+                context.Tasks.Remove(item);
+            }
+            context.SaveChanges();
+            UpdateTaskDatabaseTable();
+        }
         public void UpdateTaskDatabaseTable()
         {
             try
