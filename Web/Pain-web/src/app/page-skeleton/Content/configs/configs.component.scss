@@ -50,7 +50,13 @@ body {
 }
 .configHeader{
   padding: 30px;
-  font-size: 25px
+  font-size: 25px;
+  .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 10vw;
+  }
 }
 .container.expand{
   border-top: var(--Font-color) 1px solid;
@@ -70,12 +76,22 @@ body {
 }
 .pcViewport {
   height: 150px;
-  width: 240px;
+  width: 285px;
 }
 .pcList {
   height: 50px;
   .buttonREM {
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 0px;
+  }
+  .colName {
+    padding-right: 0;
+  }
+  .name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 6em;
   }
 }
 .InputSearch{

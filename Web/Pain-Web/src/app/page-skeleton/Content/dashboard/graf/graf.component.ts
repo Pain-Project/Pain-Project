@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { COMPLETED } from '../../../TestingDashboard/Completed';
-import { AWAITS } from '../../../TestingDashboard/Awaits';
+import {DasboardService} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-graf',
@@ -8,9 +7,10 @@ import { AWAITS } from '../../../TestingDashboard/Awaits';
   styleUrls: ['./../dashboard.component.scss']
 })
 export class GrafComponent implements OnInit {
-  completed = COMPLETED;
-  awaits = AWAITS;
-  constructor() { }
+  percent: string = '50';
+  constructor(public service: DasboardService) {
+    this.service.GetPercent().subscribe(x => this.percent = x.toFixed(0));
+  }
 
   ngOnInit(): void {
   }

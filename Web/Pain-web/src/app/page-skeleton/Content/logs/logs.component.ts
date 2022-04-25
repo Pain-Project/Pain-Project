@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Log} from "../../../models/log.model";
 import {LogsService} from "../../../services/logs.service";
 import {ActivatedRoute} from "@angular/router";
+import {ConfigsService} from "../../../services/configs.service";
 
 @Component({
   selector: 'app-logs',
@@ -15,7 +16,9 @@ export class LogsComponent implements OnInit {
   filterValue : string = 'none';
   expandNumber : number;
 
-  constructor( private service : LogsService, private route : ActivatedRoute) {}
+  constructor( private service : LogsService,
+               private route : ActivatedRoute,
+               private configsService: ConfigsService) {}
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id']
@@ -23,7 +26,7 @@ export class LogsComponent implements OnInit {
       this.searchedLog = id;
       this.expandNumber = +id;
     }
-    this.logs =  this.service.findAllLogs();
+    this.service.findAllLogs().subscribe(x => this.logs = x);
   }
   onScrollDown(ev: any) {
     this.sum += 15;

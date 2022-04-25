@@ -1,34 +1,40 @@
 import { Injectable } from '@angular/core';
+import {SessionsService} from "./sessions.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private user: loginUser = {
-    name: 'Alfons',
-    surname: 'Velký',
-    email: 'alfons.big@sssvt.cz',
-    darkMode: false,
-    loginName: 'aflikVelKy',
-    createDate: '10.4.1998',
-  };
-  constructor() { }
+  private session: session;
+  private user: loginUser;
+
+  constructor(private sessionService: SessionsService,
+              private jwt: JwtHelperService,
+              ) { }
 
   GetLogin() : loginUser {
     return this.user;
   }
-  ChangeTheme(state : boolean) : void {
-    this.user.darkMode = !this.user.darkMode;
+  SetLogin() : void {
+    this.session = this.jwt.decodeToken(this.sessionService.token || '');
+    this.user = this.session.user;
   }
+
 }
 export interface loginUser {
-  name: string;
-  surname: string;
-  email: string;
-  darkMode: boolean;
-  loginName: string;
-  createDate : string;
+  Id: number;
+  Name: string;
+  Surname: string;
+  Email: string;
+  Darkmode: boolean;
+  Create : string;
+  // loginName: string;
   // emailFreq : string;
   // logFreq : string;
   // configFreq : string;
+}
+export interface session {
+  exp: number;
+  user: loginUser;
 }

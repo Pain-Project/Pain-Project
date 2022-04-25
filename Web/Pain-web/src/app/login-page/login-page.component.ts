@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {SessionsService} from "../services/sessions.service";
+import {filter} from "rxjs";
+import {LoginService} from "../services/login.service";
 
 @Component({
   selector: 'app-login-page',
@@ -13,17 +16,25 @@ export class LoginPageComponent implements OnInit {
   name = '';
   password = '';
 
+  public form: FormGroup
 
-  constructor(private router : Router,) { }
+  constructor(
+              private router : Router,
+              private sessions : SessionsService,
+              private fb: FormBuilder,
+              private login: LoginService
+              ) { }
 
   ngOnInit(): void {
+    this.form = this.fb.group( {
+      Login: ["", Validators.required],
+      Password: ["", Validators.required]
+    })
   }
   buttonOpen(event : any): void {
     event.stopPropagation();
   }
   Submit() : void {
-    // location.pathname='ui/dashboard';
-    this.router.navigate([ 'ui/dashboard' ]);
-
+    this.sessions.login(this.form.value).subscribe( (bool) => bool ? this.router.navigate(['ui', 'dashboard']) : console.log('tohle nn'))
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BackupsizeComponent } from './backupsize.component';
+import { StepperEditComponent } from './stepperEdit.component';
 
-describe('BackupsizeComponent', () => {
-  let component: BackupsizeComponent;
-  let fixture: ComponentFixture<BackupsizeComponent>;
+describe('StepperComponent', () => {
+  let component: StepperEditComponent;
+  let fixture: ComponentFixture<StepperEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BackupsizeComponent ]
+      declarations: [ StepperEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BackupsizeComponent);
+    fixture = TestBed.createComponent(StepperEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

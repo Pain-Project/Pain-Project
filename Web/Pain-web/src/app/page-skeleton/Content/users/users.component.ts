@@ -4,6 +4,7 @@ import { UsersService } from "../../../services/users.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserDialogComponent } from "../../../components/dialogs/add-user-dialog/add-user-dialog.component";
 import {RemoveDialogComponent} from "../../../components/dialogs/remove-dialog/remove-dialog.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users',
@@ -14,10 +15,12 @@ export class UsersComponent implements OnInit {
   sum = 15;
   searchedUser : string = '';
   users : User[] = [];
-  constructor( private service : UsersService, private dialog : MatDialog) {}
+  constructor( private service : UsersService,
+               private dialog : MatDialog,
+               private router: Router) {}
 
   ngOnInit(): void {
-    this.users = this.service.findAllUsers();
+    this.service.findAllUsers().subscribe(x => this.users = x);
   }
   onScrollDown(ev: any) {
     this.sum += 15;
@@ -34,7 +37,7 @@ export class UsersComponent implements OnInit {
 
     })
   }
-  removeDialog() : void {
+  removeDialog(idAdmin: number) : void {
     const dialogRef = this.dialog.open(RemoveDialogComponent, {
       panelClass: 'custom-dialog-container',
       width: '500px'
@@ -42,7 +45,14 @@ export class UsersComponent implements OnInit {
     dialogRef.componentInstance.type = 'user';
     dialogRef.afterClosed().subscribe(result => {
       if (result == true)
-        alert('User was successfully removed!')
+        this.service.removeUser(idAdmin).subscribe(() => this.Reload())
     })
+  }
+
+  private Reload():void {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }

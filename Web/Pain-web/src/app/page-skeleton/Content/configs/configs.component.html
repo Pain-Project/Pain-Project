@@ -10,19 +10,19 @@
     <mat-expansion-panel hideToggle class="configPanel">
       <mat-expansion-panel-header class="configHeader">
         <mat-panel-title class="text-uppercase ConfigNameHeader">
-          <div class="col">
+          <div class="col name">
             {{config.name}}
           </div>
           <div class="col">
-            {{config.create_date}}
+            {{config.createDate}}
           </div>
           <div class="col">
-            {{config.backup_type}}
+            {{config.backUpType}}
           </div>
           <div class="buttons">
-            <a (click)="onClick($event); openDialog('Add')" class="buttonADD" mat-raised-button>ADD CLIENTS</a>
-            <a routerLink="/ui/edit-config" (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
-            <a (click)="onClick($event); openDialog('Remove')" class="buttonREM" mat-raised-button>REMOVE</a>
+            <a (click)="onClick($event); openDialog('Add', config, null)" class="buttonADD" mat-raised-button>ADD CLIENTS</a>
+            <a (click)="onClick($event); EditConfig(config.id)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
+            <a (click)="onClick($event); openDialog('Remove',config, null)" class="buttonREM" mat-raised-button>REMOVE</a>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -34,7 +34,7 @@
                 <h3>CREATOR:</h3>
               </div>
               <div class="col">
-                {{config.creator}}
+                {{config.adminName}}
               </div>
             </div>
             <div class="row">
@@ -42,7 +42,7 @@
                 <h3>RETENTION:</h3>
               </div>
               <div class="col">
-                {{config.retention}}
+                {{config.retentionPackages}} {{config.backUpType != 'FB' ?' / ' + config.retentionPackageSize : ''}}
               </div>
             </div>
             <div class="row">
@@ -50,7 +50,7 @@
                 <h3>FREQUENCY:</h3>
               </div>
               <div class="col">
-                {{config.frequency}}
+                {{config.cron}}
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@
                 <h3>Destinations</h3>
                 <cdk-virtual-scroll-viewport itemSize="25" class="sourcesViewport">
                   <div *cdkVirtualFor="let destination of config.destinations" class="sourcesList">
-                    {{destination.destination}}
+                    {{destination.path}}
                   </div>
                 </cdk-virtual-scroll-viewport>
               </div>
@@ -76,13 +76,13 @@
           </div>
           <div class="col pcList">
             <cdk-virtual-scroll-viewport itemSize="50" class="pcViewport">
-              <div *cdkVirtualFor="let pc of config.PCs" class="pcList text-uppercase align-content-center">
+              <div *cdkVirtualFor="let pc of config.clientNames | keyvalue" class="pcList text-uppercase align-content-center">
                 <div class="row">
-                  <div class="col">
-                    <h3>{{pc}}</h3>
+                  <div class="col colName">
+                    <h3 class="name">{{pc.value}}</h3>
                   </div>
                   <div class="col">
-                    <a (click)="onClick($event); openDialog('RemoveClient')" class="buttonREM" mat-raised-button>REMOVE CLIENT</a>
+                    <a (click)="onClick($event); openDialog('RemoveClient', config, pc.key)" class="buttonREM" mat-raised-button>REMOVE CLIENT</a>
                   </div>
                 </div>
               </div>

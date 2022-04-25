@@ -1,16 +1,24 @@
 export interface Destination {
-  type: string;
-  destination: string;
+  destType: string;
+  path: string;
+}
+export interface Client {
+  id: number;
+  name: string
 }
 export class Config {
-  public name : string = '';
-  public create_date : string = '';
-  public backup_type : string = '';
-  public backup_format : string = '';
-  public creator : string = '';
-  public retention : string = '';
-  public frequency : string = '';
-  public PCs : string[] = [];
-  public sources : string[] = [];
-  public destinations : Destination[] = [];
+  id: number;
+  name: string;
+  createDate: string;
+  cron: string;
+  backUpFormat: string;
+  backUpType: string;
+  retentionPackages: number;
+  retentionPackageSize: number;
+  adminName: string;
+  idAdministrator: number;
+  sources: string[] = [];
+  destinations: Destination[] = [];
+  clientNames = {};
+
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,7 +43,7 @@ import { AddconfigbuttonComponent } from './page-skeleton/Content/dashboard/addc
 import { GrafComponent } from './page-skeleton/Content/dashboard/graf/graf.component';
 import { CompletedComponent } from './page-skeleton/Content/dashboard/completed/completed.component';
 import { AwaitsComponent } from './page-skeleton/Content/dashboard/awaits/awaits.component';
-import { BackupsizeComponent } from './page-skeleton/content/dashboard/backupsize/backupsize.component';
+import { Backupsize } from './page-skeleton/Content/dashboard/backupsize/backupsize';
 import { AddConfigComponent } from './page-skeleton/Content/add-config/add-config.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -57,6 +57,13 @@ import { ClientsClientFilter } from "./components/pipes/Clients-ClientFilter";
 import { UsersUserSearch } from "./components/pipes/Users-UserSearch";
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { AddClientSearch } from "./components/pipes/AddClient-ClientSearch";
+import {HttpClientModule} from "@angular/common/http";
+import {JwtModule} from "@auth0/angular-jwt";
+import { StepperEditComponent } from "./components/stepper-edit/stepperEdit.component";
+
+function tokenGetter() {
+  return sessionStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -81,7 +88,7 @@ import { AddClientSearch } from "./components/pipes/AddClient-ClientSearch";
     GrafComponent,
     CompletedComponent,
     AwaitsComponent,
-    BackupsizeComponent,
+    Backupsize,
     AddConfigComponent,
     StepperComponent,
     EditConfigComponent,
@@ -92,6 +99,7 @@ import { AddClientSearch } from "./components/pipes/AddClient-ClientSearch";
     ClientsClientFilter,
     UsersUserSearch,
     AddClientSearch,
+    StepperEditComponent
   ],
     imports: [
         BrowserModule,
@@ -119,7 +127,13 @@ import { AddClientSearch } from "./components/pipes/AddClient-ClientSearch";
         ReactiveFormsModule,
         MatStepperModule,
         Ng2SearchPipeModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: tokenGetter
+          },
+        }),
     ],
   providers: [],
   bootstrap: [AppComponent]

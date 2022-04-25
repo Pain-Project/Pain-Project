@@ -1,8 +1,8 @@
 export class Log {
   id : number;
-  client_name : string = '';
-  config_name : string = '';
-  create_date : string = '';
-  status : string = '';
+  state : string = '';
   message : string = '';
+  date : string = '';
+  config_name : string = '';
+  client_name : string = '';
 }

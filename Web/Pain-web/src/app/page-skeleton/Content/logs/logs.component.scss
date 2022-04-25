@@ -19,6 +19,12 @@ body {
     color: var(--Font-color);
   }
 }
+.short {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 6em;
+}
 .InputSearch{
   background-color: var(--Background-secondary);
   color: var(--Font-color);

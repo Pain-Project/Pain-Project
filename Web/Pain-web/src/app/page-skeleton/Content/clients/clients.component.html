@@ -16,49 +16,49 @@
       <mat-expansion-panel hideToggle class="configPanel">
         <mat-expansion-panel-header class="configHeader">
           <mat-panel-title class="text-uppercase ClientNameHeader">
-            <div class="col-1">
+            <div class="col-1 name">
               {{client.name}}
             </div>
             <div *ngIf="client.active" class="col-2">
-              <mat-checkbox class="ActiveCheck" name="clientActive" (click)="onClick($event); isDirty = true" [(ngModel)]="client.active">Active</mat-checkbox>
+              <mat-checkbox class="ActiveCheck" name="clientActive" (click)="onClick($event); isDirty = true; activeChange(client.id)" [(ngModel)]="client.active">Active</mat-checkbox>
             </div>
             <div *ngIf="!client.active" class="col-2">
-              <mat-checkbox class="InactiveCheck" name="clientActive" (click)="onClick($event); isDirty = true" [(ngModel)]="client.active">Inactive</mat-checkbox>
+              <mat-checkbox class="InactiveCheck" name="clientActive" (click)="onClick($event); isDirty = true; activeChange(client.id)" [(ngModel)]="client.active">Inactive</mat-checkbox>
             </div>
             <div class="col ip">
-              {{client.ipAddress}}
+              {{client.ip}}
             </div>
             <div class="col mac">
-              {{client.macAddress}}
+              {{client.mac}}
             </div>
             <div class="col">
-              CONFIGS: {{client.configs.length}}
+              CONFIGS: {{client.configs[0] != null ? client.configs.length : 0}}
             </div>
             <div class="buttons">
-              <a (click)="onClick($event); openDialog('client')" class="buttonREM" mat-raised-button>REMOVE</a>
+              <a (click)="onClick($event); openDialog('client', client.id, 0)" class="buttonREM" mat-raised-button>REMOVE</a>
             </div>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="container expand">
-          <cdk-virtual-scroll-viewport itemSize="50" class="configViewport">
+          <cdk-virtual-scroll-viewport *ngIf="client.configs[0] != null" itemSize="50" class="configViewport">
             <div *cdkVirtualFor="let config of client.configs" class="configLine">
               <div class="row">
-                <div class="col text-uppercase">
-                  <p>{{config.name}}</p>
+                <div class="col-2 text-uppercase">
+                  <p class="configName">{{config.name}}</p>
                 </div>
                 <div class="col">
-                  <p>{{config.creator}}</p>
+                  <p>{{config.adminName}}</p>
                 </div>
                 <div class="col">
-                  <p>{{config.create_date}}</p>
+                  <p>{{config.createDate}}</p>
                 </div>
                 <div class="col">
-                  <p>{{config.backup_type}}</p>
+                  <p>{{config.backUpType}}</p>
                 </div>
                 <div class="col-3">
                   <div class="buttons">
                     <a (click)="onClick($event)" class="buttonEDIT" mat-raised-button>EDIT CONFIG</a>
-                    <a (click)="onClick($event); openDialog('configFromClient')" class="buttonREM" mat-raised-button>REMOVE</a>
+                    <a (click)="onClick($event); openDialog('configFromClient', client.id, config.id)" class="buttonREM" mat-raised-button>REMOVE</a>
                   </div>
                 </div>
               </div>
@@ -69,6 +69,6 @@
     </div>
   </div>
   <div *ngIf="isDirty" class="Save">
-    <button (click)="isDirty = false" mat-raised-button class="buttonEDIT">SAVE</button>
+    <button (click)="saveActives()" mat-raised-button class="buttonEDIT">SAVE</button>
   </div>
 </body>

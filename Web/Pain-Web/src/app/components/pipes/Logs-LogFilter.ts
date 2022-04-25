@@ -9,7 +9,7 @@ export class LogsLogFilter implements PipeTransform {
           item.client_name.toLowerCase().includes(searchText.toLowerCase()) ||
           item.id===+searchText
         )
-        && (filterText=='none' || filterText.toLowerCase()==item.status.toLowerCase()))
+        && (filterText=='none' || filterText.toLowerCase()==item.state.toLowerCase()))
           return true;
       return false;
     });

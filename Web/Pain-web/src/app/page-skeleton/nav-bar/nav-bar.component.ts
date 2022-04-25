@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { SettingsComponent} from "../../components/dialogs/settings-dialog/settings.component";
 import {LoginService} from "../../services/login.service";
+import {SessionsService} from "../../services/sessions.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,13 +15,22 @@ export class NavBarComponent implements OnInit {
   name: string;
   surname: string;
 
-  constructor( public dialog : MatDialog, private loginService : LoginService) { }
+  constructor( public dialog : MatDialog,
+               private loginService : LoginService,
+               private sessionService: SessionsService,
+               private router: Router
+  ) { }
 
 
   ngOnInit(): void {
-    this.name = this.loginService.GetLogin().name;
-    this.surname = this.loginService.GetLogin().surname;
+    this.name = this.loginService.GetLogin().Name;
+    this.surname = this.loginService.GetLogin().Surname;
   }
+  LogOut() : void {
+    this.sessionService.logout();
+    this.router.navigate([''])
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(SettingsComponent, {
       panelClass: 'custom-dialog-container',

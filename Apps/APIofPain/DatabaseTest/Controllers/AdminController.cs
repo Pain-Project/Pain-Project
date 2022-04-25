@@ -1,5 +1,6 @@
 ﻿using DatabaseTest.DatabaseTables;
 using DatabaseTest.DataClasses;
+using DatabaseTest.Logins;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,10 @@ namespace DatabaseTest.Controllers
 {
     [ApiController]
     [Route("AdminPage")]
+    //[Auth]
     public class AdminController : ControllerBase
     {
         private MyContext context = new MyContext();
-        //Login
-        //public void Login()
-        //{
-
-        //}
 
         //Dashboard
         [HttpGet("todayTasks")]
@@ -25,26 +22,56 @@ namespace DatabaseTest.Controllers
         {
             try
             {
-            DateTime today = DateTime.Today;
-            var tasks = from t in context.Tasks
-                        join a in context.Assignments on t.IdAssignment equals a.Id
-                        join cl in context.Clients on a.IdClient equals cl.Id
-                        join co in context.Configs on a.IdConfig equals co.Id
-                        where t.Date >= today && t.Date < today.AddDays(1)
-                        select new
-                        {
-                            TaskId = t.Id,
-                            ConfigName = co.Name,
-                            ClientName = cl.Name,
-                            State = t.State,
-                            Date = t.Date
-                        };
+                DateTime today = DateTime.Today;
+                var tasks = from t in context.Tasks
+                            join a in context.Assignments on t.IdAssignment equals a.Id
+                            join cl in context.Clients on a.IdClient equals cl.Id
+                            join co in context.Configs on a.IdConfig equals co.Id
+                            where t.Date >= today && t.Date < today.AddDays(1)
+                            select new
+                            {
+                                TaskId = t.Id,
+                                ConfigName = co.Name,
+                                ClientName = cl.Name,
+                                State = t.State,
+                                Date = t.Date
+                            };
                 return new JsonResult(tasks) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception)
             {
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
+        }
+        [HttpGet("getPercent")]
+        public JsonResult GetPercent()
+        {
+            try
+            {
+                DateTime today = DateTime.Today;
+                var tasks = from t in context.Tasks
+                            join a in context.Assignments on t.IdAssignment equals a.Id
+                            join cl in context.Clients on a.IdClient equals cl.Id
+                            join co in context.Configs on a.IdConfig equals co.Id
+                            where t.Date >= today && t.Date < today.AddDays(1)
+                            select new
+                            {
+                                TaskId = t.Id,
+                                ConfigName = co.Name,
+                                ClientName = cl.Name,
+                                State = t.State,
+                                Date = t.Date
+                            };
+                double result = 100.0 * tasks.Where(x => x.Date <= DateTime.Now).Count() / tasks.Count();
+                if (double.IsNaN(result))
+                    result = 100;
+                return new JsonResult(result) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
         }
         [HttpGet("getSize")]
         public JsonResult GetSize()
@@ -89,7 +116,6 @@ namespace DatabaseTest.Controllers
             }
         }
 
-
         //AddConfig
         [HttpPost("addConfig")]
         public JsonResult AddConfig(DataConfig config)
@@ -100,7 +126,7 @@ namespace DatabaseTest.Controllers
                 Config newConfig = new Config()
                 {
                     Name = config.Name,
-                    CreateDate = config.CreateDate,
+                    CreateDate = DateTime.Now,
                     Cron = config.Cron,
                     BackUpFormat = config.BackUpFormat,
                     BackUpType = config.BackUpType,
@@ -149,30 +175,27 @@ namespace DatabaseTest.Controllers
                     from pathsArray in (
                         from srcArray in (
                             from innerConfigs in context.Configs.ToList()
-                            join innerSources in context.Sources on innerConfigs.Id equals innerSources.IdConfig
-                            group innerSources.Path by innerSources.IdConfig into grp
+                            from innerSources in context.Sources.ToList().Where(x => x.IdConfig == innerConfigs.Id).DefaultIfEmpty()
+                            group innerSources == null ? null : innerSources.Path by innerConfigs.Id into grp
                             select new { id = grp.Key, sources = grp }
                         )
-                        join destArray in (
+                        from destArray in (
                             from innerConfigs in context.Configs.ToList()
-                            join innerDestinations in context.Destinations on innerConfigs.Id equals innerDestinations.IdConfig
-                            group innerDestinations by innerDestinations.IdConfig into grp
+                            from innerDestinations in context.Destinations.ToList().Where(x => x.IdConfig == innerConfigs.Id).DefaultIfEmpty()
+                            group innerDestinations by innerConfigs.Id into grp
                             select new { id = grp.Key, destinations = grp }
-                        )
-                        on srcArray.id equals destArray.id
+                        ).Where(x => x.id == srcArray.id).DefaultIfEmpty()
                         select new { id = srcArray.id, srcArray, destArray = destArray.destinations }
                     )
-                    join outerConfigs in context.Configs.ToList() on pathsArray.srcArray.id equals outerConfigs.Id
-                    from admins in context.Administrators.ToList().Where(x => x.Id == outerConfigs.IdAdministrator)
+                    from outerConfigs in context.Configs.ToList().Where(x => x.Id == pathsArray.srcArray.id).DefaultIfEmpty()
+                    from admins in context.Administrators.ToList().Where(x => x.Id == outerConfigs.IdAdministrator).DefaultIfEmpty()
 
-                    join assignments in (
+                    from assignments in (
                         from a in context.Assignments.ToList().DefaultIfEmpty()
                         from innerClients in context.Clients.ToList().Where(x => x.Id == a.IdClient).DefaultIfEmpty()
                         group (a?.Client) by a.IdConfig into grp
                         select new { id = grp.Key, ids = grp == null ? null : grp }
-                    )
-                    on outerConfigs.Id equals assignments.id
-
+                    ).Where(x => x.id == outerConfigs.Id).DefaultIfEmpty()
                     select new
                     {
                         ID = outerConfigs.Id,
@@ -183,32 +206,35 @@ namespace DatabaseTest.Controllers
                         BackupType = outerConfigs.BackUpType,
                         RetentionPackages = outerConfigs.RetentionPackages,
                         RetentionPackageSize = outerConfigs.RetentionPackageSize,
-                        AdminName = admins.Name,
+                        //AdminName = admins != null ? admins.Name : null,
+                        AdminName = admins?.Name,
                         Sources = pathsArray.srcArray.sources,
                         Destinations = pathsArray.destArray,
-                        Clients = assignments.ids.Select(x => new { x.Id, x.Name })
+                        ////Clients = assignments != null ? assignments.ids.Select(x => new { x.Id, x.Name }) : null
+                        Clients = assignments?.ids.Select(x => new { x.Id, x.Name })
                     };
                 foreach (var item in q)
                 {
                     List<DataDestination> dests = new List<DataDestination>();
                     foreach (var dest in item.Destinations)
                     {
-                        dests.Add(new DataDestination() { DestType = dest.DestType, Path = dest.Path });
+                        if (dest != null)
+                            dests.Add(new DataDestination() { DestType = dest.DestType, Path = dest.Path });
                     }
                     DataConfig data = new DataConfig()
                     {
                         Id = item.ID,
-                        Sources = item.Sources.ToList(),
+                        Sources = item.Sources.ToList()[0] == null ? new List<string>() : item.Sources.ToList(),
                         Destinations = dests,
-                        CreateDate = item.CreateDate,
+                        CreateDate = item.CreateDate.ToString("s"),
                         BackUpFormat = item.BackupFormat,
                         BackUpType = item.BackupType,
                         Cron = item.Cron,
                         Name = item.Name,
                         RetentionPackages = item.RetentionPackages,
                         RetentionPackageSize = item.RetentionPackageSize,
-                        AdminName = item.AdminName,
-                        ClientNames = item.Clients.ToDictionary(x => x.Id, x => x.Name),
+                        AdminName = item.AdminName != null ? item.AdminName : "Deleted User",
+                        ClientNames = item.Clients?.ToDictionary(x => x.Id, x => x.Name)
                     };
                     configs.Add(data);
                 }
@@ -231,7 +257,7 @@ namespace DatabaseTest.Controllers
                 {
                     Id = id,
                     Name = editedConfig.Name,
-                    CreateDate = editedConfig.CreateDate,
+                    CreateDate = DateTime.Parse(editedConfig.CreateDate),
                     Cron = editedConfig.Cron,
                     BackUpFormat = editedConfig.BackUpFormat,
                     BackUpType = editedConfig.BackUpType,
@@ -301,10 +327,12 @@ namespace DatabaseTest.Controllers
         {
             try
             {
-                DateTime today = DateTime.Today;
+                DateTime today = DateTime.Now;
                 var q =
                 from assignments in context.Assignments.ToList()
                 join tasks in context.Tasks.ToList() on assignments.Id equals tasks.IdAssignment
+                join clients in context.Clients.ToList() on assignments.IdClient equals clients.Id
+                join configs in context.Configs.ToList() on assignments.IdConfig equals configs.Id
                 orderby tasks.Date
                 where tasks.Date < today
                 select new
@@ -313,9 +341,9 @@ namespace DatabaseTest.Controllers
                     State = tasks.State,
                     Message = tasks.Message,
                     Date = tasks.Date,
-                    Size = tasks.Size, //Neukazujeme, možná změna?
-                    IdConfig = assignments.IdConfig,
-                    IdClient = assignments.IdClient
+                    //Size = tasks.Size, //Neukazujeme, možná změna?
+                    Config_name = configs.Name,
+                    Client_name = clients.Name,
                 };
                 return new JsonResult(q) { StatusCode = (int)HttpStatusCode.OK };
             }
@@ -334,7 +362,9 @@ namespace DatabaseTest.Controllers
                 var q =
                     from clients in context.Clients.ToList()
                     from assignments in context.Assignments.ToList().Where(x => x.IdClient == clients.Id).DefaultIfEmpty()
-                    group (assignments?.IdConfig) by clients.Id into grp
+                    from configs in context.Configs.ToList().Where(x => (assignments != null ? x.Id == assignments.IdConfig : false)).DefaultIfEmpty()
+                    from administrators in context.Administrators.ToList().Where(x => (configs != null ? x.Id == configs.IdAdministrator : false)).DefaultIfEmpty()
+                    group configs by clients.Id into grp
                     from clients in context.Clients.ToList().Where(x => x.Id == grp.Key).DefaultIfEmpty()
                     select new
                     {
@@ -343,7 +373,21 @@ namespace DatabaseTest.Controllers
                         Ip = clients.IpAddress,
                         Mac = clients.MacAddress,
                         Active = clients.Active,
-                        Configs = grp
+                        Configs = grp.Select(x => x == null ? null : new
+                        {
+                            id = x.Id,
+                            name = x.Name,
+                            createDate = x.CreateDate,
+                            //cron = x.Cron,
+                            //backUpFormat = x.BackUpFormat,
+                            backUpType = x.BackUpType,
+                            //retentionPackages = x.RetentionPackages,
+                            //retentionPackageSize = x.RetentionPackageSize,
+                            adminName = x.Administrator != null ? x.Administrator.Name : "Deleted User",
+                            //sources = x.Sources,
+                            //destinations = x.Destinations,
+                            //clientNames = null
+                        })
                     };
                 return new JsonResult(q) { StatusCode = (int)HttpStatusCode.OK };
             }
@@ -404,10 +448,10 @@ namespace DatabaseTest.Controllers
                 select new
                 {
                     Id = grp.Key,
-                    Login = admins.Login,
                     Name = admins.Name,
                     Surname = admins.Surname,
                     CreateDate = admins.AccountCreation,
+                    Email = admins.Email,
                     Logs = grp.ToList().Select(x => x == null ? null : new { x.LoginTime, x.IpAddress })
                 };
                 return new JsonResult(q) { StatusCode = (int)HttpStatusCode.OK };
@@ -435,11 +479,94 @@ namespace DatabaseTest.Controllers
         {
             if (context.Administrators.Where(x => x.Login == user.Login).FirstOrDefault() == null)
             {
-                context.Administrators.Add(user);
+                Administrator admin = new Administrator()
+                {
+                    Login = user.Login,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Email = user.Email,
+                    DarkMode = user.DarkMode,
+                    AccountCreation = DateTime.Now.ToString("s"),
+                    Password = BCrypt.Net.BCrypt.HashPassword(user.Password)
+                };
+
+                context.Administrators.Add(admin);
                 context.SaveChanges();
                 return new JsonResult("User added successfuly.") { StatusCode = (int)HttpStatusCode.OK };
             }
             return new JsonResult("Failed to add user!") { StatusCode = (int)HttpStatusCode.BadRequest };
         }
-    }
+        [HttpGet("clientsByConfig")]
+        public JsonResult ClientsByConfig(int idConfig)
+        {
+            try
+            {
+                if (context.Configs.Find(idConfig) == null)
+                    throw new Exception();
+                var q = from clients in context.Clients.ToList().Where(x => x.Active)
+                        from a in context.Assignments.ToList().Where(x => x.IdClient == clients.Id && x.IdConfig == idConfig).DefaultIfEmpty()
+                        select new
+                        {
+                            Id = clients.Id,
+                            Name = clients.Name,
+                            Active = a == null ? false : true
+                        };
+                return new JsonResult(q) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+        }
+        [HttpPut("changeClientsOnConfig")]
+        public JsonResult ChangeClientsOnConfig(int idConfig, Dictionary<int, bool> changes)
+        {
+            try
+            {
+                Config config = context.Configs.Find(idConfig);
+                if (config == null)
+                    return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+                foreach (var item in context.Assignments)
+                {
+                    if (item.IdConfig == idConfig && changes.ContainsKey(item.IdClient))
+                    {
+                        bool change = changes[item.IdClient];
+                        changes.Remove(item.IdClient);
+                        if (!change)
+                            context.Assignments.Remove(item);
+                    }
+                }
+                foreach (var item in changes.Where(x => x.Value == true))
+                {
+                    Assignment assignment = new Assignment() { Config = config, Downloaded = false, IdClient = item.Key };
+                    context.Assignments.Add(assignment);
+                }
+                context.SaveChanges();
+                return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+            }
+
+        }
+        [HttpPut("darkmodeChange")]
+        public JsonResult darkmodeChange(int idUser, bool change)
+        {
+            try
+            {
+                Administrator admin = context.Administrators.Find(idUser);
+                if (admin == null)
+                    return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+                admin.DarkMode = change;
+                context.SaveChanges();
+                return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch 
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+        }
+    } 
 }

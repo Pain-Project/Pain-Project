@@ -8,13 +8,13 @@
                 <div class="row" *ngFor="let odd = odd;let complete of completed" [class.grayitem]="odd">
                     <div class="row itemheight scrollitem">
                         <div class="col-3">
-                            <p>{{complete.ClientName}}</p>
+                            <p class="short">{{complete.clientName}}</p>
                         </div>
                         <div class="col-3">
-                            <p>{{complete.ConfigName}}</p>
+                            <p class="short">{{complete.configName}}</p>
                         </div>
                         <div class="col">
-                            <p class="centeredtext">{{complete.Time}}</p>
+                            <p class="centeredtext">{{format_time(complete.date)}}</p>
                         </div>
                     </div>
                 </div>
