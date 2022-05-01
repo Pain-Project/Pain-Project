@@ -59,5 +59,25 @@ namespace DatabaseTest.Logins
                 return false;
             }
         }
+        public string ReLog(int id)
+        {
+            Administrator admin = context.Administrators.Where(x => x.Id == id).FirstOrDefault();
+
+            return JwtBuilder.Create()
+                .WithAlgorithm(new HMACSHA256Algorithm())
+                .WithSecret(_SECRET)
+                .AddClaim("exp", DateTimeOffset.UtcNow.AddSeconds(3600).ToUnixTimeSeconds())
+                .AddClaim("user", new
+                {
+                    Id = admin.Id,
+                    Create = admin.AccountCreation,
+                    Name = admin.Name,
+                    Surname = admin.Surname,
+                    Email = admin.Email,
+                    CronEmail = admin.CronEmail,
+                    Darkmode = admin.DarkMode
+                })
+                .Encode();
+        }
     }
 }

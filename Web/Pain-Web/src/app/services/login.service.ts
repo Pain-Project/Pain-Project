@@ -29,10 +29,6 @@ export interface loginUser {
   Email: string;
   Darkmode: boolean;
   Create : string;
-  // loginName: string;
-  // emailFreq : string;
-  // logFreq : string;
-  // configFreq : string;
 }
 export interface session {
   exp: number;

@@ -11,7 +11,7 @@ namespace DatabaseTest.Logins
         private AuthService auth = new AuthService();
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            string token = context.HttpContext.Request.Headers["Authorizaion"].ToString().Split(' ').Last();
+            string token = context.HttpContext.Request.Headers["Authorization"].ToString().Split(' ').Last();
 
             if (!this.auth.VerifyToken(token))
                 context.Result = new JsonResult("Authentication failed!") { StatusCode = (int)HttpStatusCode.Unauthorized };

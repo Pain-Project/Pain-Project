@@ -21,7 +21,7 @@ namespace test_api2.Controllers
         {
             try
             {
-                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false };
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now };
                 context.Clients.Add(client);
                 context.SaveChanges();
                 return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
@@ -37,6 +37,18 @@ namespace test_api2.Controllers
         {
             try
             {
+                Client cl = this.context.Clients.Find(id);
+                if (cl == null)
+                    return new JsonResult("Client not found!") { StatusCode = (int)HttpStatusCode.NotFound };
+
+
+                if (cl.Active == false)
+                    return new JsonResult(new List<ConfigForDaemon>()) { StatusCode = (int)HttpStatusCode.OK };
+
+
+                cl.LastSeen = DateTimeOffset.Now;
+                this.context.SaveChanges();
+
                 var configs = from a in context.Assignments.ToList()
                               join c in context.Configs.ToList()
                                on a.IdConfig equals c.Id

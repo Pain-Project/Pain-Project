@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseTest.DatabaseTables
 {
@@ -10,5 +11,6 @@ namespace DatabaseTest.DatabaseTables
         public string IpAddress { get; set; }
         public string MacAddress { get; set; }
         public bool Active { get; set; }
+        public DateTimeOffset LastSeen { get; set; }
     }
 }

@@ -10,6 +10,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     width: 12vw;
+    margin-left: -2em;
   }
 }
 .ip, .mac {
@@ -44,6 +45,17 @@ body {
     outline: none;
   }
 }
+.state {
+  font-size: 0.7em;
+  &.online {
+    color: green;
+  }
+  &.offline {
+    color: red;
+  }
+}
+
+
 .Save {
   position: fixed;
   right: 30px;

@@ -16,6 +16,12 @@
       <mat-expansion-panel hideToggle class="configPanel">
         <mat-expansion-panel-header class="configHeader">
           <mat-panel-title class="text-uppercase ClientNameHeader">
+            <div *ngIf="client.online" class="col-1 state online">
+              <i class="fa-solid fa-circle-dot"></i>
+            </div>
+            <div *ngIf="!client.online" class="col-1 state offline">
+              <i class="fa-solid fa-circle-dot"></i>
+            </div>
             <div class="col-1 name">
               {{client.name}}
             </div>

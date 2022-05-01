@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SessionsService} from "./sessions.service";
 import {catchError, Observable} from "rxjs";
-import {Config} from "../models/config.model";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -17,7 +16,7 @@ export class LogsService {
               private sessions: SessionsService,) { }
   public get options(): {headers: HttpHeaders} {
     return {
-      headers:  new HttpHeaders({'Authorization': 'Bearer' + this.sessions.token})
+      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
   public findAllLogs():Observable<Log[]> {

@@ -6,5 +6,6 @@ export class Client {
   public ip : string = '';
   public mac : string = '';
   public active : boolean = false;
+  public online : boolean = false;
   public configs : Config[];
 }

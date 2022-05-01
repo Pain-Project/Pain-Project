@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {LoginService} from "./login.service";
 
@@ -16,12 +16,15 @@ export class SessionsService {
               private jwt: JwtHelperService,) {
     this.token = this.loadToken();
   }
-
+  public get options(): {headers: HttpHeaders} {
+    return {
+      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.token})
+    };
+  }
   public login (credentials: any): Observable<boolean> {
     return this.http.post<string>(environment.api + '/adminPage/login', credentials).pipe(
       tap(token => this.token = token),
       tap(token => this.saveToken(token)),
-      // tap(token => this.loginService.SetLogin(token)),
       map(token => true),
       catchError(() => of(false))
     )
@@ -34,8 +37,17 @@ export class SessionsService {
   public get authenticated(): boolean {
     return !!this.token && !this.jwt.isTokenExpired(this.token);
   }
+  public reLog(id: number): Observable<any> {
+    return this.http.get<string>(environment.api + '/adminPage/relog?id=' + id, this.options).pipe(
+      tap(token => this.token = token),
+      tap(token => this.saveToken(token))
+    )
+  }
+
+
   private saveToken(token: string) : void {
     sessionStorage.setItem('token', token);
+    console.log(this.loadToken());
   }
   private loadToken() : string|null {
     return sessionStorage.getItem('token');

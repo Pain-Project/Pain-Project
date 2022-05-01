@@ -1,5 +1,9 @@
-﻿using DatabaseTest.Logins;
+﻿using DatabaseTest.DatabaseTables;
+using DatabaseTest.Logins;
+using JWT.Algorithms;
+using JWT.Builder;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 
@@ -10,6 +14,7 @@ namespace DatabaseTest.Controllers
     public class SessionsController : ControllerBase
     {
         private AuthService auth = new AuthService();
+        private MyContext context = new MyContext();
 
         [HttpPost("login")]
         public JsonResult Login(Credentials cd)
@@ -23,6 +28,19 @@ namespace DatabaseTest.Controllers
             catch
             {
                 return new JsonResult("Invalid username or password!") { StatusCode = (int)HttpStatusCode.Unauthorized };
+            }
+        }
+        [Auth]
+        [HttpGet("relog")]
+        public JsonResult Relog(int id)
+        {
+            try
+            {
+                return new JsonResult(this.auth.ReLog(id));
+            }
+            catch
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
     }

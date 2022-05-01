@@ -24,7 +24,6 @@ export class LoginPageComponent implements OnInit {
               private router : Router,
               private sessions : SessionsService,
               private fb: FormBuilder,
-              private login: LoginService
               ) { }
 
   ngOnInit(): void {

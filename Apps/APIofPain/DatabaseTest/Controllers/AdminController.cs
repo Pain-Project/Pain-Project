@@ -11,7 +11,7 @@ namespace DatabaseTest.Controllers
 {
     [ApiController]
     [Route("AdminPage")]
-    //[Auth]
+    [Auth]
     public class AdminController : ControllerBase
     {
         private MyContext context = new MyContext();
@@ -150,7 +150,7 @@ namespace DatabaseTest.Controllers
 
                 foreach (var client in config.ClientNames)
                 {
-                    Assignment assignment = new Assignment() { Config = newConfig, Downloaded = false, IdClient = client.Key };
+                    Assignment assignment = new Assignment() { Config = newConfig, IdClient = client.Key };
                     context.Assignments.Add(assignment);
                 }
                 context.Configs.Add(newConfig);
@@ -362,7 +362,7 @@ namespace DatabaseTest.Controllers
 
                 foreach (var client in editedConfig.ClientNames)
                 {
-                    Assignment assignment = new Assignment() { Config = newConfig, Downloaded = false, IdClient = client.Key };
+                    Assignment assignment = new Assignment() { Config = newConfig, IdClient = client.Key };
                     context.Assignments.Add(assignment);
                 }
 
@@ -457,20 +457,14 @@ namespace DatabaseTest.Controllers
                         Ip = clients.IpAddress,
                         Mac = clients.MacAddress,
                         Active = clients.Active,
+                        Online = (DateTimeOffset.Now - clients.LastSeen).Minutes <= 5,
                         Configs = grp.Select(x => x == null ? null : new
                         {
                             id = x.Id,
                             name = x.Name,
                             createDate = x.CreateDate,
-                            //cron = x.Cron,
-                            //backUpFormat = x.BackUpFormat,
                             backUpType = x.BackUpType,
-                            //retentionPackages = x.RetentionPackages,
-                            //retentionPackageSize = x.RetentionPackageSize,
                             adminName = x.Administrator != null ? x.Administrator.Name : "Deleted User",
-                            //sources = x.Sources,
-                            //destinations = x.Destinations,
-                            //clientNames = null
                         })
                     };
                 return new JsonResult(q) { StatusCode = (int)HttpStatusCode.OK };
@@ -622,7 +616,7 @@ namespace DatabaseTest.Controllers
                 }
                 foreach (var item in changes.Where(x => x.Value == true))
                 {
-                    Assignment assignment = new Assignment() { Config = config, Downloaded = false, IdClient = item.Key };
+                    Assignment assignment = new Assignment() { Config = config, IdClient = item.Key };
                     context.Assignments.Add(assignment);
                 }
                 context.SaveChanges();
@@ -635,7 +629,7 @@ namespace DatabaseTest.Controllers
 
         }
         [HttpPut("darkmodeChange")]
-        public JsonResult darkmodeChange(int idUser, bool change)
+        public JsonResult DarkmodeChange(int idUser, bool change)
         {
             try
             {

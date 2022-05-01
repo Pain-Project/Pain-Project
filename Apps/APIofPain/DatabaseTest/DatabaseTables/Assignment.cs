@@ -14,9 +14,6 @@ namespace DatabaseTest.DatabaseTables
 		[ForeignKey("Config")]
 		public int IdConfig { get; set; }
 
-		public bool Downloaded { get; set; }
-
-
 		public Config Config { get; set; }
 		public Client Client { get; set; }
 	}

@@ -17,7 +17,7 @@ export class ClientsService {
               private sessions: SessionsService,) { }
   public get options(): {headers: HttpHeaders} {
     return {
-      headers:  new HttpHeaders({'Authorization': 'Bearer' + this.sessions.token})
+      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
   public findAllClients():Observable<Client[]> {
@@ -49,16 +49,4 @@ export class ClientsService {
       this.sessions.logout();
     }
   }
-
-
-    // return this.CLIENTS.sort(function(a,b) {
-    //   var nameA = a.name.toLowerCase();
-    //   var nameB = b.name.toLowerCase();
-    //   if (nameA < nameB)
-    //     return -1;
-    //   else if (nameA > nameB)
-    //     return 1;
-    //   else
-    //     return 0;
-    // });
 }

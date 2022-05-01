@@ -17,7 +17,7 @@ export class DasboardService {
 
   public get options(): { headers: HttpHeaders } {
     return {
-      headers: new HttpHeaders({'Authorization': 'Bearer' + this.sessions.token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
 

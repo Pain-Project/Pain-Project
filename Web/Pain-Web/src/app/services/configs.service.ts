@@ -20,7 +20,7 @@ export class ConfigsService {
 
   public get options(): { headers: HttpHeaders } {
     return {
-      headers: new HttpHeaders({'Authorization': 'Bearer' + this.sessions.token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
 
@@ -39,7 +39,7 @@ export class ConfigsService {
       })
     )
   }
-  
+
   public findConfigByID(id: number) : Observable<Config> {
     return this.http.get<Config>(environment.api + '/AdminPage/getConfigByID?id=' + id, this.options);
   }
