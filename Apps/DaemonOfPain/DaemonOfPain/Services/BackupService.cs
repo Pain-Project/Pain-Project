@@ -120,9 +120,8 @@ namespace DaemonOfPain.Services
                         packageRetention++;
                     }
 
-                    backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
                     if (config.BackupType == _BackupType.FB)
-                        backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                        backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + DateTime.Now.ToString("_H.mm.ss") + "_" + packageRetention;
                     else if (config.BackupType == _BackupType.IN)
                         backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + packageRetention;
                     else if (config.BackupType == _BackupType.DI)
@@ -411,11 +410,11 @@ namespace DaemonOfPain.Services
             {
                 try
                 {
-                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex, success = false, size = 0 });
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
                 } 
                 catch 
                 {
-                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex, success = false, size = 0 });
+                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
                 }
             }
            

@@ -15,15 +15,16 @@ namespace DaemonOfPain
         public async Task Execute(IJobExecutionContext context)
         {
             List<Report> reports = GetReports();
-            foreach (var item in reports)
+            while(reports.Count > 0)
             {
                 try
                 {
-                    await APIService.SendReport(item);
-                    reports.Remove(item);
+                    await APIService.SendReport(reports[0]);
+                    reports.RemoveAt(0);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     break;
                 }
             }

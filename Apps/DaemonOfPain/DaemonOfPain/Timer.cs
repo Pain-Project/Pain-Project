@@ -36,7 +36,7 @@ namespace DaemonOfPain
 
             //odeslání neodeslaných reportů
             IJobDetail reportJob = JobBuilder.Create<ReportHolder>().Build();
-            ITrigger reportTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(10).RepeatForever()).Build();
+            ITrigger reportTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(reportJob, reportTrigger);
         }
 
