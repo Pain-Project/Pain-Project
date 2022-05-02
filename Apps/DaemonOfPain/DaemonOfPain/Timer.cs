@@ -33,6 +33,11 @@ namespace DaemonOfPain
             IJobDetail connectJob = JobBuilder.Create<APIService>().Build();
             ITrigger connectTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(connectJob, connectTrigger);
+
+            //odeslání neodeslaných reportů
+            IJobDetail reportJob = JobBuilder.Create<ReportHolder>().Build();
+            ITrigger reportTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(10).RepeatForever()).Build();
+            await scheduler.ScheduleJob(reportJob, reportTrigger);
         }
 
         private async Task StartTimer(List<Config> configs)

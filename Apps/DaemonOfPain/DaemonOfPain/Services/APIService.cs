@@ -79,14 +79,7 @@ namespace DaemonOfPain
         public static async Task SendReport(Report report)
         {
             Setup();
-            try
-            {
-                var url = await SendReport2(report);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            var url = await SendReport2(report);
         }
         static async Task<Uri> SendReport2(Report report)
         {

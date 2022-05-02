@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DaemonOfPain.Services
@@ -18,9 +19,45 @@ namespace DaemonOfPain.Services
             int id = tasks[0].IdConfig;
             return id;
         }
+        private void ConfigCheck(Config config)
+        {
+            string[] parts = config.Cron.Split(' ');
+            if (parts.Length != 5)
+                throw new Exception("Invalid cron!");
+
+            if(!Regex.IsMatch(parts[0], @"(^\*$)|(^[0-5]?[0-9](-[0-5]?[0-9])?$)|(^[0-5]?[0-9]/[0-9]*$)|(^[0-5]?[0-9](,[0-5]?[0-9])+$)"))
+                throw new Exception("Invalid cron!");
+            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-1]?[0-9])|(2[0-3]))(-(([0-1]?[0-9])|(2[0-3])))?$)|(^(([0-1]?[0-9])|(2[0-3]))/[0-9]*$)|(^(([0-1]?[0-9])|(2[0-3]))(,(([0-1]?[0-9])|(2[0-3])))+$)"))
+                throw new Exception("Invalid cron!");
+            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-2]?[0-9])|(3[0-1]))(-(([0-2]?[0-9])|(3[0-1])))?$)|(^(([0-2]?[0-9])|(3[0-1]))/[0-9]*$)|(^(([0-2]?[0-9])|(3[0-1]))(,(([0-2]?[0-9])|(3[0-1])))+$)"))
+                throw new Exception("Invalid cron!");
+            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-9])|(1[0-2]))(-(([0-9])|(1[0-2])))?$)|(^(([0-9])|(1[0-2]))/[0-9]*$)|(^(([0-9])|(1[0-2]))(,(([0-9])|(1[0-2])))+$)"))
+                throw new Exception("Invalid cron!");
+            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^[0-6](-[0-6])?$)|(^[0-6]/[0-9]*$)|(^[0-6](,[0-6])+$)"))
+                throw new Exception("Invalid cron!");
+
+            if(config.Retention[0] <= 0 || config.Retention[1] <= 0)
+                throw new Exception("Invalid retention!");
+
+            foreach (var item in config.Sources)
+            {
+                if (!Directory.Exists(item))
+                    throw new Exception("Source: "+item+" does not exist!");
+            }
+
+            List<string> checkList = new List<string>();
+            foreach (var item in config.Sources)
+            {
+                string[] dirs = item.Split('\\');
+                if(checkList.Contains(dirs[dirs.Length-1]))
+                    throw new Exception("A duplicate source folder name: " + item);
+                checkList.Add(item);
+            }
+        }
         public void BackupSetup(List<Tasks> tasks)
         {
             Config config = Application.DataService.GetConfigByID(GetConfigId(tasks));
+            ConfigCheck(config);
 
             foreach (var item in config.Destinations)
             {
@@ -365,9 +402,9 @@ namespace DaemonOfPain.Services
                 {
                     await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.WriteLine(e);
+                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
                 }
             }
             catch(Exception ex)
@@ -375,12 +412,13 @@ namespace DaemonOfPain.Services
                 try
                 {
                     await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex, success = false, size = 0 });
+                } 
+                catch 
+                {
+                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex, success = false, size = 0 });
                 }
-                catch { }
             }
            
-            //await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
-
             TaskManager.TaskList.RemoveAt(0);
         }
     }
