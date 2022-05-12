@@ -457,7 +457,7 @@ namespace DatabaseTest.Controllers
                         Ip = clients.IpAddress,
                         Mac = clients.MacAddress,
                         Active = clients.Active,
-                        Online = (DateTimeOffset.Now - clients.LastSeen).Minutes <= 5,
+                        Online = (DateTimeOffset.Now - clients.LastSeen).TotalMinutes <= 5,
                         Configs = grp.Select(x => x == null ? null : new
                         {
                             id = x.Id,
