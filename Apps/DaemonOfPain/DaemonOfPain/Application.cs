@@ -15,13 +15,14 @@ namespace DaemonOfPain
         public static DaemonDataService DataService { get; set; }
         public TaskManager TaskManager { get; set; }
         public static int IdOfThisClient { get; set; }
-        public async Task StartApplication()
+        public Application()
         {
             DataService = new DaemonDataService();
             Timer = new Timer();
             TaskManager = new TaskManager();
-
-
+        }
+        public async Task StartApplication()
+        {
             Settings set = DataService.GetSettings();
             if (set == null)
             {

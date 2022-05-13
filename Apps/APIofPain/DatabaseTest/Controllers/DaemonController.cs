@@ -21,14 +21,14 @@ namespace test_api2.Controllers
         {
             try
             {
-                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now };
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hesh"};
                 context.Clients.Add(client);
                 context.SaveChanges();
                 return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+                return new JsonResult("Cannot resolve request!" + ex) { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
 

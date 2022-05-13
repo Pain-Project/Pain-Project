@@ -1,7 +1,9 @@
-﻿using Quartz;
+﻿using DaemonOfPain.Components;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +15,8 @@ namespace DaemonOfPain.Services
     {
         private MetadataService MdataService = new MetadataService();
         private List<Metadata> SubCompleteMlist = new List<Metadata>();
+        private HeapManager HeapManager = new HeapManager();
+        private string TempBackupPath = @"..\..\..\DaemonData\TempFiles";
 
         private int GetConfigId(List<Tasks> tasks)
         {
@@ -58,85 +62,96 @@ namespace DaemonOfPain.Services
         {
             Config config = Application.DataService.GetConfigByID(GetConfigId(tasks));
             ConfigCheck(config);
+            TempBackupPath = PathReturner(Directory.GetCurrentDirectory(),3)+ @"\DaemonData\TempFiles\Backups";
 
-            foreach (var item in config.Destinations)
+
+            if(config.BackupFormat == _BackupFormat.PT)
             {
-                int[] retention = new int[2];
-                string configDirPath = item.DestinationPath + "\\" + config.Name;
-                DirectoryInfo configDir = new DirectoryInfo(configDirPath);
-                string backupPath = "";
-                List<Metadata> Mlist = new List<Metadata>();
-
-                if (Directory.Exists(configDirPath))//Existuje složka s configem?
+                foreach (var item in config.Destinations)
                 {
+                    FilePrepare(config, item.DestinationPath);
+                }
+            }
+            else
+            {
+                //zde bude zip
 
-                    //U každého balíčku záloh najdi alespoň jeden soubor s metadaty a ulož do listu "Mlist"
-                    foreach (var backupPackageDir in configDir.GetDirectories())
+                FilePrepare(config, TempBackupPath);
+                //string zipName = PathReturner(TempBackupPath, 1) + "\\test.zip";
+                //ZipFile.CreateFromDirectory(TempBackupPath,zipName);
+            }
+            HeapManager.SaveChanges();
+
+        }
+        private void FilePrepare(Config config, string path)
+        {
+            string configDirPath = path + "\\" + config.Name;
+            DirectoryInfo configDir = new DirectoryInfo(configDirPath);
+            string backupPath = "";
+
+            if (HeapManager.ExistConfig(config.Id))//Existuje složka s configem?
+            {
+
+                Metadata firstMdata = HeapManager.GetFirstBackup(path, config.Id);
+                Metadata lastMdata = HeapManager.GetLastBackup(path, config.Id);
+
+                if (config.Retention[1] <= HeapManager.GetListOfBackups(path, config.Id).Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
+                {
+                    if (config.Retention[0] <= HeapManager.GetPackageCount(path, config.Id))//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                     {
-                        Mlist.AddRange(MdataService.MetaSearcher(backupPackageDir.FullName, true));//true znamená, že jakmile najde jeden jediný záznam, už nehledá dál
-                    }
-
-                    //Z vytvořeného listu "Mlist" vyber nejnovější záznam a získej z podsložek tohoto záznamu veškerá metadata
-                    Metadata firstMdata = GetFirstOrLastMetadata(Mlist, true);
-                    Metadata lastMdata = GetFirstOrLastMetadata(Mlist, false);
-
-
-                    this.SubCompleteMlist = MdataService.MetaSearcher(lastMdata.BackupPath);
-
-                    retention = GetFirstOrLastMetadata(SubCompleteMlist, false).RetentionStats;//hodnota, která se předává funkci Backup() - aby věděla, jak má očíslovat nové složky
-
-
-                    if (config.Retention[1] <= SubCompleteMlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
-                    {
-                        if (config.Retention[0] <= Mlist.Count)//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
-                        {
-                            Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc. Ta podmínka je tu proto, protože FB má vždy kratší cestu, než IN a DI
-                        }
-                    }
-                    else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
-                    {
-                        if (firstMdata.BackupType == _BackupType.FB)
-                            throw new Exception();
-                        backupPath = lastMdata.BackupPath;
+                        Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc.
+                        HeapManager.DeleteOldestPackage(path, config.Id);
                     }
                 }
-                else
-                {//první spuštění - vytvoří složku pro config
-                    Directory.CreateDirectory(item.DestinationPath + "\\" + config.Name);
-
+                else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
+                {
+                    if (firstMdata.BackupType == _BackupType.FB)
+                        throw new Exception();
+                    backupPath = lastMdata.BackupPath;
                 }
-
-
-                if (backupPath == "")
-                {// vytváření složky pro balíčky záloh
-                    Snapshot snapshot = new Snapshot() { ConfigID = config.Id };
-                    Application.DataService.WriteSnapshot(snapshot);
-
-                    int packageRetention = 1;
-                    if (Mlist.Count != 0)
-                    {
-                        Metadata last = GetFirstOrLastMetadata(Mlist, false);
-                        packageRetention = last.RetentionStats[0];
-                        packageRetention++;
-                    }
-
-                    if (config.BackupType == _BackupType.FB)
-                        backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + DateTime.Now.ToString("_H.mm.ss") + "_" + packageRetention;
-                    else if (config.BackupType == _BackupType.IN)
-                        backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-                    else if (config.BackupType == _BackupType.DI)
-                        backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-
-                    this.SubCompleteMlist.Clear();
-                    Directory.CreateDirectory(backupPath);
-                }
-
-                Backup(config, backupPath, retention);
+            }
+            else
+            {//první spuštění - vytvoří složku pro config
+                if (!Directory.Exists(configDirPath))
+                    Directory.CreateDirectory(path + "\\" + config.Name);
             }
 
 
+            if (backupPath == "")
+            {// vytváření složky pro balíčky záloh
+                Snapshot snapshot = new Snapshot() { ConfigID = config.Id };
+                Application.DataService.WriteSnapshot(snapshot);
+
+                int packageRetention = 1;
+                if (HeapManager.ExistConfig(config.Id))
+                {
+                    Metadata last = HeapManager.GetLastBackup(path, config.Id);
+                    packageRetention = last.RetentionStats[0];
+                    packageRetention++;
+                }
+
+                backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                if (config.BackupType == _BackupType.FB)
+                    backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                else if (config.BackupType == _BackupType.IN)
+                    backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+                else if (config.BackupType == _BackupType.DI)
+                    backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + packageRetention;
+
+                this.SubCompleteMlist.Clear();
+                Directory.CreateDirectory(backupPath);
+            }
+
+
+            int[] retention = new int[2];
+            {
+                Metadata last = HeapManager.GetLastBackup(path, config.Id);
+                if (last != null)
+                    retention = last.RetentionStats;
+            }
+            Backup(config, backupPath, retention, path);
         }
-        public void Backup(Config config, string path, int[] lastRetention)
+        private void Backup(Config config, string path, int[] lastRetention, string actualDestination)
         {
             Metadata meta;//vytvoření metadat
             if (lastRetention[1] == 0)
@@ -153,6 +168,7 @@ namespace DaemonOfPain.Services
 
                 path = path + "\\" + DateTime.Now.ToString("d") + DateTime.Now.ToString("_H.mm.ss");
             }
+            Console.WriteLine(path);
 
 
             Dictionary<string, Source> changesDictionary = new Dictionary<string, Source>();
@@ -195,7 +211,10 @@ namespace DaemonOfPain.Services
                 DoBackup(changesList, path + "\\" + newPath);
 
             }
+
             MdataService.WriteMetadata(path, meta);
+            HeapManager.meta.Add(new HeapItem(config.Id, actualDestination, meta));
+
             if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
             {
                 Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
@@ -366,31 +385,6 @@ namespace DaemonOfPain.Services
             string st = string.Join("\\", parts);
             return st.Trim('\\');
         }
-        private Metadata GetFirstOrLastMetadata(List<Metadata> Mlist, bool first) //z listu metadat vrátí první nebo poslední Metadata podle Datumů v nich uloženýćh
-        {
-            if (Mlist.Count != 0)
-            {
-                Metadata result = Mlist[0];
-                foreach (var meta in Mlist)
-                {
-                    if (first)
-                    {
-                        int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber > 0)
-                            result = meta;
-                    }
-                    else
-                    {
-                        int resultNumber = DateTime.Compare(result.CreateDate, meta.CreateDate);
-                        if (resultNumber < 0)
-                            result = meta;
-                    }
-                }
-                return result;
-            }
-            return null;
-        }
-
         public async Task Execute(IJobExecutionContext context)
         {
             Console.WriteLine("backup!" + DateTime.Now);

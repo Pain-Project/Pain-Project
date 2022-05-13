@@ -12,5 +12,6 @@ namespace DatabaseTest.DatabaseTables
         public string MacAddress { get; set; }
         public bool Active { get; set; }
         public DateTimeOffset LastSeen { get; set; }
+        public string Hash { get; set; }
     }
 }
