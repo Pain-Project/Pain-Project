@@ -1,0 +1,1 @@
+[{"Id":2,"Name":"T.C.P.Z.Z.D.S.D.Z.","Cron":"* * * * *","BackupType":1,"BackupFormat":1,"Retention":[3,2],"Sources":["C:\\Users\\František\\Desktop\\BackupTesting\\SourceDir"],"Destinations":[{"DestinationType":0,"DestinationPath":"C:\\Users\\František\\Desktop\\BackupTesting\\DestDir"}]}]

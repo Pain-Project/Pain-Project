@@ -36,6 +36,7 @@ namespace DaemonOfPain
             try
             {
                 int id = await LoginToServer(new Computer());
+                Console.WriteLine("API1 - LoginToServer");
                 return id;
             }
             catch (Exception ex)
@@ -61,7 +62,7 @@ namespace DaemonOfPain
             {
                 List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
-                Console.WriteLine("API2");
+                Console.WriteLine("API2 - GetConfigs");
             }
             catch (Exception ex)
             {
@@ -86,12 +87,12 @@ namespace DaemonOfPain
 
             HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/sendReport", report);
             response.EnsureSuccessStatusCode();
+            Console.WriteLine("API3 - SendReport");
             return response.Headers.Location;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            Console.WriteLine("API1");
             await GetConfigs();
         }
     }

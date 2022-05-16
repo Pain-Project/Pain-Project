@@ -21,7 +21,7 @@ namespace test_api2.Controllers
         {
             try
             {
-                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hesh"};
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hash"};
                 context.Clients.Add(client);
                 context.SaveChanges();
                 return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
