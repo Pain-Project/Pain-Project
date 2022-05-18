@@ -48,15 +48,6 @@
     </div>
   </div>
   <div class="row third">
-    <div class="col selectFreq">
-      <label class="form-select-lable">Reports</label>
-      <select class="form-select" [ngClass]="{ 'is-invalid': invalid('reports') }" formControlName="reports">
-        <option value="1">Never</option>
-        <option value="2">Daily</option>
-        <option value="3">Weekly</option>
-        <option value="4">Monthly</option>
-      </select>
-    </div>
     <div class="col-3 buttons">
       <button type="submit" class="submit btn btn-primary">SUBMIT</button>
       <button [mat-dialog-close]="true" class="cancel btn btn-primary">CANCEL</button>
