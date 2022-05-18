@@ -7,8 +7,8 @@ namespace FTP_test
     internal class Program
     {
         #region
-        const string tajneJmeno = "hodne";
-        const string tajneHeslo = "silne";
+        const string tajneJmeno = "karton-namiru.cz";
+        const string tajneHeslo = "IntuityADMIN21";
         #endregion
 
 
@@ -16,9 +16,9 @@ namespace FTP_test
         {
             //CreateFolder("testing");
             //UploadFile(@"C:\Users\troli\Desktop\Stranky\Orka\Obsah.txt", @"ftp://ftp.orka-cb.cz/orka-cb_cz/testing/Obsah.txt");
-            //RemoveFileFolder("ftp://ftp.orka-cb.cz/orka-cb_cz/testing");
+            RemoveFileFolder("ftp://ftp.orka-cb.cz/orka-cb_cz/testing");
             //DownloadFile("ftp://ftp.orka-cb.cz/orka-cb_cz/testing/Obsah.txt");
-            Console.WriteLine(DirExists("ftp://ftp.orka-cb.cz/orka-cb_cz/testing"));
+            //Console.WriteLine(DirExists("ftp://ftp.orka-cb.cz/orka-cb_cz/testing"));
         }
         public static void CreateFolder(string cesta)
         {
@@ -54,7 +54,6 @@ namespace FTP_test
                 StreamReader reader = new StreamReader(responseStream);
                 Console.WriteLine(reader.ReadToEnd());
             }
-
         }
         public static void DownloadFile(string path)
         {

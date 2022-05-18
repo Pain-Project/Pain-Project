@@ -30,26 +30,26 @@ namespace DaemonOfPain
                     new MediaTypeWithQualityHeaderValue("application/json"));
             }
         }
-        public static async Task<int> LoginToServer()
+        public static async Task<string> LoginToServer()
         {
             Setup();
             try
             {
-                int id = await LoginToServer(new Computer());
+                string hash = await LoginToServer(new Computer());
                 Console.WriteLine("API1 - LoginToServer");
-                return id;
+                return hash;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return 0;
+                return "";
             }
         }
-        static async Task<int> LoginToServer(Computer pc)
+        static async Task<string> LoginToServer(Computer pc)
         {
             HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", pc);
             response.EnsureSuccessStatusCode();
-            return Convert.ToInt32(response.Content.ReadAsStringAsync().Result);
+            return response.Content.ReadAsStringAsync().Result.Trim('"');
         }
 
 
@@ -60,7 +60,7 @@ namespace DaemonOfPain
             Setup();
             try
             {
-                List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
+                List<APIconfig> respose = await GetConfigs(Application.HashOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
                 Console.WriteLine("API2 - GetConfigs");
             }
@@ -69,9 +69,9 @@ namespace DaemonOfPain
                 Console.WriteLine(ex.Message);
             }
         }
-        static async Task<List<APIconfig>> GetConfigs(int id)
+        static async Task<List<APIconfig>> GetConfigs(string hash)
         {
-            string response = await client.GetStringAsync($"/Daemon/GetConfigs/{id}");
+            string response = await client.GetStringAsync($"/Daemon/GetConfigs/{hash}");
             IEnumerable<APIconfig> config = null;
             config = JsonConvert.DeserializeObject<List<APIconfig>>(response);
             return (List<APIconfig>)config;

@@ -280,3 +280,4 @@ D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\NCrontab.dll
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Quartz.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Data\emailSettings.json

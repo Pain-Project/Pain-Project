@@ -14,7 +14,7 @@ namespace DaemonOfPain
         public Timer Timer { get; set; }
         public static DaemonDataService DataService { get; set; }
         public TaskManager TaskManager { get; set; }
-        public static int IdOfThisClient { get; set; }
+        public static string HashOfThisClient { get; set; }
         public Application()
         {
             DataService = new DaemonDataService();
@@ -26,15 +26,15 @@ namespace DaemonOfPain
             Settings set = DataService.GetSettings();
             if (set == null)
             {
-                int newId = await APIService.LoginToServer();
-                DataService.WriteSettings(new Settings() { Id = newId });
-                IdOfThisClient = newId;
-                if (newId == 0)
+                string hash = await APIService.LoginToServer();
+                DataService.WriteSettings(new Settings() { Hash = hash });
+                HashOfThisClient = hash;
+                if (hash == "")
                     throw new Exception();//nelze se spojit s databází
             }
             else
             {
-                IdOfThisClient = set.Id;
+                HashOfThisClient = set.Hash;
             }
 
             await APIService.GetConfigs();

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YwjXRwYCQ1E2YUr6M+MF5Vzq28uzmxwloqd9t3gyzq6ON8qu7VNfmNFhuNSVPe2NsJxrlN6YPhWvC+kOfmd3fw==",
+  "dgSpecHash": "hYtXMBImpszHgV/X/u1yiNhPt4hTkwk9jlHODbPLfSOEqIPVPlDRs6fLaz3Ejg0GdLpui55Mdzk/sGG5FTOgEg==",
   "success": true,
-  "projectFilePath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\FTP_test\\FTP_test\\FTP_test.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\FTP_test\\FTP_test\\FTP_test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\troli\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
+  ],
   "logs": []
 }

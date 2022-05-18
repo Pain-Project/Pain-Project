@@ -21,10 +21,11 @@ namespace test_api2.Controllers
         {
             try
             {
-                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hash"};
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = BCrypt.Net.BCrypt.HashPassword(pc.MACaddress).Replace('/', 'X') };
                 context.Clients.Add(client);
                 context.SaveChanges();
-                return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
+
+                return new JsonResult(client.Hash) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception ex)
             {
@@ -32,12 +33,12 @@ namespace test_api2.Controllers
             }
         }
 
-        [HttpGet("GetConfigs/{id}")]
-        public JsonResult GetConfigs(int id)
+        [HttpGet("GetConfigs/{hash}")]
+        public JsonResult GetConfigs(string hash)
         {
             try
             {
-                Client cl = this.context.Clients.Find(id);
+                Client cl = this.context.Clients.Where(x => x.Hash == hash).FirstOrDefault();
                 if (cl == null)
                     return new JsonResult("Client not found!") { StatusCode = (int)HttpStatusCode.NotFound };
 
@@ -52,7 +53,7 @@ namespace test_api2.Controllers
                 var configs = from a in context.Assignments.ToList()
                               join c in context.Configs.ToList()
                                on a.IdConfig equals c.Id
-                              where a.IdClient == id //&& !a.Downloaded
+                              where a.IdClient == cl.Id //&& !a.Downloaded
                               select c;
                 List<ConfigForDaemon> daemonConfigs = new List<ConfigForDaemon>();
                 foreach (var item in configs)
@@ -90,9 +91,12 @@ namespace test_api2.Controllers
         [HttpPost("sendReport")]
         public JsonResult SendReport(Report report)
         {
+            int idClient = this.context.Clients.Where(x => x.Hash == report.hashClient).First().Id;
+
+
             var task = from t in context.Tasks.ToList()
                        join a in context.Assignments on t.IdAssignment equals a.Id
-                       where a.IdClient == report.idClient && a.IdConfig == report.idConfig && t.Date == report.date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
+                       where a.IdClient == idClient && a.IdConfig == report.idConfig && t.Date == report.date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
                        select t;
 
             string state;
@@ -112,7 +116,7 @@ namespace test_api2.Controllers
             }
             else
             {
-                int indexNumber = context.Assignments.Where(x => x.IdConfig == report.idConfig && x.IdClient == report.idClient).First().Id;
+                int indexNumber = context.Assignments.Where(x => x.IdConfig == report.idConfig && x.IdClient == idClient).First().Id;
                 try
                 {
                     context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = indexNumber, Date = report.date, Message = report.message, Size = report.size, State = state });

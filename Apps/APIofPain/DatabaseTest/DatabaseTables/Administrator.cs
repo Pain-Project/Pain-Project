@@ -19,8 +19,6 @@ namespace DatabaseTest.DatabaseTables
         
         public string Email { get; set; }
         
-        public string CronEmail { get; set; }
-        
         public bool DarkMode { get; set; }
     }
 }
