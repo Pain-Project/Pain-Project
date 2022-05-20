@@ -72,7 +72,7 @@
         <div class="content">
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Sender email</mat-label>
-            <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
+            <input type="email" matInput formControlName="sender" placeholder="Ex. pat@example.com">
             <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
               Please enter a valid email address
             </mat-error>
@@ -81,6 +81,7 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <button type="submit">UKAŽ</button>
       </form>
         <div class="header">
           <i class="IconSetting fa-solid fa-database"></i>

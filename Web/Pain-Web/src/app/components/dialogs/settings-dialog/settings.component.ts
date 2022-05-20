@@ -6,6 +6,7 @@ import {SessionsService} from "../../../services/sessions.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { EmailService } from 'src/app/services/email.service';
 import { EmailSettingsModel } from 'src/app/models/emailSettings.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'Dialog_settings',
@@ -24,26 +25,20 @@ export class SettingsComponent implements OnInit {
 
   public form: FormGroup;
 
-  public emailSettings: EmailSettingsModel;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data:EmailSettingsModel,
     @Inject(DOCUMENT) private document: Document,
-    private rendered: Renderer2,
     private loginService: LoginService,
     private userService: UsersService,
     private sessionsService: SessionsService,
-    private emailService: EmailService,
     private fb:FormBuilder,
   ) {
-    this.emailService.GetEmailSettings().subscribe(x => {
-      console.log(x)
-      this.emailSettings = x;
-    })
     this.form = this.fb.group({
-      port:[this.emailSettings.Port,Validators.required],
-      smtp:[this.emailSettings.SMTP, Validators.required],
-      freq:[this.emailSettings.Freq,Validators.required],
-      sender:[this.emailSettings.Sender, Validators.required],
+      port:[this.data.port,Validators.required],
+      smtp:[this.data.smtp, Validators.required],
+      freq:[this.data.freq,Validators.required],
+      sender:[this.data.sender, Validators.required],
 
       // port:[0,Validators.required],
       // smtp:['', Validators.required],
@@ -81,7 +76,7 @@ export class SettingsComponent implements OnInit {
     }
   }
   Submit(): void{
-
+      console.log(this.form.value)
   }
 }
 

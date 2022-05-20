@@ -1,6 +1,6 @@
 export class EmailSettingsModel{
-    Port:number = 25;
-    SMTP:string = '';
-    Freq:number = 0;
-    Sender:string = '';
+    public port:number = 25;
+    public smtp:string = '';
+    public freq:number = 0;
+    public sender:string = '';
 }
