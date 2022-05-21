@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "FluentFTP/37.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/FluentFTP.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/FluentFTP.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.8": {
         "type": "package",
         "dependencies": {
@@ -1391,6 +1400,37 @@
     }
   },
   "libraries": {
+    "FluentFTP/37.0.2": {
+      "sha512": "UW2svrugWPVK7g6heJjGbsWIBPhJHOtMmp1g4NijSTd3z8f+qxg8kv8cIzAWfxusjCRThIHpJts2PHjbg0SOKQ==",
+      "type": "package",
+      "path": "fluentftp/37.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "fluentftp.37.0.2.nupkg.sha512",
+        "fluentftp.nuspec",
+        "lib/net20/FluentFTP.dll",
+        "lib/net20/FluentFTP.xml",
+        "lib/net35/FluentFTP.dll",
+        "lib/net35/FluentFTP.xml",
+        "lib/net40/FluentFTP.dll",
+        "lib/net40/FluentFTP.xml",
+        "lib/net45/FluentFTP.dll",
+        "lib/net45/FluentFTP.xml",
+        "lib/net5.0/FluentFTP.dll",
+        "lib/net5.0/FluentFTP.xml",
+        "lib/netstandard1.4/FluentFTP.dll",
+        "lib/netstandard1.4/FluentFTP.xml",
+        "lib/netstandard1.6/FluentFTP.dll",
+        "lib/netstandard1.6/FluentFTP.xml",
+        "lib/netstandard2.0/FluentFTP.dll",
+        "lib/netstandard2.0/FluentFTP.xml",
+        "lib/netstandard2.1/FluentFTP.dll",
+        "lib/netstandard2.1/FluentFTP.xml",
+        "logo-nuget.png"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.8": {
       "sha512": "dkGLm30CxLieMlUO+oQpJw77rDs0IIx/w3lIHsp+8X94HXCsUfLYuFmlZPsQDItC0O2l1ZlWeKLkZX7ZiNRekw==",
       "type": "package",
@@ -5064,6 +5104,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "FluentFTP >= 37.0.2",
       "Microsoft.AspNet.WebApi.Client >= 5.2.8",
       "Newtonsoft.Json >= 13.0.1",
       "Quartz >= 3.4.0",
@@ -5109,6 +5150,10 @@
       "net5.0": {
         "targetAlias": "net5.0",
         "dependencies": {
+          "FluentFTP": {
+            "target": "Package",
+            "version": "[37.0.2, )"
+          },
           "Microsoft.AspNet.WebApi.Client": {
             "target": "Package",
             "version": "[5.2.8, )"
