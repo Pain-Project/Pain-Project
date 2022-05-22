@@ -14,6 +14,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using DaemonOfPain.Encryption;
+using DatabaseTest.DataClasses;
 
 namespace DaemonOfPain
 {
@@ -49,22 +50,22 @@ namespace DaemonOfPain
         static async Task<string> LoginToServer(Computer pc)
         {
             APIRequest request = new APIRequest() { Data = JsonConvert.SerializeObject(pc), PublicKey = EncryptionKeysManager.GetPublicKey() };
-            EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncrypt(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
+            EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncryptRequest(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
 
             HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", enRequest);
             response.EnsureSuccessStatusCode();
-            EncryptedAPIRequest data = JsonConvert.DeserializeObject<EncryptedAPIRequest>(response.Content.ReadAsStringAsync().Result);
-            return RsaProcessor.CombinedDecryptString(EncryptionKeysManager.GetPrivateKey(), data);
+            EncryptedAPIResponse data = JsonConvert.DeserializeObject<EncryptedAPIResponse>(response.Content.ReadAsStringAsync().Result);
+            return RsaProcessor.CombinedDecryptResponse(EncryptionKeysManager.GetPrivateKey(), data);
         }
         //****************************************************************************************************************
 
 
-        public static async void GetServerPublicKey()
+        public static async Task<string> GetServerPublicKey()
         {
             Setup();
             string response = await client.GetStringAsync("/Daemon/GetPublicKey");
             response = response.Substring(1, response.Length - 2);
-            EncryptionKeysManager.ServerKey = response;
+            return response;
         }
 
 
@@ -86,7 +87,10 @@ namespace DaemonOfPain
         }
         static async Task<List<APIconfig>> GetConfigs(string id)
         {
-            string response = await client.GetStringAsync($"/Daemon/GetConfigs/{id}");
+            APIRequest request = new APIRequest() { Id = id, PublicKey = EncryptionKeysManager.GetPublicKey() };
+            EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncryptRequest(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
+            string enRequestString = JsonConvert.SerializeObject(enRequest);
+            string response = await client.GetStringAsync($"/Daemon/GetConfigs/{enRequestString}");
             IEnumerable<APIconfig> config = null;
             config = JsonConvert.DeserializeObject<List<APIconfig>>(response);
             return (List<APIconfig>)config;

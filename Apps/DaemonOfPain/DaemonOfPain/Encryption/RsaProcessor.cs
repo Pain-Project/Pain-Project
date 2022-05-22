@@ -1,4 +1,5 @@
 using DaemonOfPain.Services.APIClasses;
+using DatabaseTest.DataClasses;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -152,29 +153,29 @@ namespace DaemonOfPain.Encryption
                 return Encoding.UTF8.GetString(encryptData);
             }
         }
-        public static EncryptedAPIRequest CombinedEncrypt(string symetricKey, string publicKey, APIRequest request)
+        public static EncryptedAPIRequest CombinedEncryptRequest(string symetricKey, string publicKey, APIRequest request)
         {
             string data = JsonConvert.SerializeObject(request);
             string EnData = AesProcessor.EncryptString(symetricKey, data);
             string EnKey = RsaProcessor.Encrypt(symetricKey, publicKey);
             return new EncryptedAPIRequest() { APIRequest = EnData, Key = EnKey };
         }
-        public static APIRequest CombinedDecrypt(string privateKey, EncryptedAPIRequest request)
+        public static APIRequest CombinedDecryptRequest(string privateKey, EncryptedAPIRequest request)
         {
             string DecKey = RsaProcessor.Decrypt(request.Key, privateKey);
             string DecData = AesProcessor.DecryptString(DecKey, request.APIRequest);
             return JsonConvert.DeserializeObject<APIRequest>(DecData);
         }
-        public static EncryptedAPIRequest CombinedEncryptString(string symetricKey, string publicKey, string data)
+        public static EncryptedAPIResponse CombinedEncryptResponse(string symetricKey, string publicKey, string data)
         {
             string EnData = AesProcessor.EncryptString(symetricKey, data);
             string EnKey = RsaProcessor.Encrypt(symetricKey, publicKey);
-            return new EncryptedAPIRequest() { APIRequest = EnData, Key = EnKey };
+            return new EncryptedAPIResponse() { Data = EnData, Key = EnKey };
         }
-        public static string CombinedDecryptString(string privateKey, EncryptedAPIRequest request)
+        public static string CombinedDecryptResponse(string privateKey, EncryptedAPIResponse response)
         {
-            string DecKey = RsaProcessor.Decrypt(request.Key, privateKey);
-            return AesProcessor.DecryptString(DecKey, request.APIRequest);
+            string DecKey = RsaProcessor.Decrypt(response.Key, privateKey);
+            return AesProcessor.DecryptString(DecKey, response.Data);
         }
 
         private static void EncodeIntegerBigEndian(BinaryWriter stream, byte[] value, bool forceUnsigned = true)

@@ -24,12 +24,12 @@ namespace test_api2.Controllers
             string key = AesProcessor.GenerateKey();
             try
             {
-                APIRequest request = RsaProcessor.CombinedDecrypt(EncryptionKeysManager.GetPrivateKey(), enRequest);
+                APIRequest request = RsaProcessor.CombinedDecryptRequest(EncryptionKeysManager.GetPrivateKey(), enRequest);
                 Computer pc = JsonConvert.DeserializeObject<Computer>(request.Data);
                 Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = key};
                 context.Clients.Add(client);
                 context.SaveChanges();
-                return new JsonResult(RsaProcessor.CombinedEncryptString(AesProcessor.GenerateKey(),request.PublicKey,key)) { StatusCode = (int)HttpStatusCode.OK };
+                return new JsonResult(RsaProcessor.CombinedEncryptResponse(AesProcessor.GenerateKey(),request.PublicKey,key)) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception ex)
             {
@@ -51,12 +51,18 @@ namespace test_api2.Controllers
         //    }
         //}
 
-        [HttpGet("GetConfigs/{id}")]
-        public JsonResult GetConfigs(int id)
+        [HttpGet("GetConfigs/{enRequestString}")]
+        public JsonResult GetConfigs(string enRequestString)
         {
             try
             {
-                Client cl = this.context.Clients.Find(id);
+                EncryptedAPIRequest enRequest = JsonConvert.DeserializeObject<EncryptedAPIRequest>(enRequestString);
+
+                APIRequest request = RsaProcessor.CombinedDecryptRequest(EncryptionKeysManager.GetPrivateKey(), enRequest);
+                string id = request.Id;
+
+
+                Client cl = this.context.Clients.Where(x => x.Hash == id).FirstOrDefault();
                 if (cl == null)
                     return new JsonResult("Client not found!") { StatusCode = (int)HttpStatusCode.NotFound };
 
@@ -69,9 +75,9 @@ namespace test_api2.Controllers
                 this.context.SaveChanges();
 
                 var configs = from a in context.Assignments.ToList()
-                              join c in context.Configs.ToList()
-                               on a.IdConfig equals c.Id
-                              where a.IdClient == id //&& !a.Downloaded
+                              join c in context.Configs.ToList() on a.IdConfig equals c.Id
+                              join p in context.Clients.ToList() on a.IdClient equals p.Id
+                              where p.Hash == id //&& !a.Downloaded
                               select c;
                 List<ConfigForDaemon> daemonConfigs = new List<ConfigForDaemon>();
                 foreach (var item in configs)
@@ -98,7 +104,8 @@ namespace test_api2.Controllers
                     }
                     daemonConfigs.Add(c);
                 }
-                return new JsonResult(daemonConfigs) { StatusCode = (int)HttpStatusCode.OK };
+                return new JsonResult(RsaProcessor.CombinedEncryptResponse(AesProcessor.GenerateKey(), request.PublicKey, JsonConvert.SerializeObject(daemonConfigs))) { StatusCode = (int)HttpStatusCode.OK };
+                //return new JsonResult(daemonConfigs) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception)
             {

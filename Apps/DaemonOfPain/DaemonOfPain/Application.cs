@@ -25,7 +25,7 @@ namespace DaemonOfPain
         public async Task StartApplication()
         {
             EncryptionKeysManager.NewKeys();
-            APIService.GetServerPublicKey();
+            EncryptionKeysManager.ServerKey = await APIService.GetServerPublicKey();
             Settings set = DataService.GetSettings();
             if (set == null)
             {
