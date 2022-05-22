@@ -8,6 +8,7 @@ namespace DaemonOfPain.Components
 {
     public class Settings
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
+        public string MyKey {get; set;}
     }
 }

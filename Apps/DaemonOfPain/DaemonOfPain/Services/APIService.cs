@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using DaemonOfPain.Encryption;
 
 namespace DaemonOfPain
 {
@@ -30,26 +31,40 @@ namespace DaemonOfPain
                     new MediaTypeWithQualityHeaderValue("application/json"));
             }
         }
-        public static async Task<int> LoginToServer()
+        public static async Task<string> LoginToServer()
         {
             Setup();
             try
             {
-                int id = await LoginToServer(new Computer());
+                string id = await LoginToServer(new Computer());
                 Console.WriteLine("API1 - LoginToServer");
                 return id;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return 0;
+                return null;
             }
         }
-        static async Task<int> LoginToServer(Computer pc)
+        static async Task<string> LoginToServer(Computer pc)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", pc);
+            APIRequest request = new APIRequest() { Data = JsonConvert.SerializeObject(pc), PublicKey = EncryptionKeysManager.GetPublicKey() };
+            EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncrypt(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
+
+            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/AddDaemon", enRequest);
             response.EnsureSuccessStatusCode();
-            return Convert.ToInt32(response.Content.ReadAsStringAsync().Result);
+            EncryptedAPIRequest data = JsonConvert.DeserializeObject<EncryptedAPIRequest>(response.Content.ReadAsStringAsync().Result);
+            return RsaProcessor.CombinedDecryptString(EncryptionKeysManager.GetPrivateKey(), data);
+        }
+        //****************************************************************************************************************
+
+
+        public static async void GetServerPublicKey()
+        {
+            Setup();
+            string response = await client.GetStringAsync("/Daemon/GetPublicKey");
+            response = response.Substring(1, response.Length - 2);
+            EncryptionKeysManager.ServerKey = response;
         }
 
 
@@ -69,7 +84,7 @@ namespace DaemonOfPain
                 Console.WriteLine(ex.Message);
             }
         }
-        static async Task<List<APIconfig>> GetConfigs(int id)
+        static async Task<List<APIconfig>> GetConfigs(string id)
         {
             string response = await client.GetStringAsync($"/Daemon/GetConfigs/{id}");
             IEnumerable<APIconfig> config = null;

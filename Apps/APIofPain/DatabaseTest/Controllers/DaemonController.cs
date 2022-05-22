@@ -1,12 +1,14 @@
 using DatabaseTest.Controllers;
 using DatabaseTest.DatabaseTables;
 using DatabaseTest.DataClasses;
+using DatabaseTest.Encryption;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace test_api2.Controllers
@@ -17,20 +19,37 @@ namespace test_api2.Controllers
     {
         private MyContext context = new MyContext();
         [HttpPost("AddDaemon")]
-        public JsonResult AddDaemon(Computer pc)
+        public JsonResult AddDaemon(EncryptedAPIRequest enRequest)
         {
+            string key = AesProcessor.GenerateKey();
             try
             {
-                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hash"};
+                APIRequest request = RsaProcessor.CombinedDecrypt(EncryptionKeysManager.GetPrivateKey(), enRequest);
+                Computer pc = JsonConvert.DeserializeObject<Computer>(request.Data);
+                Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = key};
                 context.Clients.Add(client);
                 context.SaveChanges();
-                return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
+                return new JsonResult(RsaProcessor.CombinedEncryptString(AesProcessor.GenerateKey(),request.PublicKey,key)) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (Exception ex)
             {
                 return new JsonResult("Cannot resolve request!" + ex) { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
+        //public JsonResult AddDaemon(Computer pc)
+        //{
+        //    try
+        //    {
+        //        Client client = new Client() { Name = pc.Name, IpAddress = pc.IPaddress, MacAddress = pc.MACaddress, Active = false, LastSeen = DateTimeOffset.Now, Hash = "hash" };
+        //        context.Clients.Add(client);
+        //        context.SaveChanges();
+        //        return new JsonResult(client.Id) { StatusCode = (int)HttpStatusCode.OK };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new JsonResult("Cannot resolve request!" + ex) { StatusCode = (int)HttpStatusCode.BadRequest };
+        //    }
+        //}
 
         [HttpGet("GetConfigs/{id}")]
         public JsonResult GetConfigs(int id)
@@ -90,9 +109,12 @@ namespace test_api2.Controllers
         [HttpPost("sendReport")]
         public JsonResult SendReport(Report report)
         {
+
+
             var task = from t in context.Tasks.ToList()
                        join a in context.Assignments on t.IdAssignment equals a.Id
-                       where a.IdClient == report.idClient && a.IdConfig == report.idConfig && t.Date == report.date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
+                       join c in context.Clients on a.IdClient equals c.Id
+                       where c.Hash == report.idClient && a.IdConfig == report.idConfig && t.Date == report.date //můžu hledat pomocí datumu a času za předpokladu, že tento údaj bude na obou stranách vygenerován přes cron 
                        select t;
 
             string state;
@@ -112,11 +134,13 @@ namespace test_api2.Controllers
             }
             else
             {
-                int indexNumber = context.Assignments.Where(x => x.IdConfig == report.idConfig && x.IdClient == report.idClient).First().Id;
+                int indexNumber = (from a in context.Assignments
+                                  join c in context.Clients on a.IdClient equals c.Id
+                                  where a.IdConfig == report.idConfig && c.Hash == report.idClient
+                                  select a.Id).FirstOrDefault();
                 try
                 {
                     context.Tasks.Add(new DatabaseTest.DatabaseTables.Task { IdAssignment = indexNumber, Date = report.date, Message = report.message, Size = report.size, State = state });
-
                 }
                 catch
                 {
@@ -125,6 +149,19 @@ namespace test_api2.Controllers
             }
             context.SaveChanges();
             return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
+        }
+        [HttpGet("GetPublicKey")]
+        public string GetPublicKey()
+        {
+            try
+            {
+                return EncryptionKeysManager.GetPublicKey();
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
     }
 }
