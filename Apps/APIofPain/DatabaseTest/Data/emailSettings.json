@@ -1,1 +1,8 @@
-{"Port":4158,"SMTP":"googleLMAO","Freq":2,"Sender":"admin@lepain.cz"}
+{
+  "Port": 25,
+  "SMTP": "smtp.gmail.com",
+  "Freq": 1,
+  "Sender": "test.lepain@gmail.com",
+  "Password": "Ab.123456",
+  "SSL": true
+}

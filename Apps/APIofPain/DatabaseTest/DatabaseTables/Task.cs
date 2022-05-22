@@ -24,7 +24,6 @@ namespace DatabaseTest.DatabaseTables
         [Column("Size[MB]")]
         public int Size { get; set; } 
 
-
         public Assignment Assignment { get; set; }
     }
 }

@@ -687,7 +687,6 @@ namespace DatabaseTest.Controllers
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
-
-
+        
     } 
 }

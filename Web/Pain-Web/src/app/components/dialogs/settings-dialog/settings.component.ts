@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit {
   user: loginUser;
   darkMode: boolean;
   isDirty: boolean = false;
+  hide = true;
 
   selectedComp = 'one';
   selectedFreq = 'one';
@@ -32,6 +33,7 @@ export class SettingsComponent implements OnInit {
     private loginService: LoginService,
     private userService: UsersService,
     private sessionsService: SessionsService,
+    private emailService: EmailService,
     private fb:FormBuilder,
   ) {
     this.form = this.fb.group({
@@ -39,6 +41,8 @@ export class SettingsComponent implements OnInit {
       smtp:[this.data.smtp, Validators.required],
       freq:[this.data.freq,Validators.required],
       sender:[this.data.sender, Validators.required],
+      password:[this.data.password, Validators.required],
+      ssl:[this.data.ssl, Validators.required],
 
       // port:[0,Validators.required],
       // smtp:['', Validators.required],
@@ -74,9 +78,14 @@ export class SettingsComponent implements OnInit {
       this.userService.darkmodeChange(this.darkMode).subscribe(() => this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe());
       ;
     }
+    this.emailService.changeEmailSettings(this.form.value).subscribe();
+  }
+  buttonOpen(event : any): void {
+    event.stopPropagation();
   }
   Submit(): void{
-      console.log(this.form.value)
+      console.log("ahoj");
+      this.emailService.changeEmailSettings(this.form.value).subscribe();
   }
 }
 
