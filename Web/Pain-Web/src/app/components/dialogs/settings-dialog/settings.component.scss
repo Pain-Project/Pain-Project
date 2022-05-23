@@ -78,7 +78,7 @@ mat-dialog-actions{
   color: white;
   border-radius: 10px;
   width: 100px;
-  fon-size: 30px;
+  //font-size: 30px;
 }
 .Button.cancel{
   margin-right: 10px;
@@ -128,4 +128,11 @@ input[type="time"]::-webkit-calendar-picker-indicator { background: none; displa
 .fa-floppy-disk {
   font-size: 25px;
   margin-right: 5px;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  opacity: 0.03 !important;
+  background-color: #0078D4!important;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: #0078D4;
 }

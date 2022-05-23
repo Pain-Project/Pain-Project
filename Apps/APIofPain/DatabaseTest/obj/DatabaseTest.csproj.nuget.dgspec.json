@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
+    "C:\\Users\\rusla\\Documents\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
   },
   "projects": {
-    "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
+    "C:\\Users\\rusla\\Documents\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "projectUniqueName": "C:\\Users\\rusla\\Documents\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
         "projectName": "DatabaseTest",
-        "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
-        "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
-        "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
+        "projectPath": "C:\\Users\\rusla\\Documents\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "packagesPath": "C:\\Users\\rusla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rusla\\Documents\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rusla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -59,6 +59,9 @@
             "Portable.BouncyCastle": {
               "target": "Package",
               "version": "[1.9.0, )"
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Quartz": {
               "target": "Package",
@@ -91,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

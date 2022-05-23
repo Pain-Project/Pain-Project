@@ -39,7 +39,7 @@ namespace DaemonOfPain
             {
                 string id = await LoginToServer(new Computer());
                 Console.WriteLine("API1 - LoginToServer");
-                return id;
+                return hash;
             }
             catch (Exception ex)
             {
@@ -76,7 +76,7 @@ namespace DaemonOfPain
             Setup();
             try
             {
-                List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
+                List<APIconfig> respose = await GetConfigs(Application.HashOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
                 Console.WriteLine("API2 - GetConfigs");
             }

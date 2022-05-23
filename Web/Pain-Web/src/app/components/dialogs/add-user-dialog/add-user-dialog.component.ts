@@ -26,7 +26,6 @@ export class AddUserDialogComponent implements OnInit {
       email: [ user.email, Validators.required ],
       password: [ user.password, Validators.required ],
       confirmPassword: [ user.password, Validators.required ],
-      reports: [ user.cronEmail, Validators.required ],
     });
   }
   public submit() : void {

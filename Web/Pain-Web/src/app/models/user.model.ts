@@ -11,6 +11,5 @@ export class User {
   public createDate : string = '';
   public email : string = '';
   public password : string = '';
-  public cronEmail : number = 1;
   public logs : Log[] = [];
 }

@@ -2,22 +2,27 @@
 using DatabaseTest.DataClasses;
 using DatabaseTest.Logins;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 
 namespace DatabaseTest.Controllers
 {
+
     [ApiController]
     [Route("AdminPage")]
-    [Auth]
+    //[Auth]
     public class AdminController : ControllerBase
     {
         private MyContext context = new MyContext();
+        private string dataPath = @"Data\emailSettings.json";
 
-        //Dashboard
-        [HttpGet("todayTasks")]
+
+            //Dashboard
+            [HttpGet("todayTasks")]
         public JsonResult GetTodayTasks()
         {
             try
@@ -646,5 +651,42 @@ namespace DatabaseTest.Controllers
             }
 
         }
+
+        [HttpPut("changeEmailSettings")]
+        public JsonResult ChangeEmailSettings(EmailSettings data)
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(dataPath);
+                sw.WriteLine(JsonConvert.SerializeObject(data));
+
+                sw.Close();
+                return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch (Exception)
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+
+        }
+        [HttpGet("getEmailSettings")]
+        public JsonResult GetEmailSettings()
+        {
+            try
+            {
+                StreamReader sr = new StreamReader(dataPath);
+                string data = sr.ReadToEnd();
+                EmailSettings emailSettings = JsonConvert.DeserializeObject<EmailSettings>(data);
+                if (emailSettings == null)
+                    return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.NotFound };
+                sr.Close();
+                return new JsonResult(emailSettings) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            }
+        }
+        
     } 
 }

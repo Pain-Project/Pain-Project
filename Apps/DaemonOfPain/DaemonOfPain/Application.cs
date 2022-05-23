@@ -37,7 +37,7 @@ namespace DaemonOfPain
             }
             else
             {
-                IdOfThisClient = set.Id;
+                HashOfThisClient = set.Hash;
             }
 
             await APIService.GetConfigs();

@@ -34,13 +34,18 @@ namespace DaemonOfPain.Controller.ClassesToSend
         }
         public static string GetMacAddress()
         {
+            string mac = "";
             foreach (var nic in NetworkInterface.GetAllNetworkInterfaces())
             {
                 if (nic.OperationalStatus == OperationalStatus.Up)
                 {
-                    return nic.GetPhysicalAddress().ToString();
+                    mac = nic.GetPhysicalAddress().ToString();
+                    if (nic.Name == "Ethernet")
+                        break;
                 }
             }
+            if (mac != "")
+                return mac;
             throw new Exception("No mac address");
         }
     }

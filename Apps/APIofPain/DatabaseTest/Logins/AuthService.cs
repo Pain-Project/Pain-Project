@@ -38,7 +38,6 @@ namespace DatabaseTest.Logins
                     Name = admin.Name,
                     Surname = admin.Surname,
                     Email = admin.Email,
-                    CronEmail = admin.CronEmail,
                     Darkmode = admin.DarkMode
                 })
                 .Encode();
@@ -74,7 +73,6 @@ namespace DatabaseTest.Logins
                     Name = admin.Name,
                     Surname = admin.Surname,
                     Email = admin.Email,
-                    CronEmail = admin.CronEmail,
                     Darkmode = admin.DarkMode
                 })
                 .Encode();

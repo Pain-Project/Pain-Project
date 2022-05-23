@@ -27,24 +27,6 @@
           <div></div>
           <a tabindex="-1" href="">Change email</a>
         </div>
-      </div>
-      <div class="col big right">
-        <div class="header">
-          <i class="IconSetting fa-solid fa-paper-plane"></i>
-          <h2>Email settings</h2>
-        </div>
-        <div class="content">
-          <p>Frequency: </p>
-          <mat-form-field class="DateInput" >
-            <mat-select tabindex="-1" [(ngModel)]="selectedComp" class="SelectDate">
-              <mat-option value="one">Never</mat-option>
-              <mat-option value="two">Daily</mat-option>
-              <mat-option value="three">Weekly</mat-option>
-              <mat-option value="four">Monthly</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
         <div class="header">
           <i class="IconSetting fa-solid fa-paintbrush"></i>
           <h2>Theme</h2>
@@ -53,29 +35,70 @@
           <p style="float:left; margin-right: 1em">Dark mode: </p>
           <mat-slide-toggle (change)="SwitchTheme()" [(ngModel)]="darkMode"></mat-slide-toggle>
         </div>
-
+      </div>
+      <div class="col big right">
+        <form [formGroup]="form" (ngSubmit)="Submit()">
         <div class="header">
-          <i class="IconSetting fa-solid fa-database"></i>
-          <h2>Database settings</h2>
+          <i class="IconSetting fa-solid fa-paper-plane"></i>
+          <h2>Email settings</h2>
         </div>
-        <div class="content database">
-          <div class="DeleteLogFreq">
-            <p>Delete log frequency: </p>
-            <mat-form-field class="DateInput" >
-              <mat-select tabindex="-1" [(ngModel)]="selectedFreq" class="SelectDate">
-                <mat-option class="SomeValue" value="one">Never</mat-option>
-                <mat-option value="two">Daily</mat-option>
-                <mat-option value="three">Weekly</mat-option>
-                <mat-option value="four">Monthly</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <input class="timeInput" type="time">
+        <div class="content">
+          <p>Frequency: </p>
+          <mat-form-field class="DateInput" >
+            <mat-select tabindex="-1" formControlName="freq" class="SelectDate">
+              <mat-option value="0">Never</mat-option>
+              <mat-option value="1">Daily</mat-option>
+              <mat-option value="2">Weekly</mat-option>
+              <mat-option value="3">Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="content">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Smtp-server</mat-label>
+                <input formControlName="smtp" matInput placeholder="smtp.gmail.com" pattern="[^0-9]" required="true">
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field style="width:6rem;" appearance="fill">
+                <mat-label>Port</mat-label>
+                <input formControlName="port" matInput type="number" placeholder="Port" min="1" pattern="[1-9]" required="true">
+              </mat-form-field>
+            </div>
+          </div>        
+        </div>
+        <div class="content">
+          <div class="row">
+            <mat-form-field class="example-full-width" appearance="fill" style="width: 25rem;">
+              <mat-label>Sender email</mat-label>
+              <input type="email" matInput formControlName="sender" placeholder="Ex. pat@example.com">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+              </mat-form-field>
           </div>
-          <div class="ConfigUpdateFreq">
-            <p>Config update frequency: </p>
-            <input class="timeInput" type="time">
+          <div class="row align-items-baseline">
+            <div class="col">
+              <mat-form-field class="example-full-width" appearance="fill" style="width: 15rem;">
+                <mat-label>Password</mat-label>
+                <input required="true" matInput class="form-control" formControlName="password"  [type]="hide ? 'password' : 'text'" style="font-size: 20px; color: #707070" >
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide; buttonOpen($event);" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-checkbox class="example-margin" formControlName="ssl">SSL</mat-checkbox>
+            </div>
           </div>
         </div>
+      </form>
+        
       </div>
     </div>
   </div>

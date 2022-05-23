@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "DaemonOfPain/1.0.0": {
         "dependencies": {
+          "FluentFTP": "37.0.2",
           "Microsoft.AspNet.WebApi.Client": "5.2.8",
           "Newtonsoft.Json": "13.0.1",
           "Portable.BouncyCastle": "1.9.0",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "DaemonOfPain.dll": {}
+        }
+      },
+      "FluentFTP/37.0.2": {
+        "runtime": {
+          "lib/net5.0/FluentFTP.dll": {
+            "assemblyVersion": "37.0.2.0",
+            "fileVersion": "37.0.2.0"
+          }
         }
       },
       "Microsoft.AspNet.WebApi.Client/5.2.8": {
@@ -863,6 +872,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FluentFTP/37.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UW2svrugWPVK7g6heJjGbsWIBPhJHOtMmp1g4NijSTd3z8f+qxg8kv8cIzAWfxusjCRThIHpJts2PHjbg0SOKQ==",
+      "path": "fluentftp/37.0.2",
+      "hashPath": "fluentftp.37.0.2.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.8": {
       "type": "package",

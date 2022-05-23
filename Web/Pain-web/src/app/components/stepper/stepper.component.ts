@@ -1,11 +1,11 @@
-import {Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray, Form} from "@angular/forms";
+import {Component, OnInit, Input, Output} from '@angular/core';
+import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
 import {Config, Destination} from "../../models/config.model";
 import {Client} from "../../models/client.model";
 import {ClientsService} from "../../services/clients.service";
 import {ConfigsService} from "../../services/configs.service";
 import {LoginService} from "../../services/login.service";
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-stepper',
@@ -17,6 +17,7 @@ export class StepperComponent implements OnInit {
   clients: Client[] = [];
   retentionSwitch = false;
   frequentionBasic = true;
+  ftpError = false;
 
   //full ; diff ; inc
   backup = 'full'
@@ -31,7 +32,6 @@ export class StepperComponent implements OnInit {
 
   @Output()
   public formArray: FormArray
-  // public Formevent: EventEmitter<void> = new EventEmitter<void>()
 
   public config: Config = new Config();
 
@@ -62,8 +62,7 @@ export class StepperComponent implements OnInit {
     if (this.tempClient.hasOwnProperty(id)) {
       // @ts-ignore
       delete this.tempClient[id]
-    }
-    else {
+    } else {
       // @ts-ignore
       this.tempClient[id] = ''
     }
@@ -77,10 +76,7 @@ export class StepperComponent implements OnInit {
   }
 
   public Submit(): void {
-    // if (!this.form.valid) {
-    //   console.log('Nope')
-    //   return
-    // }
+
     var config: Config = new Config();
     var secondStep: SecondStep = this.form.controls['formArray'].value[1];
 
@@ -90,18 +86,27 @@ export class StepperComponent implements OnInit {
     config.name = this.Name?.value;
     config.backUpType = secondStep.backupType;
     config.idAdministrator = this.loginService.GetLogin().Id;
-    config.retentionPackageSize = config.backUpType == 'FB' ?  1: secondStep.packages;
+    config.retentionPackageSize = config.backUpType == 'FB' ? 1 : secondStep.packages;
     config.retentionPackages = secondStep.backups;
     config.backUpFormat = secondStep.backupFormat;
 
     for (let source of this.Sources.value) {
       config.sources.push(source.path);
     }
+    let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let dest of this.Dest.value) {
+      if (dest.type == "FTP" && !re.test(dest.path)) {
+        this.ftpError = true;
+        return
+      }
+
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-
+    // if (!this.form.valid) {
+    //   alert("You must fill all inputs!")
+    //   return;
+    // }
     this.configService.sendConfig(config).subscribe(() => (this.router.navigateByUrl('/ui/dashboard'), alert('Config was succesfully created!')));
   }
 
@@ -193,6 +198,7 @@ export class StepperComponent implements OnInit {
     var test2 = test.controls[2].get('sources') as FormArray;
     return test2 as FormArray;
   }
+
   get Name() {
     var test = this.form.controls['formArray'] as FormArray;
     return test.controls[2].get('configName')
@@ -208,7 +214,8 @@ export class StepperComponent implements OnInit {
     const sourceTest = this.fb.group({path: ['', Validators.required]})
     this.Sources.push(sourceTest);
   }
-  public removeSource(index : number): void {
+
+  public removeSource(index: number): void {
     this.Sources.removeAt(index);
   }
 
@@ -219,7 +226,8 @@ export class StepperComponent implements OnInit {
     })
     this.Dest.push(destTest);
   }
-  public removeDest(index : number): void {
+
+  public removeDest(index: number): void {
     this.Dest.removeAt(index);
   }
 }
