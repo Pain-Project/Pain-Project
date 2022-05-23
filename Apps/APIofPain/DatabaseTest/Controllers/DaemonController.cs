@@ -51,7 +51,7 @@ namespace test_api2.Controllers
         //    }
         //}
 
-        [HttpGet("GetConfigs/{enRequestString}")]
+        [HttpGet("GetConfigs")]
         public JsonResult GetConfigs(string enRequestString)
         {
             try

@@ -90,7 +90,7 @@ namespace DaemonOfPain
             APIRequest request = new APIRequest() { Id = id, PublicKey = EncryptionKeysManager.GetPublicKey() };
             EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncryptRequest(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
             string enRequestString = JsonConvert.SerializeObject(enRequest);
-            string response = await client.GetStringAsync($"/Daemon/GetConfigs/{enRequestString}");
+            string response = await client.GetStringAsync($"/Daemon/GetConfigs" + "?enRequestString=" + enRequestString);
             IEnumerable<APIconfig> config = null;
             config = JsonConvert.DeserializeObject<List<APIconfig>>(response);
             return (List<APIconfig>)config;
