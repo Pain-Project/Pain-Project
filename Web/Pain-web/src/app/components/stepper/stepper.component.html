@@ -224,11 +224,18 @@
               </mat-form-field>
             </div>
             <div class="col">
-              <mat-form-field [formGroupName]="i" class="example-full-widthDst" appearance="fill" [style.width.px]=700>
-                <mat-label>Destination</mat-label>
-                <input formControlName="path" matInput placeholder="X:\\.....">
-              </mat-form-field>
+                <mat-form-field *ngIf="dest.value.type == 'DRIVE'" [formGroupName]="i" class="example-full-widthDst"
+                                appearance="fill" [style.width.px]=700>
+                  <mat-label>Destination</mat-label>
+                  <input formControlName="path" matInput placeholder="X:\\.....">
+                </mat-form-field>
+                <mat-form-field *ngIf="dest.value.type == 'FTP'" [formGroupName]="i" class="example-full-widthDst"
+                                appearance="fill" [style.width.px]=700>
+                  <mat-label>Destination</mat-label>
+                  <input formControlName="path" matInput placeholder="ftp://username:password@host">
+                </mat-form-field>
               <mat-icon class="delete-btn" (click)="removeDest(i)">delete_forever</mat-icon>
+              <p style="font-size: 15px; color: red" *ngIf="ftpError  && dest.value.type == 'FTP'" class="Error">Wrong FTP pattern!</p>
             </div>
           </div>
           <svg (click)="addDest()" class="plusIcon" xmlns="http://www.w3.org/2000/svg" width="33" height="33"

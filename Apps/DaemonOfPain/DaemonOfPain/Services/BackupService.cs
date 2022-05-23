@@ -81,7 +81,7 @@ namespace DaemonOfPain.Services
             string configPath = ftpConfig.BackupFolder + '/' + config.Name;
             string backupPath = "";
 
-            if (HeapManager.ExistConfig(config.Id))
+            if (HeapManager.ExistConfig(config.Id, path))
             {
                 Metadata firstMdata = HeapManager.GetFirstBackup(ftpConfig.BackupFolder, config.Id);
                 Metadata lastMdata = HeapManager.GetLastBackup(ftpConfig.BackupFolder, config.Id);
@@ -114,7 +114,7 @@ namespace DaemonOfPain.Services
                 Application.DataService.WriteSnapshot(snapshot);
 
                 int packageRetention = 1;
-                if (HeapManager.ExistConfig(config.Id))
+                if (HeapManager.ExistConfig(config.Id, path))
                 {
                     Metadata last = HeapManager.GetLastBackup(ftpConfig.BackupFolder, config.Id);
                     packageRetention = last.RetentionStats[0];
@@ -285,7 +285,7 @@ namespace DaemonOfPain.Services
             DirectoryInfo configDir = new DirectoryInfo(configDirPath);
             string backupPath = "";
 
-            if (HeapManager.ExistConfig(config.Id))//Existuje složka s configem?
+            if (HeapManager.ExistConfig(config.Id, path))//Existuje složka s configem?
             {
 
                 Metadata firstMdata = HeapManager.GetFirstBackup(path, config.Id);
@@ -319,7 +319,7 @@ namespace DaemonOfPain.Services
                 Application.DataService.WriteSnapshot(snapshot);
 
                 int packageRetention = 1;
-                if (HeapManager.ExistConfig(config.Id))
+                if (HeapManager.ExistConfig(config.Id, path))
                 {
                     Metadata last = HeapManager.GetLastBackup(path, config.Id);
                     packageRetention = last.RetentionStats[0];
