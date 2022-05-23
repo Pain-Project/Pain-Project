@@ -18,8 +18,9 @@ namespace DatabaseTest.DatabaseTables
             ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(job, trigger);
 
+            //zmìna klíèe
             //IJobDetail jobEncrypt = JobBuilder.Create<EncryptionKeysManager>().Build();
-            //ITrigger triggerEncrypt = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
+            //ITrigger triggerEncrypt = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
             //await scheduler.ScheduleJob(jobEncrypt, triggerEncrypt);
 
             await scheduler.Start();

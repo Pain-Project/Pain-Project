@@ -80,7 +80,7 @@ namespace DaemonOfPain
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
                 Console.WriteLine("API2 - GetConfigs");
             }
-            catch (Exception ex)
+             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -90,7 +90,8 @@ namespace DaemonOfPain
             APIRequest request = new APIRequest() { Id = id, PublicKey = EncryptionKeysManager.GetPublicKey() };
             EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncryptRequest(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, request);
             string enRequestString = JsonConvert.SerializeObject(enRequest);
-            string response = await client.GetStringAsync($"/Daemon/GetConfigs" + "?enRequestString=" + enRequestString);
+            string enResponse = await client.GetStringAsync($"/Daemon/GetConfigs" + "?enRequestString=" + enRequestString);
+            string response = RsaProcessor.CombinedDecryptResponse(EncryptionKeysManager.GetPrivateKey(), JsonConvert.DeserializeObject<EncryptedAPIResponse>(enResponse));
             IEnumerable<APIconfig> config = null;
             config = JsonConvert.DeserializeObject<List<APIconfig>>(response);
             return (List<APIconfig>)config;
@@ -103,8 +104,8 @@ namespace DaemonOfPain
         }
         static async Task<Uri> SendReport2(Report report)
         {
-
-            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/sendReport", report);
+            EncryptedAPIRequest enRequest = RsaProcessor.CombinedEncryptRequest(AesProcessor.GenerateKey(), EncryptionKeysManager.ServerKey, new APIRequest() { Data = JsonConvert.SerializeObject(report), Id = Application.IdOfThisClient, PublicKey = EncryptionKeysManager.GetPublicKey() });
+            HttpResponseMessage response = await client.PostAsJsonAsync("/Daemon/sendReport", enRequest);
             response.EnsureSuccessStatusCode();
             Console.WriteLine("API3 - SendReport");
             return response.Headers.Location;

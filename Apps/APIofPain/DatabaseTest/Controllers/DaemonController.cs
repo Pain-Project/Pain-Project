@@ -56,8 +56,8 @@ namespace test_api2.Controllers
         {
             try
             {
+                enRequestString = enRequestString.Replace(' ', '+');
                 EncryptedAPIRequest enRequest = JsonConvert.DeserializeObject<EncryptedAPIRequest>(enRequestString);
-
                 APIRequest request = RsaProcessor.CombinedDecryptRequest(EncryptionKeysManager.GetPrivateKey(), enRequest);
                 string id = request.Id;
 
@@ -107,17 +107,24 @@ namespace test_api2.Controllers
                 return new JsonResult(RsaProcessor.CombinedEncryptResponse(AesProcessor.GenerateKey(), request.PublicKey, JsonConvert.SerializeObject(daemonConfigs))) { StatusCode = (int)HttpStatusCode.OK };
                 //return new JsonResult(daemonConfigs) { StatusCode = (int)HttpStatusCode.OK };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
 
         [HttpPost("sendReport")]
-        public JsonResult SendReport(Report report)
+        public JsonResult SendReport(EncryptedAPIRequest enRequest)
         {
+            APIRequest request = RsaProcessor.CombinedDecryptRequest(EncryptionKeysManager.GetPrivateKey(), enRequest);
+            Report report = JsonConvert.DeserializeObject<Report>(request.Data);
 
-
+            Client cl = this.context.Clients.Where(x => x.Hash == request.Id).FirstOrDefault();
+            if (cl == null)
+                return new JsonResult("Client not found!") { StatusCode = (int)HttpStatusCode.NotFound };
+            if (report.idClient != request.Id)
+                return new JsonResult("You can not send report for another client!") { StatusCode = (int)HttpStatusCode.BadRequest };
+            
             var task = from t in context.Tasks.ToList()
                        join a in context.Assignments on t.IdAssignment equals a.Id
                        join c in context.Clients on a.IdClient equals c.Id

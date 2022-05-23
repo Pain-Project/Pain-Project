@@ -18,25 +18,13 @@ namespace DaemonOfPain.Encryption
         }
         public static void NewKeys()
         {
-            //if (provider != null)
-            //    provider = null;
-
             MyKey = new RSACryptoServiceProvider(1024);
-
-
-            //RSAParameters MyPrivateKeyParam = provider.ExportParameters(true);
-            //RSAParameters MyPublicKeyParam = provider.ExportParameters(false);
-            //MyPrivateKey.ImportParameters(MyPrivateKeyParam);
-            //MyPublicKey.ImportParameters(MyPublicKeyParam);
-
-
-
-            //RSA r = RSA.Create();
-            //RSAParameters p = r.ExportParameters(true);
-            //provider.ImportParameters(p);
-
         }
-
+        public static void SetNewServerKey(string key)
+        {
+            ServerKey = key;
+            ServerKeyExpiration = DateTime.Now.AddHours(1).AddMinutes(-DateTime.Now.Minute).AddSeconds(-DateTime.Now.Second).AddMilliseconds(-DateTime.Now.Millisecond);
+        }
         public static string GetPublicKey()
         {
             return RsaProcessor.ExportPublicKey(MyKey);
