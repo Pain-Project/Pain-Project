@@ -1,1 +1,22 @@
-[{"Id":10,"Name":"Test","Cron":"* * * * *","BackupType":0,"BackupFormat":1,"Retention":[3,1],"Sources":["C:\\BackupTesting"],"Destinations":[{"DestinationType":1,"DestinationPath":"ftp://admin:123456Ab@127.0.0.2/Backup/Test"},{"DestinationType":1,"DestinationPath":"ftp://karton-namiru.cz:LePainProjekt@ftp://ftp.orka-cb.cz/orka-cb_cz/Backup"}]}]
+[
+  {
+    "Id": 2,
+    "Name": "T.C.P.Z.Z.D.S.D.Z.",
+    "Cron": "* * * * *",
+    "BackupType": 1,
+    "BackupFormat": 1,
+    "Retention": [
+      3,
+      2
+    ],
+    "Sources": [
+      "C:\\BackupTesting"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 1,
+        "DestinationPath": "ftp://karton-namiru.cz:LePainProjekt@ftp://ftp.orka-cb.cz/orka-cb_cz/Backup"
+      }
+    ]
+  }
+]

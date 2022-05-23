@@ -200,6 +200,8 @@ namespace DaemonOfPain.Services
                     FtpDoBackup(service, changesList, path + "/" + newPath);
                 else
                 {
+                    if (!service.DirExists(path))
+                        service.CreateDir(path);
                     if (Directory.Exists(@"..\..\..\temp"))
                         Directory.Delete(@"..\..\..\temp", true);
                     FtpDoBackupArchiv(service, changesList, @"..\..\..\temp\backup");
