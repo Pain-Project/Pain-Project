@@ -200,6 +200,8 @@ namespace DaemonOfPain.Services
                     FtpDoBackup(service, changesList, path + "/" + newPath);
                 else
                 {
+                    if (!service.DirExists(path))
+                        service.CreateDir(path);
                     if (Directory.Exists(@"..\..\..\temp"))
                         Directory.Delete(@"..\..\..\temp", true);
                     FtpDoBackupArchiv(service, changesList, @"..\..\..\temp\backup");
@@ -593,11 +595,11 @@ namespace DaemonOfPain.Services
                 this.BackupSetup(TaskManager.TaskList);
                 try
                 {
-                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, hashClient = Application.HashOfThisClient, message = "OK", success = true, size = 0 });
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
                 }
                 catch
                 {
-                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, hashClient = Application.HashOfThisClient, message = "OK", success = true, size = 0 });
+                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "OK", success = true, size = 0 });
                     Console.WriteLine("Send report fail");
                 }
             }
@@ -607,11 +609,11 @@ namespace DaemonOfPain.Services
                 Console.WriteLine(ex);
                 try
                 {
-                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, hashClient = Application.HashOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
+                    await APIService.SendReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
                 }
                 catch
                 {
-                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, hashClient = Application.HashOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
+                    ReportHolder.AddReport(new Report() { date = TaskManager.TaskList[0].Date, idConfig = TaskManager.TaskList[0].IdConfig, idClient = Application.IdOfThisClient, message = "Backup Error: " + ex.Message, success = false, size = 0 });
                     Console.WriteLine("Send report fail");
                 }
             }

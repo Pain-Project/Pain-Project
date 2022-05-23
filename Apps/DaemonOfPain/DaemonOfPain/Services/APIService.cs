@@ -24,7 +24,7 @@ namespace DaemonOfPain
 
         private static void Setup()
         {
-            if(client.BaseAddress == null)
+            if (client.BaseAddress == null)
             {
                 client.BaseAddress = new Uri(@"https://localhost:5001/");
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -39,7 +39,7 @@ namespace DaemonOfPain
             {
                 string id = await LoginToServer(new Computer());
                 Console.WriteLine("API1 - LoginToServer");
-                return hash;
+                return id;
             }
             catch (Exception ex)
             {
@@ -76,11 +76,11 @@ namespace DaemonOfPain
             Setup();
             try
             {
-                List<APIconfig> respose = await GetConfigs(Application.HashOfThisClient);
+                List<APIconfig> respose = await GetConfigs(Application.IdOfThisClient);
                 Application.DataService.WriteAllConfigs(APIconfig.ConvertListToConfig(respose));
                 Console.WriteLine("API2 - GetConfigs");
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

@@ -39,7 +39,7 @@ namespace DaemonOfPain.Controller.ClassesToSend
             {
                 if (nic.OperationalStatus == OperationalStatus.Up)
                 {
-                    mac = nic.GetPhysicalAddress().ToString();
+                    mac = nic.GetPhysicalAddress().ToString() == "" ? mac : nic.GetPhysicalAddress().ToString();
                     if (nic.Name == "Ethernet")
                         break;
                 }

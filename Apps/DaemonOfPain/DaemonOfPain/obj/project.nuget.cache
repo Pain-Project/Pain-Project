@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "66KzACXhXczr7ItdEjyqeGaACCSp21sGMcRUlIUCxBqiMszSiirGZQF+f6/pwIlxu/4DV8oO2Tt1GTl2XLM6iQ==",
+  "dgSpecHash": "WjJEPTya22m+geemzMEidBBiKYwvoVwzzG6fJEfARco6icVKcmeGU2/V4fYLYt/TuT6HVkbyogbUa9uB8KcMkw==",
   "success": true,
   "projectFilePath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\František\\.nuget\\packages\\fluentftp\\37.0.2\\fluentftp.37.0.2.nupkg.sha512",
     "C:\\Users\\František\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.8\\microsoft.aspnet.webapi.client.5.2.8.nupkg.sha512",
     "C:\\Users\\František\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.1.1\\microsoft.extensions.logging.abstractions.2.1.1.nupkg.sha512",
     "C:\\Users\\František\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
