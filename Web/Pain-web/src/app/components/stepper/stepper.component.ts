@@ -93,7 +93,7 @@ export class StepperComponent implements OnInit {
     for (let source of this.Sources.value) {
       config.sources.push(source.path);
     }
-    let re = RegExp("^(ftp:\\/\\/)[A-Za-z]{1,}:[A-Za-z]{1,}@[A-Za-z\\/\\-.]{1,}$");
+    let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let dest of this.Dest.value) {
       if (dest.type == "FTP" && !re.test(dest.path)) {
         this.ftpError = true;
@@ -103,10 +103,10 @@ export class StepperComponent implements OnInit {
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-    if (!this.form.valid) {
-      alert("You must fill all inputs!")
-      return;
-    }
+    // if (!this.form.valid) {
+    //   alert("You must fill all inputs!")
+    //   return;
+    // }
     this.configService.sendConfig(config).subscribe(() => (this.router.navigateByUrl('/ui/dashboard'), alert('Config was succesfully created!')));
   }
 

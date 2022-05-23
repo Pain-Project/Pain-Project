@@ -130,9 +130,9 @@ namespace DaemonOfPain.Services
                 ItemsToDelete.RemoveAt(0);
             }
         }
-        public bool ExistConfig(int configID)
+        public bool ExistConfig(int configID, string dest )
         {
-            return meta.FirstOrDefault(x => x.ConfigID == configID) != null;
+            return meta.FirstOrDefault(x => x.ConfigID == configID && x.Destination == dest) != null;
         }
 
 
