@@ -4,7 +4,7 @@
     "Name": "T.C.P.Z.Z.D.S.D.Z.",
     "Cron": "* * * * *",
     "BackupType": 1,
-    "BackupFormat": 1,
+    "BackupFormat": 0,
     "Retention": [
       3,
       2
@@ -14,8 +14,8 @@
     ],
     "Destinations": [
       {
-        "DestinationType": 1,
-        "DestinationPath": "ftp://karton-namiru.cz:LePainProjekt@ftp://ftp.orka-cb.cz/orka-cb_cz/Backup"
+        "DestinationType": 0,
+        "DestinationPath": "C:\\Dest"
       }
     ]
   }

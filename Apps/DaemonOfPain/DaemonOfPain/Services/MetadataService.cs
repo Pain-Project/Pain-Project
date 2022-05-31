@@ -18,16 +18,15 @@ namespace DaemonOfPain.Services
             sw.Close();
         }
 
-        public void FtpWriteMetadata(FtpService service, string path, Metadata meta)
+        public void FtpWriteMetadata(Service service, string path, Metadata meta)
         {
             string temp = @"..\..\..\temp";
             if (!Directory.Exists(temp))
                 Directory.CreateDirectory(temp);
 
-            StreamWriter sw = new StreamWriter(temp + @"\Metadata.json");
-            sw.Write(JsonConvert.SerializeObject(meta));
-            sw.Close();
-            service.UploadFile(temp + @"\Metadata.json", path + @"/Metadata.json");
+            WriteMetadata(temp, meta);
+
+            service.CopyFile(temp + @"\Metadata.json", path + @"/Metadata.json");
             File.Delete(temp + @"\Metadata.json"); 
 
         }
