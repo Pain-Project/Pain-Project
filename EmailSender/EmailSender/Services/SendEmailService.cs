@@ -36,29 +36,30 @@ namespace EmailSender
             //template creating
             StringBuilder messageTemplate = new StringBuilder();
             messageTemplate.AppendLine($"<p>Hi Admin!</p>");
-            messageTemplate.AppendLine($"<p>This is your {setInfo.Freq} report from LePain a.s.</p>");
+            messageTemplate.AppendLine($"<p>This is your<strong> {setInfo.Freq}</strong> report from <i>LePain a.s.</i></p>");
             messageTemplate.AppendLine("<br>");
-            messageTemplate.AppendLine("<p>Here is your report: </p>");
-            messageTemplate.AppendLine($"<p>Number of tasks with state - SUCCESS: {settingsGetter.SUCCESS_count}</p>");
-            messageTemplate.AppendLine($"<p>Number of tasks with state - NORUN: {settingsGetter.NORUN_count}</p>");
-            messageTemplate.AppendLine($"<p>Number of tasks with state - ERROR: {settingsGetter.ERROR_count}</p>");
-            messageTemplate.AppendLine($"<p>Number of all tasks: {taskInfo.Count}</p>");
+            messageTemplate.AppendLine("<strong>HERE IS YOUR REPORT: </strong>");
+            messageTemplate.AppendLine($"<ul><li>ALL TASKS: {taskInfo.Count}</li>");
+            messageTemplate.AppendLine($"<li style='color:green;'>SUCCESS: {settingsGetter.SUCCESS_count}</li>");
+            messageTemplate.AppendLine($"<li style='color:orange;'>NORUN: {settingsGetter.NORUN_count}</li>");
+            messageTemplate.AppendLine($"<li style='color:red;'>ERROR: {settingsGetter.ERROR_count}</li></ul>");
+
             if(settingsGetter.ERROR_count != 0)
             {
                 messageTemplate.AppendLine("<br>");
-                messageTemplate.AppendLine("<p>PROBLEMS: </p>");
+                messageTemplate.AppendLine("<p><strong>PROBLEMS: </strong></p>");
                 messageTemplate.AppendLine("<br>");
-                messageTemplate.AppendLine($"<table style='{this.TableTitleStyle}'><tr><th style='{this.TableTitleStyle}'>ID</th><th style='{this.TableTitleStyle}'>ID ASSIGNMENT</th><th style='{this.TableTitleStyle}'>DATE</th><th style='{this.TableTitleStyle}'>MESSAGE</th></tr>");
+                messageTemplate.AppendLine($"<table style='{this.TableTitleStyle}'><tr><th style='{this.TableTitleStyle}'>ID</th><th style='{this.TableTitleStyle}'>CONFIG</th><th style='{this.TableTitleStyle}'>CLIENT</th><th style='{this.TableTitleStyle}'>DATE</th><th style='{this.TableTitleStyle}'>MESSAGE</th></tr>");
                 foreach (var item in taskInfo)
                 {
                     if (item.State == State.ERROR)
-                        messageTemplate.AppendLine($"<tr><td style='{this.RowStyle}'>{item.TaskId}</td><td style='{this.RowStyle}'>{item.IdAssignment}</td><td style='{this.RowStyle}'>{item.Date}</td><td style='{this.RowStyle}'>{item.Message}<td></tr>");
+                        messageTemplate.AppendLine($"<tr><td style='{this.RowStyle}'>{item.TaskId}</td><td style='{this.RowStyle}'>{item.ConfigName}</td><td style='{this.RowStyle}'>{item.ClientName}</td><td style='{this.RowStyle}'>{item.Date}</td><td style='{this.RowStyle}'>{item.Message}<td></tr>");
                 }
                 messageTemplate.AppendLine("</table>");
             }
             messageTemplate.AppendLine("<br>");
             messageTemplate.AppendLine("<p>Have a nice day! :)</p>");
-            messageTemplate.AppendLine("<p>  -LePain a.s.</p>");
+            messageTemplate.AppendLine("<i>  -LePain a.s.</i>");
 
             //message creating
             MailAddress FromEmail = new MailAddress(setInfo.Sender, "Your report sender");
