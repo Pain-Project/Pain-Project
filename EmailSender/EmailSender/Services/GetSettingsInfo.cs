@@ -22,6 +22,11 @@ namespace EmailSender.Services
             string emails = await client.GetStringAsync(@"https://localhost:5001/Email/getEmails");
             emailSettings.SendTo = JsonConvert.DeserializeObject<List<string>>(emails);
 
+            if (Application.setinf != emailSettings)
+            {
+                await Application.Timer.SetUp(emailSettings);
+            }
+
             return emailSettings;
         }   
         public async Task<List<TasksInfo>> GetTasks()

@@ -87,7 +87,7 @@ namespace EmailSender
         public async Task Execute(IJobExecutionContext context)
         {
             GetSettingsInfo settingsGetter = new GetSettingsInfo();
-            SettingsInfo setinf = await settingsGetter.GetInfo(); //get email settings
+            SettingsInfo setinf = Application.setinf; //get email settings
             List<TasksInfo> taskInfo = await settingsGetter.GetTasks(); //get list of tasks
             settingsGetter.CountStates(taskInfo); //count nubmer of tasks with specific state
             await this.EmailSender(setinf, settingsGetter, taskInfo); //send email

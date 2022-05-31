@@ -11,6 +11,7 @@ namespace EmailSender
     public class Timer
     {
         public IScheduler Scheduler { get; set; }
+
         public async Task SetUp(SettingsInfo setInf)
         {
             if (Scheduler != null)
@@ -41,6 +42,10 @@ namespace EmailSender
                 ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 1 ? *").Build();
                 await Scheduler.ScheduleJob(job, trigger);
             }
+            IJobDetail reqJob = JobBuilder.Create<Application>().Build();
+            ITrigger reqTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
+            await Scheduler.ScheduleJob(reqJob, reqTrigger);
+
             await Scheduler.Start();
         }
      }

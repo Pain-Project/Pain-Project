@@ -21,8 +21,8 @@ namespace DatabaseTest.Controllers
         private string dataPath = @"Data\emailSettings.json";
 
 
-            //Dashboard
-            [HttpGet("todayTasks")]
+        //Dashboard
+        [HttpGet("todayTasks")]
         public JsonResult GetTodayTasks()
         {
             try
