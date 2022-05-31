@@ -24,8 +24,8 @@ namespace EmailSender
             if (setInf.Freq == Freq.DAILY)
             {
                 IJobDetail job = JobBuilder.Create<SendEmailService>().Build();
-                ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 ? * *").Build();
-                //ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever()).Build();
+                //ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 ? * *").Build();
+                ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever()).Build();
                 await Scheduler.ScheduleJob(job, trigger);
             }
             else if (setInf.Freq == Freq.WEEKLY)

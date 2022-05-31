@@ -14,6 +14,8 @@ namespace EmailSender
 {
     public class SendEmailService :IJob
     {
+        private string TableTitleStyle = "border: 2px solid;";
+        private string RowStyle = "border: 2px solid; padding: 7px";
         public async Task EmailSender(SettingsInfo setInfo, GetSettingsInfo settingsGetter, List<TasksInfo> taskInfo)
         {
             //smtp client creation
@@ -33,36 +35,40 @@ namespace EmailSender
 
             //template creating
             StringBuilder messageTemplate = new StringBuilder();
-            messageTemplate.AppendLine($"Hi Admin! This is your {setInfo.Freq} report from LePain a.s.");
-            messageTemplate.AppendLine("");
-            messageTemplate.AppendLine("Here is your report: ");
-            messageTemplate.AppendLine($"Number of tasks with state - SUCCESS: {settingsGetter.SUCCESS_count}");
-            messageTemplate.AppendLine($"Number of tasks with state - NORUN: {settingsGetter.NORUN_count}");
-            messageTemplate.AppendLine($"Number of tasks with state - ERROR: {settingsGetter.ERROR_count}");
-            messageTemplate.AppendLine($"Number of all tasks: {taskInfo.Count}");
+            messageTemplate.AppendLine($"<p>Hi Admin!</p>");
+            messageTemplate.AppendLine($"<p>This is your {setInfo.Freq} report from LePain a.s.</p>");
+            messageTemplate.AppendLine("<br>");
+            messageTemplate.AppendLine("<p>Here is your report: </p>");
+            messageTemplate.AppendLine($"<p>Number of tasks with state - SUCCESS: {settingsGetter.SUCCESS_count}</p>");
+            messageTemplate.AppendLine($"<p>Number of tasks with state - NORUN: {settingsGetter.NORUN_count}</p>");
+            messageTemplate.AppendLine($"<p>Number of tasks with state - ERROR: {settingsGetter.ERROR_count}</p>");
+            messageTemplate.AppendLine($"<p>Number of all tasks: {taskInfo.Count}</p>");
             if(settingsGetter.ERROR_count != 0)
             {
-                messageTemplate.AppendLine("");
-                messageTemplate.AppendLine("PROBLEMS: ");
+                messageTemplate.AppendLine("<br>");
+                messageTemplate.AppendLine("<p>PROBLEMS: </p>");
+                messageTemplate.AppendLine("<br>");
+                messageTemplate.AppendLine($"<table style='{this.TableTitleStyle}'><tr><th style='{this.TableTitleStyle}'>ID</th><th style='{this.TableTitleStyle}'>ID ASSIGNMENT</th><th style='{this.TableTitleStyle}'>DATE</th><th style='{this.TableTitleStyle}'>MESSAGE</th></tr>");
                 foreach (var item in taskInfo)
                 {
                     if (item.State == State.ERROR)
-                        messageTemplate.AppendLine($"ID: {item.TaskId} /// DATE: {item.Date} /// MESSAGE: {item.Message}");
+                        messageTemplate.AppendLine($"<tr><td style='{this.RowStyle}'>{item.TaskId}</td><td style='{this.RowStyle}'>{item.IdAssignment}</td><td style='{this.RowStyle}'>{item.Date}</td><td style='{this.RowStyle}'>{item.Message}<td></tr>");
                 }
+                messageTemplate.AppendLine("</table>");
             }
-            messageTemplate.AppendLine("");
-            messageTemplate.AppendLine("Have a nice day! :)");
-            messageTemplate.AppendLine("  -LePain a.s.");
+            messageTemplate.AppendLine("<br>");
+            messageTemplate.AppendLine("<p>Have a nice day! :)</p>");
+            messageTemplate.AppendLine("<p>  -LePain a.s.</p>");
 
             //message creating
             MailAddress FromEmail = new MailAddress(setInfo.Sender, "Your report sender");
             MailMessage Message = new MailMessage()
             {
+                IsBodyHtml = true,
                 From = FromEmail,
                 Subject = $"Your {setInfo.Freq} report!",
                 Body = messageTemplate.ToString()
             };
-
             //email validation and sending
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             foreach (var item in setInfo.SendTo)
