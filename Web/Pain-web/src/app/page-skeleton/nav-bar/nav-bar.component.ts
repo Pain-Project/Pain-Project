@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { MatDialog } from "@angular/material/dialog";
-import { SettingsComponent} from "../../components/dialogs/settings-dialog/settings.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SettingsComponent} from "../../components/dialogs/settings-dialog/settings.component";
 import {LoginService} from "../../services/login.service";
 import {SessionsService} from "../../services/sessions.service";
 import {Router} from "@angular/router";
-import { EmailService } from 'src/app/services/email.service';
-import { EmailSettingsModel } from 'src/app/models/emailSettings.model';
+import {EmailService} from 'src/app/services/email.service';
+import {EmailSettingsModel} from 'src/app/models/emailSettings.model';
 
 @Component({
   selector: 'app-nav-bar',
@@ -19,12 +19,12 @@ export class NavBarComponent implements OnInit {
 
   emailSettings: EmailSettingsModel;
 
-  constructor( public dialog : MatDialog,
-               private loginService : LoginService,
-               private sessionService: SessionsService,
-               private router: Router,
-               private emailService: EmailService,
-  ) { 
+  constructor(public dialog: MatDialog,
+              private loginService: LoginService,
+              private sessionService: SessionsService,
+              private router: Router,
+              private emailService: EmailService,
+  ) {
     this.emailService.GetEmailSettings().subscribe(x => this.emailSettings = x)
   }
 
@@ -33,7 +33,8 @@ export class NavBarComponent implements OnInit {
     this.name = this.loginService.GetLogin().Name;
     this.surname = this.loginService.GetLogin().Surname;
   }
-  LogOut() : void {
+
+  LogOut(): void {
     this.sessionService.logout();
     this.router.navigate([''])
   }
@@ -46,8 +47,19 @@ export class NavBarComponent implements OnInit {
       data: this.emailSettings
     })
     dialogRef.afterClosed().subscribe(result => {
-      if(result== true)
+      if (result == true) {
         alert('Settings saved!');
+        this.Reload();
+      }
     });
+
+
+  }
+
+  private Reload(): void {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }

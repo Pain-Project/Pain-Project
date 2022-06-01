@@ -17,7 +17,7 @@ namespace DatabaseTest.Controllers
     //[Auth]
     public class AdminController : ControllerBase
     {
-        private MyContext context = MyContextHolder.GetInstance();
+        private MyContext context = new MyContext();
         private string dataPath = @"Data\emailSettings.json";
 
 
@@ -127,6 +127,8 @@ namespace DatabaseTest.Controllers
         {
             try
             {
+                if (context.Configs.Where(x => x.Name == config.Name).ToList().Count != 0)
+                    throw new Exception();
                 Administrator creator = context.Administrators.Where(x => x.Id == config.IdAdministrator).FirstOrDefault();
                 Config newConfig = new Config()
                 {

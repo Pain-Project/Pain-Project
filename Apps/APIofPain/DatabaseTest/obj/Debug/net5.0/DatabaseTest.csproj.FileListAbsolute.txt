@@ -435,3 +435,4 @@ C:\Users\stankomichal\Documents\GitHub\Pain-Project\Apps\APIofPain\DatabaseTest\
 C:\Users\stankomichal\Documents\GitHub\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\ref\DatabaseTest.dll
 C:\Users\stankomichal\Documents\GitHub\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\DatabaseTest.pdb
 C:\Users\stankomichal\Documents\GitHub\Pain-Project\Apps\APIofPain\DatabaseTest\obj\Debug\net5.0\DatabaseTest.genruntimeconfig.cache
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\APIofPain\DatabaseTest\bin\Debug\net5.0\Data\emailSettings.json

@@ -7,6 +7,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { EmailService } from 'src/app/services/email.service';
 import { EmailSettingsModel } from 'src/app/models/emailSettings.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'Dialog_settings',
@@ -43,11 +44,6 @@ export class SettingsComponent implements OnInit {
       sender:[this.data.sender, Validators.required],
       password:[this.data.password, Validators.required],
       ssl:[this.data.ssl, Validators.required],
-
-      // port:[0,Validators.required],
-      // smtp:['', Validators.required],
-      // freq:[0,Validators.required],
-      // sender:['', Validators.required],
     })
   }
 
@@ -75,8 +71,9 @@ export class SettingsComponent implements OnInit {
 
   SaveClick(): void {
     if (this.isDirty) {
-      this.userService.darkmodeChange(this.darkMode).subscribe(() => this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe());
-      ;
+      this.userService.darkmodeChange(this.darkMode).subscribe(() => {
+        this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe()
+      });
     }
     this.emailService.changeEmailSettings(this.form.value).subscribe();
   }
@@ -84,7 +81,6 @@ export class SettingsComponent implements OnInit {
     event.stopPropagation();
   }
   Submit(): void{
-      console.log("ahoj");
       this.emailService.changeEmailSettings(this.form.value).subscribe();
   }
 }

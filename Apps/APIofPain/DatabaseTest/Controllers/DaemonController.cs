@@ -17,7 +17,7 @@ namespace test_api2.Controllers
     [Route("[controller]")]
     public class DaemonController : ControllerBase
     {
-        private MyContext context = MyContextHolder.GetInstance();
+        private MyContext context = new MyContext();
         [HttpPost("AddDaemon")]
         public JsonResult AddDaemon(EncryptedAPIRequest enRequest)
         {

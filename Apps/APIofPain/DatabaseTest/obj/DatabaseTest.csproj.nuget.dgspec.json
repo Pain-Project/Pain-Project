@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
+    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
+    "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
         "projectName": "DatabaseTest",
-        "projectPath": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
-        "packagesPath": "C:\\Users\\stankomichal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
+        "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\DatabaseTest.csproj",
+        "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\APIofPain\\DatabaseTest\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\stankomichal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -86,6 +83,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.14, 5.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -94,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

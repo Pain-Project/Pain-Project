@@ -36,8 +36,7 @@ export class StepperComponent implements OnInit {
   public config: Config = new Config();
 
   tempDest: Destination[] = [{destType: "drive", path: ""}]
-  tempClients = new Map(null);
-  tempClient = {1: 'ads'};
+  tempClient = {};
   tempDaysWeek: number[] = [];
   tempMonth: number;
 
@@ -48,7 +47,6 @@ export class StepperComponent implements OnInit {
               private loginService: LoginService,
               private router: Router) {
     // @ts-ignore
-    delete this.tempClient[1]
   }
 
 
@@ -66,6 +64,7 @@ export class StepperComponent implements OnInit {
       // @ts-ignore
       this.tempClient[id] = ''
     }
+    console.log(this.tempClient)
   }
 
   public AddRemoveDayWeek(id: number): void {
@@ -76,9 +75,39 @@ export class StepperComponent implements OnInit {
   }
 
   public Submit(): void {
+    if (this.Name?.value == '') {
+      alert("Please enter config name!")
+      return
+    }
 
+    if (Object.keys(this.tempClient).length == 0) {
+      alert("No clients selected!")
+      return
+    }
+    if (this.frequention == 'weekly' && this.tempDaysWeek.length == 0) {
+      alert("You must select days of week!")
+      return
+    }
     var config: Config = new Config();
     var secondStep: SecondStep = this.form.controls['formArray'].value[1];
+
+    if (secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
+      alert("Please select valid day of month!")
+      return
+    }
+    if (secondStep.backups < 1 || (secondStep.packages < 1 && secondStep.backupType != 'FB')) {
+      alert("Please enter valid retention!")
+      return
+    }
+    if (this.Sources.value.length == 0) {
+      alert("Please enter source!")
+      return
+    }
+    if (this.Dest.value.length == 0) {
+      alert("Please enter destination!")
+      return
+    }
+
 
     config.cron = this.BuildCron();
     config.clientNames = this.tempClient;
@@ -91,6 +120,11 @@ export class StepperComponent implements OnInit {
     config.backUpFormat = secondStep.backupFormat;
 
     for (let source of this.Sources.value) {
+      console.log(source)
+      if (source.path == '') {
+        alert("Please enter valid source!")
+        return
+      }
       config.sources.push(source.path);
     }
     let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
@@ -99,15 +133,19 @@ export class StepperComponent implements OnInit {
         this.ftpError = true;
         return
       }
-
+      if (dest.path == '') {
+        alert("Please enter valid destination!")
+        return
+      }
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-    // if (!this.form.valid) {
-    //   alert("You must fill all inputs!")
-    //   return;
-    // }
-    this.configService.sendConfig(config).subscribe(() => (this.router.navigateByUrl('/ui/dashboard'), alert('Config was succesfully created!')));
+
+    // return
+    this.configService.sendConfig(config).subscribe(() => (
+        this.router.navigateByUrl('/ui/dashboard'),
+          alert('Config was succesfully created!')),
+      () => alert('Config name is already taken!'));
   }
 
   private BuildCron(): string {
@@ -172,9 +210,9 @@ export class StepperComponent implements OnInit {
           dayM: ['*', Validators.required],
           month: ['*', Validators.required],
           dayW: ['*', Validators.required],
-          dayOfMonth: [0, Validators.required],
-          packages: [0, Validators.required],
-          backups: [0, Validators.required],
+          dayOfMonth: [1, Validators.required],
+          packages: [1, Validators.required],
+          backups: [1, Validators.required],
         }),
         this.fb.group({
           sources: this.fb.array([this.fb.group({

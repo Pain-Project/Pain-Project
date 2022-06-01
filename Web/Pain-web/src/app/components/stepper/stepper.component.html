@@ -64,13 +64,13 @@
           <td>
             <mat-form-field class="example-full-widthL" appearance="fill">
               <mat-label>Number of backups</mat-label>
-              <input formControlName="backups" type="number" matInput>
+              <input [min]="1" formControlName="backups" type="number" matInput>
             </mat-form-field>
           </td>
           <td *ngIf="backup != 'full'">
             <mat-form-field class="example-full-widthR" appearance="fill">
               <mat-label>Number of packages</mat-label>
-              <input formControlName="packages" type="number" matInput>
+              <input [min]="1" formControlName="packages" type="number" matInput>
             </mat-form-field>
           </td>
           <!--Backup format-->
@@ -121,7 +121,7 @@
               <td class="days" *ngIf="frequention == 'monthly'">
                 <mat-form-field appearance="fill">
                   <mat-label>Day of month</mat-label>
-                  <input formControlName="dayOfMonth" matInput type="number">
+                  <input [min]="1" [max]="31" formControlName="dayOfMonth" matInput type="number">
                 </mat-form-field>
               </td>
             <td>

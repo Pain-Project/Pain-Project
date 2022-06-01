@@ -22,7 +22,6 @@ export class AddUserFormComponent implements OnInit {
 
   public submit(): void {
     if (this.form.valid && this.confirmPassword()) {
-      alert('User has been successfuly added!')
       this.FormEvent.emit();
       this.form.reset({
         name:'',
