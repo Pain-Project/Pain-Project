@@ -1,4 +1,5 @@
 ﻿using DaemonOfPain.Components;
+using DaemonOfPain.Encryption;
 using DaemonOfPain.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace DaemonOfPain
         public Timer Timer { get; set; }
         public static DaemonDataService DataService { get; set; }
         public TaskManager TaskManager { get; set; }
-        public static string HashOfThisClient { get; set; }
+        public static string IdOfThisClient { get; set; }
         public Application()
         {
             DataService = new DaemonDataService();
@@ -23,18 +24,20 @@ namespace DaemonOfPain
         }
         public async Task StartApplication()
         {
+            EncryptionKeysManager.NewKeys();
+            EncryptionKeysManager.ServerKey = await APIService.GetServerPublicKey();
             Settings set = DataService.GetSettings();
             if (set == null)
             {
-                string hash = await APIService.LoginToServer();
-                DataService.WriteSettings(new Settings() { Hash = hash });
-                HashOfThisClient = hash;
-                if (hash == "")
+                string newId = await APIService.LoginToServer();
+                DataService.WriteSettings(new Settings() { Id = newId });
+                IdOfThisClient = newId;
+                if (newId == null)
                     throw new Exception();//nelze se spojit s databází
             }
             else
             {
-                HashOfThisClient = set.Hash;
+                IdOfThisClient = set.Id;
             }
 
             await APIService.GetConfigs();

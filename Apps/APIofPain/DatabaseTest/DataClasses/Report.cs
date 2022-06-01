@@ -2,7 +2,7 @@ using System;
 
 public class Report
 {
-    public string hashClient { get; set; }
+    public string idClient { get; set; }
     public int idConfig { get; set; }
     public bool success { get; set; }
     public string message { get; set; }

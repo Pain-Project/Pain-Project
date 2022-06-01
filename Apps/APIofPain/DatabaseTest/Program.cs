@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatabaseTest.Encryption;
 
 namespace DatabaseTest
 {
@@ -18,6 +19,7 @@ namespace DatabaseTest
             new Tasker().RegenerateTaskDatabaseTable();
             Timer timer = new Timer();
             await timer.SetUp();
+            EncryptionKeysManager.NewKeys();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -160,6 +160,15 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
+      "Portable.BouncyCastle/1.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "Quartz/3.4.0": {
         "type": "package",
         "dependencies": {
@@ -1633,6 +1642,21 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
+      ]
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "sha512": "eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "type": "package",
+      "path": "portable.bouncycastle/1.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/BouncyCastle.Crypto.dll",
+        "lib/net40/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "portable.bouncycastle.1.9.0.nupkg.sha512",
+        "portable.bouncycastle.nuspec"
       ]
     },
     "Quartz/3.4.0": {
@@ -5107,24 +5131,30 @@
       "FluentFTP >= 37.0.2",
       "Microsoft.AspNet.WebApi.Client >= 5.2.8",
       "Newtonsoft.Json >= 13.0.1",
+      "Portable.BouncyCastle >= 1.9.0",
       "Quartz >= 3.4.0",
       "ncrontab >= 3.3.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\troli\\.nuget\\packages\\": {}
+    "C:\\Users\\František\\.nuget\\packages\\": {},
+    "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+      "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
       "projectName": "DaemonOfPain",
-      "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
-      "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
+      "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+      "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
+      "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5162,6 +5192,10 @@
             "target": "Package",
             "version": "[13.0.1, )"
           },
+          "Portable.BouncyCastle": {
+            "target": "Package",
+            "version": "[1.9.0, )"
+          },
           "Quartz": {
             "target": "Package",
             "version": "[3.4.0, )"
@@ -5181,18 +5215,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.14, 5.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -8,6 +8,6 @@ namespace DaemonOfPain.Components
 {
     public class Settings
     {
-        public string Hash { get; set; }
+        public string Id { get; set; }
     }
 }

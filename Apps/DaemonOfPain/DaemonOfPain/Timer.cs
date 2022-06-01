@@ -1,4 +1,6 @@
-﻿using DaemonOfPain.Services;
+﻿using DaemonOfPain.Encryption;
+using DaemonOfPain.Services;
+using DaemonOfPain.Services.APIClasses;
 using Quartz;
 using Quartz.Impl;
 using System;
@@ -38,6 +40,16 @@ namespace DaemonOfPain
             IJobDetail reportJob = JobBuilder.Create<ReportHolder>().Build();
             ITrigger reportTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(reportJob, reportTrigger);
+
+            ////šifrování - vygenerování nového klíče
+            //IJobDetail encryptJob = JobBuilder.Create<EncryptionKeysManager>().Build();
+            //ITrigger encryptTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
+            //await scheduler.ScheduleJob(encryptJob, encryptTrigger);
+
+            //////Dotazování na public key serveru
+            //IJobDetail keyServerJob = JobBuilder.Create<ServerKeyAsker>().Build();
+            //ITrigger keyServerTrigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
+            //await scheduler.ScheduleJob(keyServerJob, keyServerTrigger);
         }
 
         private async Task StartTimer(List<Config> configs)

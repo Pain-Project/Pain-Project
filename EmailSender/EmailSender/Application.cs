@@ -1,4 +1,5 @@
 ﻿using EmailSender.Services;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace EmailSender
 {
-    public class Application
+    public class Application : IJob
     {
         GetSettingsInfo settingsGetter { get; set; }
-        SettingsInfo setinf { get; set; }
-        Timer Timer  { get; set; }
+        public static SettingsInfo setinf { get; set; }
+        public static Timer Timer  { get; set; }
         public Application()
         {
             settingsGetter = new GetSettingsInfo();
@@ -25,6 +26,11 @@ namespace EmailSender
             {
                 Thread.Sleep(5000);
             }
+        }
+        public async Task Execute(IJobExecutionContext context)
+        {
+            settingsGetter = new GetSettingsInfo();
+            setinf = await settingsGetter.GetInfo();
         }
     }
 }

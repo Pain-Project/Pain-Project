@@ -1,11 +1,8 @@
+using DatabaseTest.Encryption;
 using Quartz;
 using Quartz.Impl;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace DatabaseTest.DatabaseTables
 {
@@ -16,9 +13,16 @@ namespace DatabaseTest.DatabaseTables
         public async System.Threading.Tasks.Task SetUp()
         {
             scheduler = await new StdSchedulerFactory().GetScheduler();
+
             IJobDetail job = JobBuilder.Create<Tasker>().Build();
             ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInHours(1).RepeatForever()).Build();
             await scheduler.ScheduleJob(job, trigger);
+
+            //zmìna klíèe
+            //IJobDetail jobEncrypt = JobBuilder.Create<EncryptionKeysManager>().Build();
+            //ITrigger triggerEncrypt = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()).Build();
+            //await scheduler.ScheduleJob(jobEncrypt, triggerEncrypt);
+
             await scheduler.Start();
         }
 
