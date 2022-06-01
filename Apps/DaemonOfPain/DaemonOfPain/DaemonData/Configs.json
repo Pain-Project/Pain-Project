@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 2,
+    "Name": "T.C.P.Z.Z.D.S.D.Z.",
+    "Cron": "* * * * *",
+    "BackupType": 1,
+    "BackupFormat": 0,
+    "Retention": [
+      3,
+      2
+    ],
+    "Sources": [
+      "C:\\BackupTesting"
+    ],
+    "Destinations": [
+      {
+        "DestinationType": 0,
+        "DestinationPath": "C:\\Dest"
+      }
+    ]
+  }
+]

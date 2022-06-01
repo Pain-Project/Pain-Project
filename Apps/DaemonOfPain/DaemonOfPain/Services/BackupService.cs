@@ -30,13 +30,13 @@ namespace DaemonOfPain.Services
 
             if (!Regex.IsMatch(parts[0], @"(^\*$)|(^[0-5]?[0-9](-[0-5]?[0-9])?$)|(^[0-5]?[0-9]/[0-9]*$)|(^[0-5]?[0-9](,[0-5]?[0-9])+$)"))
                 throw new Exception("Invalid cron!");
-            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-1]?[0-9])|(2[0-3]))(-(([0-1]?[0-9])|(2[0-3])))?$)|(^(([0-1]?[0-9])|(2[0-3]))/[0-9]*$)|(^(([0-1]?[0-9])|(2[0-3]))(,(([0-1]?[0-9])|(2[0-3])))+$)"))
+            if (!Regex.IsMatch(parts[1], @"(^\*$)|(^(([0-1]?[0-9])|(2[0-3]))(-(([0-1]?[0-9])|(2[0-3])))?$)|(^(([0-1]?[0-9])|(2[0-3]))/[0-9]*$)|(^(([0-1]?[0-9])|(2[0-3]))(,(([0-1]?[0-9])|(2[0-3])))+$)"))
                 throw new Exception("Invalid cron!");
-            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-2]?[0-9])|(3[0-1]))(-(([0-2]?[0-9])|(3[0-1])))?$)|(^(([0-2]?[0-9])|(3[0-1]))/[0-9]*$)|(^(([0-2]?[0-9])|(3[0-1]))(,(([0-2]?[0-9])|(3[0-1])))+$)"))
+            if (!Regex.IsMatch(parts[2], @"(^\*$)|(^(([0-2]?[0-9])|(3[0-1]))(-(([0-2]?[0-9])|(3[0-1])))?$)|(^(([0-2]?[0-9])|(3[0-1]))/[0-9]*$)|(^(([0-2]?[0-9])|(3[0-1]))(,(([0-2]?[0-9])|(3[0-1])))+$)"))
                 throw new Exception("Invalid cron!");
-            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^(([0-9])|(1[0-2]))(-(([0-9])|(1[0-2])))?$)|(^(([0-9])|(1[0-2]))/[0-9]*$)|(^(([0-9])|(1[0-2]))(,(([0-9])|(1[0-2])))+$)"))
+            if (!Regex.IsMatch(parts[3], @"(^\*$)|(^(([0-9])|(1[0-2]))(-(([0-9])|(1[0-2])))?$)|(^(([0-9])|(1[0-2]))/[0-9]*$)|(^(([0-9])|(1[0-2]))(,(([0-9])|(1[0-2])))+$)"))
                 throw new Exception("Invalid cron!");
-            if (!Regex.IsMatch(parts[0], @"(^\*$)|(^[0-6](-[0-6])?$)|(^[0-6]/[0-9]*$)|(^[0-6](,[0-6])+$)"))
+            if (!Regex.IsMatch(parts[4], @"(^\*$)|(^[0-6](-[0-6])?$)|(^[0-6]/[0-9]*$)|(^[0-6](,[0-6])+$)"))
                 throw new Exception("Invalid cron!");
 
             if (config.Retention[0] <= 0 || config.Retention[1] <= 0)
@@ -60,39 +60,39 @@ namespace DaemonOfPain.Services
         public void BackupSetup(List<Tasks> tasks)
         {
             Config config = Application.DataService.GetConfigByID(GetConfigId(tasks));
-            //ConfigCheck(config);
+            ConfigCheck(config);
 
 
             foreach (var item in config.Destinations)
             {
-                if (item.DestinationType == DestType.FTP)
-                    this.FtpPrepare(config, item.DestinationPath);
-                else
-                    FilePrepare(config, item.DestinationPath);
+                Service service = new Service(item);
+
+
+
+
+
+                Prepare(service, config, service._destPath);
             }
 
             HeapManager.SaveChanges();
 
         }
-        private void FtpPrepare(Config config, string path)
+        private void Prepare(Service sr, Config config, string path)
         {
-            FtpConfig ftpConfig = new FtpConfig(path);
-            FtpService service = new FtpService(ftpConfig);
-            string configPath = ftpConfig.BackupFolder + '/' + config.Name;
+            string configPath = path + '/' + config.Name;
             string backupPath = "";
 
             if (HeapManager.ExistConfig(config.Id, path))
             {
-                Metadata firstMdata = HeapManager.GetFirstBackup(ftpConfig.BackupFolder, config.Id);
-                Metadata lastMdata = HeapManager.GetLastBackup(ftpConfig.BackupFolder, config.Id);
+                Metadata firstMdata = HeapManager.GetFirstBackup(path, config.Id);
+                Metadata lastMdata = HeapManager.GetLastBackup(path, config.Id);
 
-                if (config.Retention[1] <= HeapManager.GetListOfBackups(ftpConfig.BackupFolder, config.Id).Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
+                if (config.Retention[1] <= HeapManager.GetListOfBackups(path, config.Id).Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
                 {
-                    if (config.Retention[0] <= HeapManager.GetPackageCount(ftpConfig.BackupFolder, config.Id))//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
+                    if (config.Retention[0] <= HeapManager.GetPackageCount(path, config.Id))//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
                     {
-                        service.DeleteDir(firstMdata.BackupPath);
-                        //Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc.
-                        HeapManager.DeleteOldestPackage(ftpConfig.BackupFolder, config.Id);
+                        sr.DeleteDir(firstMdata.BackupPath);
+                        HeapManager.DeleteOldestPackage(path, config.Id);
                     }
                 }
                 else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
@@ -104,8 +104,8 @@ namespace DaemonOfPain.Services
             }
             else
             {
-                if (!service.DirExists(configPath))
-                    service.CreateDir(configPath);
+                if (!sr.DirExists(configPath))
+                    sr.CreateDir(configPath);
             }
 
             if (backupPath == "")
@@ -116,7 +116,7 @@ namespace DaemonOfPain.Services
                 int packageRetention = 1;
                 if (HeapManager.ExistConfig(config.Id, path))
                 {
-                    Metadata last = HeapManager.GetLastBackup(ftpConfig.BackupFolder, config.Id);
+                    Metadata last = HeapManager.GetLastBackup(path, config.Id);
                     packageRetention = last.RetentionStats[0];
                     packageRetention++;
                 }
@@ -129,18 +129,17 @@ namespace DaemonOfPain.Services
 
                 this.SubCompleteMlist.Clear();
 
-                service.CreateDir(backupPath);
+                sr.CreateDir(backupPath);
             }
             int[] retention = new int[2];
             {
-                Metadata last = HeapManager.GetLastBackup(ftpConfig.BackupFolder, config.Id);
+                Metadata last = HeapManager.GetLastBackup(path, config.Id);
                 if (last != null)
                     retention = last.RetentionStats;
             }
-            FtpBackup(service, config, backupPath, retention, ftpConfig.BackupFolder);
+            Backup(sr, config, backupPath, retention, path);
         }
-
-        private void FtpBackup(FtpService service, Config config, string path, int[] lastRetention, string actualDestination)
+        private void Backup(Service service, Config config, string path, int[] lastRetention, string actualDestination)
         {
             Metadata meta;//vytvoření metadat
             if (lastRetention[1] == 0)
@@ -195,22 +194,27 @@ namespace DaemonOfPain.Services
                 while (service.DirExists(newPath))
                     newPath += "_1";
 
-
+                if (!service.DirExists(path))
+                    service.CreateDir(path);
                 if (config.BackupFormat == _BackupFormat.PT)
-                    FtpDoBackup(service, changesList, path + "/" + newPath);
+                    DoBackup(service, changesList, path + "/" + newPath);
                 else
                 {
-                    if (!service.DirExists(path))
-                        service.CreateDir(path);
                     if (Directory.Exists(@"..\..\..\temp"))
                         Directory.Delete(@"..\..\..\temp", true);
-                    FtpDoBackupArchiv(service, changesList, @"..\..\..\temp\backup");
+
+                    Service tempServ = new Service(new Destination (@"..\..\..\temp", DestType.DRIVE ));
+                    if (!tempServ.DirExists(tempServ._destPath))
+                        tempServ.CreateDir(tempServ._destPath);
+
+                    DoBackup(tempServ, changesList, tempServ._destPath + @"\backup");
                     ZipFile.CreateFromDirectory(@"..\..\..\temp\backup", @"..\..\..\temp\" + newPath + ".zip");
-                    service.UploadFile(@"..\..\..\temp\" + newPath + ".zip", path + "/" + newPath + ".zip");
+                    service.CopyFile(@"..\..\..\temp\" + newPath + ".zip", path + "/" + newPath + ".zip");
                     Directory.Delete(@"..\..\..\temp", true);
 
                 }
             }
+
 
             MdataService.FtpWriteMetadata(service, path, meta);
             HeapManager.meta.Add(new HeapItem(config.Id, actualDestination, meta));
@@ -245,7 +249,7 @@ namespace DaemonOfPain.Services
                 Application.DataService.WriteSnapshot(snapshot);
             }
         }
-        private void FtpDoBackup(FtpService service, List<SnapshotItem> changesList, string path)
+        public void DoBackup(Service service, List<SnapshotItem> changesList, string path)
         {
             if (!service.DirExists(path))
                 service.CreateDir(path);
@@ -255,212 +259,12 @@ namespace DaemonOfPain.Services
                 {
                     if (!Directory.Exists(path + PathReturner(item.ItemPath, 1).Replace(item.Root, "")))
                         service.CreateDir(path + PathReturner(item.ItemPath, 1).Replace(item.Root, ""));
-                    service.UploadFile(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
+                    service.CopyFile(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
                 }
                 else
                 {
                     if (!service.DirExists(path + item.ItemPath.Replace(item.Root, "")))
                         service.CreateDir(path + item.ItemPath.Replace(item.Root, ""));
-                }
-            }
-        }
-        private void FtpDoBackupArchiv(FtpService service, List<SnapshotItem> changesList, string path)
-        {
-            foreach (var item in changesList)
-            {
-                if (item.ItemType == _ItemType.FILE)
-                {
-                    if (!Directory.Exists(path + PathReturner(item.ItemPath, 1).Replace(item.Root, "")))
-                        Directory.CreateDirectory(path + PathReturner(item.ItemPath, 1).Replace(item.Root, ""));
-                    File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
-                }
-                else
-                {
-                    if (!Directory.Exists(path + item.ItemPath.Replace(item.Root, "")))
-                        Directory.CreateDirectory(path + item.ItemPath.Replace(item.Root, ""));
-                }
-            }
-        }
-        private void FilePrepare(Config config, string path)
-        {
-            string configDirPath = path + "\\" + config.Name;
-            DirectoryInfo configDir = new DirectoryInfo(configDirPath);
-            string backupPath = "";
-
-            if (HeapManager.ExistConfig(config.Id, path))//Existuje složka s configem?
-            {
-
-                Metadata firstMdata = HeapManager.GetFirstBackup(path, config.Id);
-                Metadata lastMdata = HeapManager.GetLastBackup(path, config.Id);
-
-                if (config.Retention[1] <= HeapManager.GetListOfBackups(path, config.Id).Count)//Je počet získaných metadat roven hodnotě v "Retention[1]" ?
-                {
-                    if (config.Retention[0] <= HeapManager.GetPackageCount(path, config.Id))//Je počet získaných metadat roven hodnotě v "Retention[0]" ?
-                    {
-                        Directory.Delete(firstMdata.BackupPath, true);//maže balíčky, pokud jich je už moc.
-                        HeapManager.DeleteOldestPackage(path, config.Id);
-                    }
-                }
-                else//místo je, není nutné nic odstraňovat, v diagramu => "Toto je nyní "Aktuální složka" pro zálohu"
-                {
-                    if (firstMdata.BackupType == _BackupType.FB)
-                        throw new Exception();
-                    backupPath = lastMdata.BackupPath;
-                }
-            }
-            else
-            {//první spuštění - vytvoří složku pro config
-                if (!Directory.Exists(configDirPath))
-                    Directory.CreateDirectory(path + "\\" + config.Name);
-            }
-
-
-            if (backupPath == "")
-            {// vytváření složky pro balíčky záloh
-                Snapshot snapshot = new Snapshot() { ConfigID = config.Id };
-                Application.DataService.WriteSnapshot(snapshot);
-
-                int packageRetention = 1;
-                if (HeapManager.ExistConfig(config.Id, path))
-                {
-                    Metadata last = HeapManager.GetLastBackup(path, config.Id);
-                    packageRetention = last.RetentionStats[0];
-                    packageRetention++;
-                }
-
-                backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-                if (config.BackupType == _BackupType.FB)
-                    backupPath = configDir + "\\FB_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-                else if (config.BackupType == _BackupType.IN)
-                    backupPath = configDir + "\\IN_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-                else if (config.BackupType == _BackupType.DI)
-                    backupPath = configDir + "\\DI_" + DateTime.Now.ToString("d") + "_" + packageRetention;
-
-                this.SubCompleteMlist.Clear();
-                Directory.CreateDirectory(backupPath);
-            }
-
-
-            int[] retention = new int[2];
-            {
-                Metadata last = HeapManager.GetLastBackup(path, config.Id);
-                if (last != null)
-                    retention = last.RetentionStats;
-            }
-            Backup(config, backupPath, retention, path);
-        }
-        private void Backup(Config config, string path, int[] lastRetention, string actualDestination)
-        {
-            Metadata meta;//vytvoření metadat
-            if (lastRetention[1] == 0)
-                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { 1, 1 });
-            else if (config.Retention[1] == lastRetention[1])
-                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0] + 1, 1 });
-            else
-                meta = new Metadata(config.Id, config.Name, path, DateTime.Now, config.BackupType, new int[2] { lastRetention[0], lastRetention[1] + 1 });
-
-
-
-            if (config.BackupType != _BackupType.FB)
-            {//přidání cesty - vytváření složek pro konkrétní zálohy. FB nepotřebuje, jelikož jeho záloha je brána jako balíček záloh.
-
-                path = path + "\\" + DateTime.Now.ToString("d") + DateTime.Now.ToString("_H.mm.ss");
-            }
-            Console.WriteLine(path);
-
-
-            Dictionary<string, Source> changesDictionary = new Dictionary<string, Source>();
-
-            Snapshot lastSnapshot = Application.DataService.GetSnapshotByID(config.Id);
-
-            foreach (var item in config.Sources)
-            {
-                //vytváří chngesList a sbírá medadata
-                List<SnapshotItem> newSnapshotList = new List<SnapshotItem>();
-                newSnapshotList = GetSnapshot(item);
-                newSnapshotList = SnapshotItemFilter(newSnapshotList);
-                ChangeReport report;
-                try
-                {
-                    report = GetChanges(lastSnapshot.Sources[item].Items, newSnapshotList);
-                }
-                catch
-                {
-                    report = GetChanges(new List<SnapshotItem>(), newSnapshotList);
-                }
-                List<SnapshotItem> changesList = report.SnapshotItem;
-                changesList = SnapshotItemFilter(changesList);
-                meta.Items.AddRange(report.MetadataItem);
-
-                if (!changesDictionary.ContainsKey(item))
-                {
-                    Source src = new Source() { Path = item, Items = changesList };
-                    changesDictionary[item] = src;
-                }
-
-                //nutno k cestě přidat název zdoje//asi už ne
-
-                string[] parts = item.Split("\\");
-                string newPath = parts[parts.Length - 1];
-                while (Directory.Exists(newPath))
-                    newPath += "_1";
-
-
-                DoBackup(changesList, path + "\\" + newPath);
-                if (config.BackupFormat == _BackupFormat.AR)
-                {
-                    ZipFile.CreateFromDirectory(path + "\\" + newPath, path + "\\" + newPath + ".zip");
-                    Directory.Delete(path + "\\" + newPath, true);
-                }
-            }
-
-            MdataService.WriteMetadata(path, meta);
-            HeapManager.meta.Add(new HeapItem(config.Id, actualDestination, meta));
-
-            if (SubCompleteMlist.Count == 0 && (config.BackupType == _BackupType.DI || config.BackupType == _BackupType.IN))
-            {
-                Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = changesDictionary };
-                Application.DataService.WriteSnapshot(snapshot);
-            }
-            else if (config.BackupType == _BackupType.IN && SubCompleteMlist.Count > 0)
-            {
-                Dictionary<string, Source> lastChangesDictionary = lastSnapshot.Sources;
-                foreach (KeyValuePair<string, Source> item in changesDictionary)
-                {
-                    for (int i = 0; i < item.Value.Items.Count; i++)
-                    {
-                        if (lastChangesDictionary[item.Key].Items.Contains(item.Value.Items[i]))
-                        {
-                            int index = lastChangesDictionary[item.Key].Items.IndexOf(item.Value.Items[i]);
-                            lastChangesDictionary[item.Key].Items[index] = item.Value.Items[i];
-                        }
-                        else
-                        {
-                            lastChangesDictionary[item.Key].Items.Add(item.Value.Items[i]);
-                        }
-                    }
-
-                    //lastChangesDictionary[item.Key].Items = item.Value.Items;
-                }
-
-                Snapshot snapshot = new Snapshot() { ConfigID = config.Id, Sources = lastChangesDictionary };
-                Application.DataService.WriteSnapshot(snapshot);
-            }
-        }
-        public void DoBackup(List<SnapshotItem> changesList, string path)
-        {
-            CreateDir(path);
-            foreach (var item in changesList)
-            {
-                if (item.ItemType == _ItemType.FILE)
-                {
-                    if (!Directory.Exists(path + item.ItemPath.Replace(item.Root, "")))
-                        Directory.CreateDirectory(path + PathReturner(item.ItemPath, 1).Replace(item.Root, ""));
-                    File.Copy(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
-                }
-                else
-                {
-                    CopyDir(item.ItemPath, path + item.ItemPath.Replace(item.Root, ""));
                 }
             }
         }
