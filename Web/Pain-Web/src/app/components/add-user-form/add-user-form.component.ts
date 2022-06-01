@@ -22,14 +22,28 @@ export class AddUserFormComponent implements OnInit {
 
   public submit(): void {
     if (this.form.valid && this.confirmPassword()) {
+      alert('User has been successfuly added!')
       this.FormEvent.emit();
       this.form.reset({
-        bigBoss: false,
-        reports: 1,
+        name:'',
+        surname: '',
+        login: '',
+        email: '',
+        password: '',
+        confirmPassword:''
       });
     }
   }
   public invalid(name: string): boolean {
+    if (name == 'email')
+      return !RegExp(/^[a-zA-Z0-9.^_`-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/).test(this.form.get(name)?.value) && !!this.form.get(name)?.touched;
+    if (name == 'login')
+      return !(this.form.get(name)?.value.length > 4)  && !!this.form.get(name)?.touched;
+    if (name == 'password')
+      return !(this.form.get(name)?.value.length > 7)  && !!this.form.get(name)?.touched;
+
+
+
     return !!this.form.get(name)?.invalid && !!this.form.get(name)?.touched;
   }
 

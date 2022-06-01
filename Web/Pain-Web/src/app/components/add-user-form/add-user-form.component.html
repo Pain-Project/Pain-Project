@@ -3,9 +3,9 @@
     <div class="row first">
       <div class="col login">
         <label class="form-label">Login name</label>
-        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('loginName') }" formControlName="login" >
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('login') }" formControlName="login" >
         <div class="invalid-feedback">
-          This field is required!
+          Login must be at least 5 letters long!
         </div>
       </div>
       <div class="col name">
@@ -28,14 +28,14 @@
         <label class="form-label">E-mail</label>
         <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('email') }" formControlName="email">
         <div class="invalid-feedback">
-          This field is required!
+          Enter valid email!
         </div>
       </div>
       <div class="col password">
         <label class="form-label">Password</label>
         <input type="password" class="form-control" [ngClass]="{ 'is-invalid': invalid('password') }" formControlName="password">
         <div class="invalid-feedback">
-          This field is required!
+          Password must be at least 8 letters long!
         </div>
       </div>
       <div class="col passwordRepeat">
