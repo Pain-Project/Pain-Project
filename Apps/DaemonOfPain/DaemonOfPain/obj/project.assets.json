@@ -5137,24 +5137,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\František\\.nuget\\packages\\": {},
-    "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages": {}
+    "C:\\Users\\stankomichal\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+      "projectUniqueName": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
       "projectName": "DaemonOfPain",
-      "projectPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
-      "packagesPath": "C:\\Users\\František\\.nuget\\packages\\",
-      "outputPath": "D:\\DATA\\programy\\Git Projekty\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
+      "projectPath": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\DaemonOfPain.csproj",
+      "packagesPath": "C:\\Users\\stankomichal\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stankomichal\\Documents\\GitHub\\Pain-Project\\Apps\\DaemonOfPain\\DaemonOfPain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\DATA\\programy\\visual studio\\sdílené komponenty\\NuGetPackages"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\František\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\stankomichal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5220,7 +5219,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

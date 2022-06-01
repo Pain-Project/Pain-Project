@@ -17,7 +17,7 @@ namespace DatabaseTest.Controllers
     //[Auth]
     public class AdminController : ControllerBase
     {
-        private MyContext context = new MyContext();
+        private MyContext context = MyContextHolder.GetInstance();
         private string dataPath = @"Data\emailSettings.json";
 
 
@@ -645,7 +645,7 @@ namespace DatabaseTest.Controllers
                 context.SaveChanges();
                 return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };
             }
-            catch 
+            catch
             {
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
@@ -687,6 +687,6 @@ namespace DatabaseTest.Controllers
                 return new JsonResult("Cannot resolve request!") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
         }
-        
-    } 
+
+    }
 }

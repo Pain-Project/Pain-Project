@@ -14,7 +14,7 @@ namespace DatabaseTest.Controllers
     public class SessionsController : ControllerBase
     {
         private AuthService auth = new AuthService();
-        private MyContext context = new MyContext();
+        private MyContext context = MyContextHolder.GetInstance();
 
         [HttpPost("login")]
         public JsonResult Login(Credentials cd)

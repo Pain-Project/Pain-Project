@@ -14,7 +14,7 @@ namespace DatabaseTest.Controllers
     [Route("Email")]
     public class EmailController : ControllerBase
     {
-        private MyContext context = new MyContext();
+        private MyContext context = MyContextHolder.GetInstance();
         private string dataPath = @"Data\emailSettings.json";
 
 
@@ -62,7 +62,7 @@ namespace DatabaseTest.Controllers
                 //List<Task> tasks = new List<Task>();
                 StreamReader sr = new StreamReader(dataPath);
                 EmailSettings em = JsonConvert.DeserializeObject<EmailSettings>(sr.ReadToEnd());
-                
+
                 if (em.Freq == Freq.WEEKLY)
                 {
                     DateTime today = DateTime.Today;
@@ -83,8 +83,8 @@ namespace DatabaseTest.Controllers
                     sr.Close();
                     return new JsonResult(tasks) { StatusCode = (int)HttpStatusCode.OK };
                 }
-                    
-                else if(em.Freq == Freq.DAILY)
+
+                else if (em.Freq == Freq.DAILY)
                 {
                     DateTime today = DateTime.Today;
                     var tasks = from t in context.Tasks
@@ -119,14 +119,11 @@ namespace DatabaseTest.Controllers
                                     ClientName = cl.Name,
                                     State = t.State,
                                     Message = t.Message,
-                                    Date = t.Date                                   
+                                    Date = t.Date
                                 };
                     sr.Close();
                     return new JsonResult(tasks) { StatusCode = (int)HttpStatusCode.OK };
                 }
-
-                
-                
             }
             catch (Exception ex)
             {
