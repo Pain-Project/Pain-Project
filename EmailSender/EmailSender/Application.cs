@@ -10,17 +10,17 @@ namespace EmailSender
 {
     public class Application : IJob
     {
-        GetSettingsInfo settingsGetter { get; set; }
+        ApiService apiService { get; set; }
         public static SettingsInfo setinf { get; set; }
         public static Timer Timer  { get; set; }
         public Application()
         {
-            settingsGetter = new GetSettingsInfo();
+            apiService = new ApiService();
             Timer = new Timer();
         }
         public async Task Start()
         {
-            setinf = await settingsGetter.GetInfo();
+            setinf = await apiService.GetInfo();
             await Timer.SetUp(setinf);
             while (true)
             {
@@ -29,8 +29,8 @@ namespace EmailSender
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            settingsGetter = new GetSettingsInfo();
-            setinf = await settingsGetter.GetInfo();
+            apiService = new ApiService();
+            setinf = await apiService.GetInfo();
         }
     }
 }

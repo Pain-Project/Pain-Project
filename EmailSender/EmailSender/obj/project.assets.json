@@ -666,23 +666,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hasekfrantisek\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\troli\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hasekfrantisek\\Documents\\GitHub\\Pain-Project\\EmailSender\\EmailSender\\EmailSender.csproj",
+      "projectUniqueName": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\EmailSender\\EmailSender\\EmailSender.csproj",
       "projectName": "EmailSender",
-      "projectPath": "C:\\Users\\hasekfrantisek\\Documents\\GitHub\\Pain-Project\\EmailSender\\EmailSender\\EmailSender.csproj",
-      "packagesPath": "C:\\Users\\hasekfrantisek\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hasekfrantisek\\Documents\\GitHub\\Pain-Project\\EmailSender\\EmailSender\\obj\\",
+      "projectPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\EmailSender\\EmailSender\\EmailSender.csproj",
+      "packagesPath": "C:\\Users\\troli\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\troli\\Desktop\\Pain Project\\Pain-Project\\EmailSender\\EmailSender\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\hasekfrantisek\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\troli\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -736,7 +732,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

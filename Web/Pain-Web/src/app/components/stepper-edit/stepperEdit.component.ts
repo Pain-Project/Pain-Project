@@ -31,7 +31,6 @@ export class StepperEditComponent implements OnInit {
 
   @Output()
   public formArray: FormArray
-  // public Formevent: EventEmitter<void> = new EventEmitter<void>()
 
 
   tempDest: Destination[] = [{destType: "drive", path: ""}]
@@ -57,8 +56,8 @@ export class StepperEditComponent implements OnInit {
     if (this.config == null) {
       this.router.navigateByUrl('/ui/dashboard')
     }
-    // @ts-ignore
-    this.tempClient = this.config.clientNames;
+    //@ts-ignore
+    this.tempClient = this.config.clientNames == null ? {} : this.config.clientNames;
     let cron = this.config.cron.split(' ');
     this.CronTempMin = cron[0];
     this.CronTempHour = cron[1];
@@ -106,12 +105,35 @@ export class StepperEditComponent implements OnInit {
   }
 
   public Submit(): void {
-    // if (!this.form.valid) {
-    //   console.log('Nope')
-    //   return
-    // }
-    var config: Config = new Config();
-    var secondStep: SecondStep = this.form.controls['formArray'].value[1];
+
+    if (Object.keys(this.tempClient).length == 0) {
+      alert("No clients selected!")
+      return
+    }
+    if (this.frequention == 'weekly' && this.tempDaysWeek.length == 0) {
+      alert("You must select days of week!")
+      return
+    }
+    let config: Config = new Config();
+    let secondStep: SecondStep = this.form.controls['formArray'].value[1];
+
+    if (this.frequention == 'monthly' && secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
+      alert("Please select valid day of month!")
+      return
+    }
+    if (secondStep.backups < 1 || (secondStep.packages < 1 && secondStep.backupType != 'FB')) {
+      alert("Please enter valid retention!")
+      return
+    }
+    if (this.Sources.value.length == 0) {
+      alert("Please enter source!")
+      return
+    }
+    if (this.Dest.value.length == 0) {
+      alert("Please enter destination!")
+      return
+    }
+
     config = this.config
     config.createDate = moment(this.config.createDate).format();
     config.cron = this.BuildCron();
@@ -124,29 +146,52 @@ export class StepperEditComponent implements OnInit {
     config.sources = [];
     config.destinations = [];
 
+    let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let source of this.Sources.value) {
+      if (source.path == '' || !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(source.path)) {
+        alert("Please enter valid source!")
+        return
+      }
+      if (config.sources.find(x => x == source.path)) {
+        alert("All sources must be unique!")
+        return
+      }
       config.sources.push(source.path);
     }
     for (let dest of this.Dest.value) {
+      if (dest.type == "FTP" && !re.test(dest.path)) {
+        alert("Please enter valid FTP pattern!")
+        return
+      }
+      if (dest.type == 'DRIVE' && !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(dest.path)) {
+        alert("Please enter valid destination!")
+        return
+      }
+
+      if (dest.path == '') {
+        alert("Please enter valid destination!")
+        return
+      }
+      if (config.destinations.find(x => x == dest.path)) {
+        alert("All destinations must be unique!")
+        return
+      }
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-    // console.log(this.Sources);
-    // console.log(this.Dest);
-    // console.log(config);
     this.configService.updateConfig(config).subscribe(() => this.router.navigateByUrl('/ui/dashboard'));
   }
 
   private BuildCron(): string {
     let cron = '';
-    var secondStep: SecondStep = this.form.controls['formArray'].value[1];
-    var minutes = secondStep.frequency.split(':');
+    let secondStep: SecondStep = this.form.controls['formArray'].value[1];
+    let minutes = secondStep.frequency.split(':');
 
     if (this.frequentionBasic) {
       if (this.frequention == 'daily') {
         cron = `${minutes[1]} ${minutes[0]} * * *`
       } else if (this.frequention == 'weekly') {
-        var days = ''
+        let days = ''
         for (let day of this.tempDaysWeek) {
           switch (day) {
             case 1:
@@ -216,19 +261,19 @@ export class StepperEditComponent implements OnInit {
   }
 
   get Sources() {
-    var test = this.form.controls['formArray'] as FormArray;
-    var test2 = test.controls[2].get('sources') as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
+    let test2 = test.controls[2].get('sources') as FormArray;
     return test2 as FormArray;
   }
 
   get Name() {
-    var test = this.form.controls['formArray'] as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
     return test.controls[2].get('configName')
   }
 
   get Dest() {
-    var test = this.form.controls['formArray'] as FormArray;
-    var test2 = test.controls[2].get('destinations') as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
+    let test2 = test.controls[2].get('destinations') as FormArray;
     return test2 as FormArray;
   }
 

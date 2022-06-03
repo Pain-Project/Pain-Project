@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="col big right">
-      <form [formGroup]="form" (ngSubmit)="Submit()">
+      <form [formGroup]="form" (ngSubmit)="SaveClick()">
         <div class="header">
           <i class="IconSetting fa-solid fa-paper-plane"></i>
           <h2>Email settings</h2>
@@ -105,7 +105,7 @@
 </div>
 <mat-dialog-actions align="end">
   <button class="Button cancel" mat-button mat-dialog-close (click)="CancelClick()">CANCEL</button>
-  <button class="Button save" mat-button [mat-dialog-close]="true" (click)="SaveClick()">
+  <button class="Button save" mat-button (click)="SaveClick()">
     <i class="fa-solid fa-floppy-disk"></i>
     SAVE
   </button>

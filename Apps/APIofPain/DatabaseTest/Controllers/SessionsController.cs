@@ -13,8 +13,8 @@ namespace DatabaseTest.Controllers
     [Route("AdminPage")]
     public class SessionsController : ControllerBase
     {
-        private AuthService auth = new AuthService();
-        private MyContext context = MyContextHolder.GetInstance();
+        private AuthService auth = new ();
+        private MyContext context = new ();
 
         [HttpPost("login")]
         public JsonResult Login(Credentials cd)

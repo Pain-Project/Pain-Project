@@ -24,21 +24,21 @@ namespace EmailSender
         {
             if (setInf.Freq == Freq.DAILY)
             {
-                IJobDetail job = JobBuilder.Create<SendEmailService>().Build();
+                IJobDetail job = JobBuilder.Create<SenderService>().Build();
                 ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 ? * *").Build();
                 //ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever()).Build();
                 await Scheduler.ScheduleJob(job, trigger);
             }
             else if (setInf.Freq == Freq.WEEKLY)
             {
-                IJobDetail job = JobBuilder.Create<SendEmailService>().Build();
+                IJobDetail job = JobBuilder.Create<SenderService>().Build();
                 ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 ? * 1").Build();
                 //ITrigger trigger = TriggerBuilder.Create().WithSimpleSchedule(x => x.WithIntervalInSeconds(30).RepeatForever()).Build();
                 await Scheduler.ScheduleJob(job, trigger);
             }
             else if (setInf.Freq == Freq.MONTHLY)
             {
-                IJobDetail job = JobBuilder.Create<SendEmailService>().Build();
+                IJobDetail job = JobBuilder.Create<SenderService>().Build();
                 ITrigger trigger = TriggerBuilder.Create().WithCronSchedule("0 0 0 1 ? *").Build();
                 await Scheduler.ScheduleJob(job, trigger);
             }

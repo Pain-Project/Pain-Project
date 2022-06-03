@@ -21,6 +21,5 @@ namespace EmailSender
         public DateTime Date { get; set; }
         [Column("Size[MB]")]
         public int Size { get; set; }
-
     }
 }

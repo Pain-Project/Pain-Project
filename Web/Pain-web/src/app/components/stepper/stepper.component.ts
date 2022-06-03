@@ -17,7 +17,6 @@ export class StepperComponent implements OnInit {
   clients: Client[] = [];
   retentionSwitch = false;
   frequentionBasic = true;
-  ftpError = false;
 
   //full ; diff ; inc
   backup = 'full'
@@ -46,7 +45,6 @@ export class StepperComponent implements OnInit {
               private configService: ConfigsService,
               private loginService: LoginService,
               private router: Router) {
-    // @ts-ignore
   }
 
 
@@ -64,7 +62,6 @@ export class StepperComponent implements OnInit {
       // @ts-ignore
       this.tempClient[id] = ''
     }
-    console.log(this.tempClient)
   }
 
   public AddRemoveDayWeek(id: number): void {
@@ -91,7 +88,7 @@ export class StepperComponent implements OnInit {
     var config: Config = new Config();
     var secondStep: SecondStep = this.form.controls['formArray'].value[1];
 
-    if (secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
+    if (this.frequention == 'monthly' && secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
       alert("Please select valid day of month!")
       return
     }
@@ -120,9 +117,12 @@ export class StepperComponent implements OnInit {
     config.backUpFormat = secondStep.backupFormat;
 
     for (let source of this.Sources.value) {
-      console.log(source)
-      if (source.path == '') {
+      if (source.path == '' || !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(source.path)) {
         alert("Please enter valid source!")
+        return
+      }
+      if (config.sources.find(x => x == source.path)) {
+        alert("All sources must be unique!")
         return
       }
       config.sources.push(source.path);
@@ -130,18 +130,26 @@ export class StepperComponent implements OnInit {
     let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let dest of this.Dest.value) {
       if (dest.type == "FTP" && !re.test(dest.path)) {
-        this.ftpError = true;
+        alert("Please enter valid FTP pattern!")
         return
       }
+      if (dest.type == 'DRIVE' && !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(dest.path)) {
+        alert("Please enter valid destination!")
+        return
+      }
+
       if (dest.path == '') {
         alert("Please enter valid destination!")
+        return
+      }
+      if (config.destinations.find(x => x == dest.path)) {
+        alert("All destinations must be unique!")
         return
       }
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
 
-    // return
     this.configService.sendConfig(config).subscribe(() => (
         this.router.navigateByUrl('/ui/dashboard'),
           alert('Config was succesfully created!')),

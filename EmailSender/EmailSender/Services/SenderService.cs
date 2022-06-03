@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace EmailSender
 {
-    public class SendEmailService :IJob
+    public class SenderService :IJob
     {
-        private string TableTitleStyle = "border: 2px solid;";
-        private string RowStyle = "border: 2px solid; padding: 7px";
-        public async Task EmailSender(SettingsInfo setInfo, GetSettingsInfo settingsGetter, List<TasksInfo> taskInfo)
+        private string tableTitleStyle = "border: 2px solid;";
+        private string rowStyle = "border: 2px solid; padding: 7px";
+        public async Task EmailSender(SettingsInfo setInfo, ApiService settingsGetter, List<TasksInfo> taskInfo)
         {
             //smtp client creation
             SmtpClient client = new SmtpClient()
@@ -49,11 +49,11 @@ namespace EmailSender
                 messageTemplate.AppendLine("<br>");
                 messageTemplate.AppendLine("<p><strong>PROBLEMS: </strong></p>");
                 messageTemplate.AppendLine("<br>");
-                messageTemplate.AppendLine($"<table style='{this.TableTitleStyle}'><tr><th style='{this.TableTitleStyle}'>ID</th><th style='{this.TableTitleStyle}'>CONFIG</th><th style='{this.TableTitleStyle}'>CLIENT</th><th style='{this.TableTitleStyle}'>DATE</th><th style='{this.TableTitleStyle}'>MESSAGE</th></tr>");
+                messageTemplate.AppendLine($"<table style='{this.tableTitleStyle}'><tr><th style='{this.tableTitleStyle}'>ID</th><th style='{this.tableTitleStyle}'>CONFIG</th><th style='{this.tableTitleStyle}'>CLIENT</th><th style='{this.tableTitleStyle}'>DATE</th><th style='{this.tableTitleStyle}'>MESSAGE</th></tr>");
                 foreach (var item in taskInfo)
                 {
                     if (item.State == State.ERROR)
-                        messageTemplate.AppendLine($"<tr><td style='{this.RowStyle}'>{item.TaskId}</td><td style='{this.RowStyle}'>{item.ConfigName}</td><td style='{this.RowStyle}'>{item.ClientName}</td><td style='{this.RowStyle}'>{item.Date}</td><td style='{this.RowStyle}'>{item.Message}<td></tr>");
+                        messageTemplate.AppendLine($"<tr><td style='{this.rowStyle}'>{item.TaskId}</td><td style='{this.rowStyle}'>{item.ConfigName}</td><td style='{this.rowStyle}'>{item.ClientName}</td><td style='{this.rowStyle}'>{item.Date}</td><td style='{this.rowStyle}'>{item.Message}<td></tr>");
                 }
                 messageTemplate.AppendLine("</table>");
             }
@@ -93,10 +93,10 @@ namespace EmailSender
 
         public async Task Execute(IJobExecutionContext context)
         {
-            GetSettingsInfo settingsGetter = new GetSettingsInfo();
+            ApiService settingsGetter = new ApiService();
             SettingsInfo setinf = Application.setinf; //get email settings
             List<TasksInfo> taskInfo = await settingsGetter.GetTasks(); //get list of tasks
-            settingsGetter.CountStates(taskInfo); //count nubmer of tasks with specific state
+            settingsGetter.CountStates(taskInfo); //count number of tasks with specific state
             await this.EmailSender(setinf, settingsGetter, taskInfo); //send email
         }
     }

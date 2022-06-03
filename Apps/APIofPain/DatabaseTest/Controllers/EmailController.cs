@@ -14,7 +14,7 @@ namespace DatabaseTest.Controllers
     [Route("Email")]
     public class EmailController : ControllerBase
     {
-        private MyContext context = MyContextHolder.GetInstance();
+        private MyContext context = new MyContext();
         private string dataPath = @"Data\emailSettings.json";
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmailSender.Services
 {
-    public class GetSettingsInfo
+    public class ApiService
     {
         public int SUCCESS_count { get; set; }
         public int NORUN_count { get; set; }

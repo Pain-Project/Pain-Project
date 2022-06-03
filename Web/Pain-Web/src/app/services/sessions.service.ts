@@ -47,7 +47,6 @@ export class SessionsService {
 
   private saveToken(token: string) : void {
     sessionStorage.setItem('token', token);
-    console.log(this.loadToken());
   }
   private loadToken() : string|null {
     return sessionStorage.getItem('token');

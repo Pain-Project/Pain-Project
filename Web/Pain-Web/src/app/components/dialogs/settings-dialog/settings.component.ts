@@ -4,9 +4,9 @@ import {LoginService, loginUser} from "../../../services/login.service";
 import {UsersService} from "../../../services/users.service";
 import {SessionsService} from "../../../services/sessions.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { EmailService } from 'src/app/services/email.service';
-import { EmailSettingsModel } from 'src/app/models/emailSettings.model';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {EmailService} from 'src/app/services/email.service';
+import {EmailSettingsModel} from 'src/app/models/emailSettings.model';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from "@angular/router";
 
 @Component({
@@ -29,21 +29,23 @@ export class SettingsComponent implements OnInit {
 
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:EmailSettingsModel,
+    @Inject(MAT_DIALOG_DATA) public data: EmailSettingsModel,
     @Inject(DOCUMENT) private document: Document,
     private loginService: LoginService,
     private userService: UsersService,
     private sessionsService: SessionsService,
     private emailService: EmailService,
-    private fb:FormBuilder,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<SettingsComponent>,
+    private router: Router,
   ) {
     this.form = this.fb.group({
-      port:[this.data.port,Validators.required],
-      smtp:[this.data.smtp, Validators.required],
-      freq:[this.data.freq,Validators.required],
-      sender:[this.data.sender, Validators.required],
-      password:[this.data.password, Validators.required],
-      ssl:[this.data.ssl, Validators.required],
+      port: [this.data.port, Validators.required],
+      smtp: [this.data.smtp, Validators.required],
+      freq: [this.data.freq, Validators.required],
+      sender: [this.data.sender, Validators.required],
+      password: [this.data.password, Validators.required],
+      ssl: [this.data.ssl, Validators.required],
     })
   }
 
@@ -69,19 +71,41 @@ export class SettingsComponent implements OnInit {
       this.document.body.classList.replace('dark-theme', 'light-theme')
   }
 
-  SaveClick(): void {
+  SaveClick(): any {
     if (this.isDirty) {
       this.userService.darkmodeChange(this.darkMode).subscribe(() => {
-        this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe()
+        this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe(() => {
+          this.dialogRef.close();
+          alert('Settings saved!');
+          this.Reload();
+        })
       });
     }
-    this.emailService.changeEmailSettings(this.form.value).subscribe();
+    if (this.form.touched) {
+      if (this.form.get('port')?.value < 1) {
+        alert('Port must be higher than zero!');
+        return;
+      }
+      if (!RegExp(/^[a-zA-Z0-9.^_`-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/).test(this.form.get('sender')?.value) && !!this.form.get('sender')?.touched) {
+        alert('Please enter valid email!');
+        return;
+      }
+      this.emailService.changeEmailSettings(this.form.value).subscribe();
+      this.dialogRef.close(true);
+      return;
+    }
+    this.dialogRef.close(false);
   }
-  buttonOpen(event : any): void {
+
+  buttonOpen(event: any): void {
     event.stopPropagation();
   }
-  Submit(): void{
-      this.emailService.changeEmailSettings(this.form.value).subscribe();
+
+  private Reload(): void {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 }
 
