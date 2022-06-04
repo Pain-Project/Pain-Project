@@ -7,6 +7,7 @@ import {SessionsService} from "../../services/sessions.service";
 import {Router} from "@angular/router";
 import {EmailService} from 'src/app/services/email.service';
 import {EmailSettingsModel} from 'src/app/models/emailSettings.model';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-nav-bar',
@@ -24,6 +25,7 @@ export class NavBarComponent implements OnInit {
               private sessionService: SessionsService,
               private router: Router,
               private emailService: EmailService,
+              private snackBar: MatSnackBar,
   ) {
     this.emailService.GetEmailSettings().subscribe(x => this.emailSettings = x)
   }
@@ -36,7 +38,7 @@ export class NavBarComponent implements OnInit {
 
   LogOut(): void {
     this.sessionService.logout();
-    this.router.navigate([''])
+    this.router.navigate(['']).then();
   }
 
   openDialog(): void {
@@ -48,18 +50,16 @@ export class NavBarComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result == true) {
-        alert('Settings saved!');
+        this.snackBar.open('Settings saved!', '', {duration: 2000});
         this.Reload();
       }
     });
-
-
   }
 
   private Reload(): void {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    this.router.navigate([currentUrl]).then();
   }
 }

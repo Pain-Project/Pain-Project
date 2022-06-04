@@ -1,11 +1,11 @@
 body.light-theme {
-  --Background-primary : #F6F6F6;
-  --Background-secondary : #FFFFFF;
+  --Background-primary: #F6F6F6;
+  --Background-secondary: #FFFFFF;
   --Font-color: #707070;
   --Font-blue: #0078D4;
   --Shadow: #b9b9b9;
   --AddUser: rgba(255, 255, 255, .15);
-  --AddUserIcon : black;
+  --AddUserIcon: black;
   --Submit: #1c9c24;
   --SubmitFocus: #17801d;
   --Cancel: #E52F2F;
@@ -13,26 +13,19 @@ body.light-theme {
   --Stripe: #cbcbcb;
   --StripeFocus: #9a9a9a;
 }
+
 body.dark-theme {
-  --Background-primary : #070834;
-  --Background-secondary : #0D0D48;
+  --Background-primary: #070834;
+  --Background-secondary: #0D0D48;
   --Font-color: #CECBCB;
   --Font-blue: #62AAE2;
   --Shadow: #05062D;
   --AddUser: rgba(21, 21, 21, 0.35);
-  --AddUserIcon : #8c8b8b;
-
-
-  //--Submit: #252573;
-  //--SubmitFocus: #1e1e5b;
-  //--Cancel: #111172;
-  //--CancelFocus: #101060;
-
+  --AddUserIcon: #8c8b8b;
   --Submit: #126418;
   --SubmitFocus: #125616;
   --Cancel: #8a1c1c;
   --CancelFocus: #771d1d;
-
   --Stripe: #05062D;
   --StripeFocus: #040425;
 }

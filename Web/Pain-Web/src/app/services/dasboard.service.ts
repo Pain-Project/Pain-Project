@@ -8,7 +8,7 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class DasboardService {
+export class DashboardService {
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -33,13 +33,14 @@ export class DasboardService {
   public TodayTasks(): Observable<dashboardTask[]> {
     return this.http.get<dashboardTask[]>(environment.api + '/adminPage/todayTasks', this.options);
   }
+
   public SevenDays(): Observable<dashboardTask[]> {
     return this.http.get<dashboardTask[]>(environment.api + '/adminPage/sevenDays', this.options);
   }
+
   public GetPercent(): Observable<number> {
     return this.http.get<number>(environment.api + '/adminPage/getPercent', this.options);
   }
-
 
 
   private unauthenticated(err: any): void {

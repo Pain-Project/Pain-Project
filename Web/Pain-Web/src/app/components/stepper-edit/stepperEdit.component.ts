@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import {Component, OnInit, Input, Output} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from "@angular/forms";
 import {Config, Destination} from "../../models/config.model";
 import {Client} from "../../models/client.model";
@@ -7,6 +7,7 @@ import {ConfigsService} from "../../services/configs.service";
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
 import * as moment from "moment";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-stepperEdit',
@@ -36,7 +37,6 @@ export class StepperEditComponent implements OnInit {
   tempDest: Destination[] = [{destType: "drive", path: ""}]
   tempClient = {1: 'ads'};
   tempDaysWeek: number[] = [];
-  tempMonth: number;
 
   CronTempMin: string;
   CronTempHour: string;
@@ -48,13 +48,14 @@ export class StepperEditComponent implements OnInit {
               private service: ClientsService,
               private configService: ConfigsService,
               private loginService: LoginService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
     // @ts-ignore
     delete this.tempClient[1]
     // @ts-ignore
     this.config = this.router.getCurrentNavigation()?.extras.state
     if (this.config == null) {
-      this.router.navigateByUrl('/ui/dashboard')
+      this.router.navigateByUrl('/ui/dashboard').then();
     }
     //@ts-ignore
     this.tempClient = this.config.clientNames == null ? {} : this.config.clientNames;
@@ -71,7 +72,7 @@ export class StepperEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.CreateForm(this.config);
-    this.service.findAllClients().subscribe(x => this.clients = x.filter(x => x.active == true))
+    this.service.findAllClients().subscribe(x => this.clients = x.filter(x => x.active))
     for (let source of this.config.sources) {
       this.addSource(source);
     }
@@ -107,30 +108,30 @@ export class StepperEditComponent implements OnInit {
   public Submit(): void {
 
     if (Object.keys(this.tempClient).length == 0) {
-      alert("No clients selected!")
+      this.snackBar.open('No clients selected!', '', {duration: 2000});
       return
     }
     if (this.frequention == 'weekly' && this.tempDaysWeek.length == 0) {
-      alert("You must select days of week!")
+      this.snackBar.open('You must select days of week!', '', {duration: 2000});
       return
     }
     let config: Config = new Config();
     let secondStep: SecondStep = this.form.controls['formArray'].value[1];
 
     if (this.frequention == 'monthly' && secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
-      alert("Please select valid day of month!")
+      this.snackBar.open('Please select valid day of month!', '', {duration: 2000});
       return
     }
     if (secondStep.backups < 1 || (secondStep.packages < 1 && secondStep.backupType != 'FB')) {
-      alert("Please enter valid retention!")
+      this.snackBar.open('Please enter valid retention!', '', {duration: 2000});
       return
     }
     if (this.Sources.value.length == 0) {
-      alert("Please enter source!")
+      this.snackBar.open('Please enter source!', '', {duration: 2000});
       return
     }
     if (this.Dest.value.length == 0) {
-      alert("Please enter destination!")
+      this.snackBar.open('Please enter destination!', '', {duration: 2000});
       return
     }
 
@@ -149,37 +150,62 @@ export class StepperEditComponent implements OnInit {
     let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let source of this.Sources.value) {
       if (source.path == '' || !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(source.path)) {
-        alert("Please enter valid source!")
+        this.snackBar.open('Please enter valid source!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (config.sources.find(x => x == source.path)) {
-        alert("All sources must be unique!")
+        this.snackBar.open('All sources must be unique!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       config.sources.push(source.path);
     }
     for (let dest of this.Dest.value) {
       if (dest.type == "FTP" && !re.test(dest.path)) {
-        alert("Please enter valid FTP pattern!")
+        this.snackBar.open('Please enter valid FTP pattern!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (dest.type == 'DRIVE' && !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(dest.path)) {
-        alert("Please enter valid destination!")
+        this.snackBar.open('Please enter valid destination!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
 
       if (dest.path == '') {
-        alert("Please enter valid destination!")
+        this.snackBar.open('Please enter valid destination!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (config.destinations.find(x => x == dest.path)) {
-        alert("All destinations must be unique!")
+        this.snackBar.open('All destinations must be unique!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-    this.configService.updateConfig(config).subscribe(() => this.router.navigateByUrl('/ui/dashboard'));
+
+    this.configService.updateConfig(config).subscribe(() => (
+      this.router.navigateByUrl('/ui/dashboard'),
+        this.snackBar.open('Config was successfully saved!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        })
+    ));
   }
 
   private BuildCron(): string {

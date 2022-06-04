@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Client } from "../models/client.model";
+import {Injectable} from '@angular/core';
+import {Client} from "../models/client.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SessionsService} from "./sessions.service";
@@ -14,13 +14,16 @@ export class ClientsService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private sessions: SessionsService,) { }
-  public get options(): {headers: HttpHeaders} {
+              private sessions: SessionsService,) {
+  }
+
+  public get options(): { headers: HttpHeaders } {
     return {
-      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
-  public findAllClients():Observable<Client[]> {
+
+  public findAllClients(): Observable<Client[]> {
     return this.http.get<Client[]>(environment.api + '/adminPage/allClients', this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -28,7 +31,8 @@ export class ClientsService {
       })
     )
   }
-  public removeClient(idClient: number):Observable<any> {
+
+  public removeClient(idClient: number): Observable<any> {
     return this.http.delete<any>(environment.api + '/adminPage/removeClient?idClient=' + idClient, this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -36,7 +40,8 @@ export class ClientsService {
       })
     )
   }
-  public changeClients(change: any):Observable<any> {
+
+  public changeClients(change: any): Observable<any> {
     return this.http.put<any>(environment.api + '/AdminPage/activeChange', change, this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -44,7 +49,8 @@ export class ClientsService {
       })
     )
   }
-  private unauthenticated(err: any) : void {
+
+  private unauthenticated(err: any): void {
     if (err.status === 401) {
       this.sessions.logout();
     }

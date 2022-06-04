@@ -41,8 +41,6 @@ export class AddUserFormComponent implements OnInit {
     if (name == 'password')
       return !(this.form.get(name)?.value.length > 7)  && !!this.form.get(name)?.touched;
 
-
-
     return !!this.form.get(name)?.invalid && !!this.form.get(name)?.touched;
   }
 

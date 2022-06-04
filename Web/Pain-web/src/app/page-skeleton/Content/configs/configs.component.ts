@@ -34,12 +34,13 @@ export class ConfigsComponent implements OnInit {
   onClick(event: any): void {
     event.stopPropagation();
   }
+
   EditConfig(id: number) {
-    var cf = this.configs.find(x => x.id == id);
-    this.router.navigateByUrl('/ui/edit-config', {state: cf})
+    let cf = this.configs.find(x => x.id == id);
+    this.router.navigateByUrl('/ui/edit-config', {state: cf}).then()
   }
 
-  openDialog(type: any, config: Config, client : number | null): void {
+  openDialog(type: any, config: Config, client: number | null): void {
     if (type == 'Add') {
       const dialogRef = this.dialog.open(AddClientDialogComponent, {
         panelClass: 'custom-dialog-container',
@@ -69,17 +70,17 @@ export class ConfigsComponent implements OnInit {
       })
       dialogRef.componentInstance.type = 'clientFromConfig';
       dialogRef.afterClosed().subscribe(result => {
-        if (result == true)
-          { // @ts-ignore
-            this.configService.removeClientFromConfig(config.id, client).subscribe(() => this.Reload());
-          }
+        if (result == true) { // @ts-ignore
+          this.configService.removeClientFromConfig(config.id, client).subscribe(() => this.Reload());
+        }
       })
     }
   }
-  private Reload():void {
+
+  private Reload(): void {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    this.router.navigate([currentUrl]).then();
   }
 }

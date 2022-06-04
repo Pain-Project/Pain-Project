@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { User } from "../models/user.model";
+import {Injectable} from '@angular/core';
+import {User} from "../models/user.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SessionsService} from "./sessions.service";
@@ -16,14 +16,16 @@ export class UsersService {
   constructor(private http: HttpClient,
               private router: Router,
               private sessions: SessionsService,
-              private logins: LoginService) { }
+              private logins: LoginService) {
+  }
 
-  public get options(): {headers: HttpHeaders} {
+  public get options(): { headers: HttpHeaders } {
     return {
-      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
-  public findAllUsers():Observable<User[]> {
+
+  public findAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(environment.api + '/adminPage/allUsers', this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -31,6 +33,7 @@ export class UsersService {
       })
     )
   }
+
   public removeUser(idUser: number): Observable<any> {
     return this.http.delete<any>(environment.api + '/adminPage/removeUser?idUser=' + idUser, this.options).pipe(
       catchError(err => {
@@ -40,7 +43,7 @@ export class UsersService {
     )
   }
 
-  public addUser(user: User) : Observable<any> {
+  public addUser(user: User): Observable<any> {
     return this.http.post<any>(environment.api + '/adminPage/addUser', user, this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -48,7 +51,8 @@ export class UsersService {
       })
     )
   }
-  public darkmodeChange(change: boolean) : Observable<any> {
+
+  public darkmodeChange(change: boolean): Observable<any> {
     let idUser = this.logins.GetLogin().Id;
     return this.http.put<any>(environment.api + '/adminPage/darkmodeChange?idUser=' + idUser + '&change=' + change, null, this.options).pipe(
       catchError(err => {
@@ -56,8 +60,9 @@ export class UsersService {
         throw new Error((err));
       })
     )
-}
-  private unauthenticated(err: any) : void {
+  }
+
+  private unauthenticated(err: any): void {
     if (err.status === 401) {
       this.sessions.logout();
     }

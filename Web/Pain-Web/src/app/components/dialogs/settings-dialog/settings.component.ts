@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import {LoginService, loginUser} from "../../../services/login.service";
 import {UsersService} from "../../../services/users.service";
@@ -8,6 +8,7 @@ import {EmailService} from 'src/app/services/email.service';
 import {EmailSettingsModel} from 'src/app/models/emailSettings.model';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'Dialog_settings',
@@ -21,7 +22,6 @@ export class SettingsComponent implements OnInit {
   hide = true;
 
   selectedComp = 'one';
-  selectedFreq = 'one';
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<SettingsComponent>,
     private router: Router,
+    private snackBar: MatSnackBar,
   ) {
     this.form = this.fb.group({
       port: [this.data.port, Validators.required],
@@ -76,18 +77,18 @@ export class SettingsComponent implements OnInit {
       this.userService.darkmodeChange(this.darkMode).subscribe(() => {
         this.sessionsService.reLog(this.loginService.GetLogin().Id).subscribe(() => {
           this.dialogRef.close();
-          alert('Settings saved!');
+          this.snackBar.open('Settings saved!', '', {duration: 2000, panelClass: ['snackbar']});
           this.Reload();
         })
       });
     }
     if (this.form.touched) {
       if (this.form.get('port')?.value < 1) {
-        alert('Port must be higher than zero!');
+        this.snackBar.open('Port must be higher than zero!', '', {duration: 2000, panelClass: ['snackbar']});
         return;
       }
       if (!RegExp(/^[a-zA-Z0-9.^_`-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/).test(this.form.get('sender')?.value) && !!this.form.get('sender')?.touched) {
-        alert('Please enter valid email!');
+        this.snackBar.open('Please enter valid email!', '', {duration: 2000, panelClass: ['snackbar']});
         return;
       }
       this.emailService.changeEmailSettings(this.form.value).subscribe();
@@ -105,7 +106,14 @@ export class SettingsComponent implements OnInit {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    this.router.navigate([currentUrl]).then();
+  }
+
+  public invalid(name: string): boolean {
+    if (name == 'sender')
+      return !RegExp(/^[a-zA-Z0-9.^_`-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/).test(this.form.get('sender')?.value) && !!this.form.get('sender')?.touched;
+
+    return !!this.form.get(name)?.invalid && !!this.form.get(name)?.touched;
   }
 }
 

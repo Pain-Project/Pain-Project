@@ -14,10 +14,11 @@ export class PageSkeletonComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private loginService : LoginService,
+    private loginService: LoginService,
     private router: Router
   ) {
   }
+
   ngOnInit(): void {
 
     this.loginService.SetLogin();
@@ -28,10 +29,12 @@ export class PageSkeletonComponent implements OnInit {
       this.theme = 'light-theme';
 
     this.initializeTheme();
-    if(this.router.url.endsWith('ui'))
-      this.router.navigate(['ui','dashboard'])
+    if (this.router.url.endsWith('ui'))
+      this.router.navigate(['ui', 'dashboard']).then();
   }
+
   initializeTheme = (): void =>
     this.renderer.addClass(this.document.body, this.theme);
 }
+
 export type Theme = 'light-theme' | 'dark-theme';

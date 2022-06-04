@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DasboardService} from "../../../../services/dasboard.service";
+import {DashboardService} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-backupsize',
@@ -9,7 +9,7 @@ import {DasboardService} from "../../../../services/dasboard.service";
 export class Backupsize implements OnInit {
   size: number = 0;
 
-  constructor(public service: DasboardService) {
+  constructor(public service: DashboardService) {
     this.service.GetSize().subscribe(x => this.size = x);
   }
 

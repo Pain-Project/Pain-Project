@@ -33,6 +33,7 @@ export class AddUserDialogComponent implements OnInit {
   }
 
   public submit(): void {
+    // noinspection JSDeprecatedSymbols
     this.service.addUser(this.form.value).subscribe(() => alert('User has been successfully added!'), () => alert('User has not been added!')
     );
   }

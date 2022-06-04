@@ -6,6 +6,7 @@ import {ClientsService} from "../../services/clients.service";
 import {ConfigsService} from "../../services/configs.service";
 import {LoginService} from "../../services/login.service";
 import {Router} from '@angular/router';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-stepper',
@@ -15,7 +16,6 @@ import {Router} from '@angular/router';
 export class StepperComponent implements OnInit {
   searchClient: FormControl = new FormControl('');
   clients: Client[] = [];
-  retentionSwitch = false;
   frequentionBasic = true;
 
   //full ; diff ; inc
@@ -24,7 +24,6 @@ export class StepperComponent implements OnInit {
   //daily ; weekly ; monthly
   frequention = 'daily'
 
-  PlainText = true;
   searchActive = false;
   @Input()
   public form: FormGroup;
@@ -37,20 +36,20 @@ export class StepperComponent implements OnInit {
   tempDest: Destination[] = [{destType: "drive", path: ""}]
   tempClient = {};
   tempDaysWeek: number[] = [];
-  tempMonth: number;
 
 
   constructor(private fb: FormBuilder,
               private service: ClientsService,
               private configService: ConfigsService,
               private loginService: LoginService,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
 
 
   ngOnInit(): void {
     this.form = this.CreateForm(this.config);
-    this.service.findAllClients().subscribe(x => this.clients = x.filter(x => x.active == true))
+    this.service.findAllClients().subscribe(x => this.clients = x.filter(x => x.active))
   }
 
   public AddRemoveClient(id: number): void {
@@ -73,35 +72,44 @@ export class StepperComponent implements OnInit {
 
   public Submit(): void {
     if (this.Name?.value == '') {
-      alert("Please enter config name!")
+      this.snackBar.open('Please enter config name!', '', {duration: 2000, panelClass: ['snackbar']});
       return
     }
 
     if (Object.keys(this.tempClient).length == 0) {
-      alert("No clients selected!")
+      this.snackBar.open('No clients selected!', '', {duration: 2000, panelClass: ['snackbar']});
       return
     }
     if (this.frequention == 'weekly' && this.tempDaysWeek.length == 0) {
-      alert("You must select days of week!")
+      this.snackBar.open('You must select days of week!', '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      });
       return
     }
-    var config: Config = new Config();
-    var secondStep: SecondStep = this.form.controls['formArray'].value[1];
+    let config: Config = new Config();
+    let secondStep: SecondStep = this.form.controls['formArray'].value[1];
 
     if (this.frequention == 'monthly' && secondStep.dayOfMonth < 1 || secondStep.dayOfMonth > 31) {
-      alert("Please select valid day of month!")
+      this.snackBar.open('Please select valid day of month!', '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      });
       return
     }
     if (secondStep.backups < 1 || (secondStep.packages < 1 && secondStep.backupType != 'FB')) {
-      alert("Please enter valid retention!")
+      this.snackBar.open('Please enter valid retention!', '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      });
       return
     }
     if (this.Sources.value.length == 0) {
-      alert("Please enter source!")
+      this.snackBar.open('Please enter source!', '', {duration: 2000, panelClass: ['snackbar']});
       return
     }
     if (this.Dest.value.length == 0) {
-      alert("Please enter destination!")
+      this.snackBar.open('Please enter destination!', '', {duration: 2000, panelClass: ['snackbar']});
       return
     }
 
@@ -118,11 +126,17 @@ export class StepperComponent implements OnInit {
 
     for (let source of this.Sources.value) {
       if (source.path == '' || !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(source.path)) {
-        alert("Please enter valid source!")
+        this.snackBar.open('Please enter valid source!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (config.sources.find(x => x == source.path)) {
-        alert("All sources must be unique!")
+        this.snackBar.open('All sources must be unique!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       config.sources.push(source.path);
@@ -130,20 +144,32 @@ export class StepperComponent implements OnInit {
     let re = RegExp("^(ftp:\\/\\/)[A-Za-z0-9\\-_.]{1,}:[A-Za-z0-9?\\-_.:]{1,}@[A-Za-z0-9\\/\\-_/:.]{1,}$");
     for (let dest of this.Dest.value) {
       if (dest.type == "FTP" && !re.test(dest.path)) {
-        alert("Please enter valid FTP pattern!")
+        this.snackBar.open('Please enter valid FTP pattern!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (dest.type == 'DRIVE' && !RegExp(`((?!\\?|\\\\|\\/|\\:|\\*|\\"|\\<|\\>|\\|).)+`).test(dest.path)) {
-        alert("Please enter valid destination!")
+        this.snackBar.open('Please enter valid destination!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
 
       if (dest.path == '') {
-        alert("Please enter valid destination!")
+        this.snackBar.open('Please enter valid destination!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       if (config.destinations.find(x => x == dest.path)) {
-        alert("All destinations must be unique!")
+        this.snackBar.open('All destinations must be unique!', '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
         return
       }
       let destination: Destination = {destType: dest.type, path: dest.path}
@@ -152,20 +178,26 @@ export class StepperComponent implements OnInit {
 
     this.configService.sendConfig(config).subscribe(() => (
         this.router.navigateByUrl('/ui/dashboard'),
-          alert('Config was succesfully created!')),
-      () => alert('Config name is already taken!'));
+          this.snackBar.open('Config was successfully created!', '', {
+            duration: 2000,
+            panelClass: ['snackbar']
+          })),
+      () => this.snackBar.open('Config name is already taken!', '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      }));
   }
 
   private BuildCron(): string {
     let cron = '';
-    var secondStep: SecondStep = this.form.controls['formArray'].value[1];
-    var minutes = secondStep.frequency.split(':');
+    let secondStep: SecondStep = this.form.controls['formArray'].value[1];
+    let minutes = secondStep.frequency.split(':');
 
     if (this.frequentionBasic) {
       if (this.frequention == 'daily') {
         cron = `${minutes[1]} ${minutes[0]} * * *`
       } else if (this.frequention == 'weekly') {
-        var days = ''
+        let days = ''
         for (let day of this.tempDaysWeek) {
           switch (day) {
             case 1:
@@ -240,19 +272,19 @@ export class StepperComponent implements OnInit {
   }
 
   get Sources() {
-    var test = this.form.controls['formArray'] as FormArray;
-    var test2 = test.controls[2].get('sources') as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
+    let test2 = test.controls[2].get('sources') as FormArray;
     return test2 as FormArray;
   }
 
   get Name() {
-    var test = this.form.controls['formArray'] as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
     return test.controls[2].get('configName')
   }
 
   get Dest() {
-    var test = this.form.controls['formArray'] as FormArray;
-    var test2 = test.controls[2].get('destinations') as FormArray;
+    let test = this.form.controls['formArray'] as FormArray;
+    let test2 = test.controls[2].get('destinations') as FormArray;
     return test2 as FormArray;
   }
 

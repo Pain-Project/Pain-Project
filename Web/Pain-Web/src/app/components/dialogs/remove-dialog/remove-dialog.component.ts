@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {Config} from "../../../models/config.model";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-remove-dialog',
@@ -8,10 +7,9 @@ import {Config} from "../../../models/config.model";
 })
 export class RemoveDialogComponent implements OnInit {
 
-  type : string = '';
-  // data : Config;
-
-  constructor() {}
+  type: string = '';
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

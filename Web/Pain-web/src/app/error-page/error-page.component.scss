@@ -1,14 +1,16 @@
-.body{
+.body {
   position: relative;
 }
-.error{
+
+.error {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
 }
-.backBtn{
+
+.backBtn {
   margin-top: 20px;
   background-color: #0078D4;
   border: none;
@@ -19,7 +21,8 @@
   font-size: 20px;
   box-shadow: 1px 1px 5px #707070;
 }
-h1{
+
+h1 {
   margin-top: 1em;
   font-size: 40px
 }

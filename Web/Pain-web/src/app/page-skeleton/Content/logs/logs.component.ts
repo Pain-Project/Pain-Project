@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Log} from "../../../models/log.model";
 import {LogsService} from "../../../services/logs.service";
 import {ActivatedRoute} from "@angular/router";
-import {ConfigsService} from "../../../services/configs.service";
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-logs',
@@ -12,14 +10,14 @@ import * as moment from 'moment';
 })
 export class LogsComponent implements OnInit {
   sum = 15;
-  searchedLog : string = '';
-  logs : Log[] = [];
-  filterValue : string = 'none';
-  expandNumber : number;
+  searchedLog: string = '';
+  logs: Log[] = [];
+  filterValue: string = 'none';
+  expandNumber: number;
 
-  constructor( private service : LogsService,
-               private route : ActivatedRoute,
-               private configsService: ConfigsService) {}
+  constructor(private service: LogsService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id']
@@ -29,10 +27,12 @@ export class LogsComponent implements OnInit {
     }
     this.service.findAllLogs().subscribe(x => this.logs = x.sort((a, b) => Date.parse(b.date) - Date.parse(a.date)));
   }
+
   onScrollDown(ev: any) {
     this.sum += 15;
   }
-  onClick(event : any) : void {
+
+  onClick(event: any): void {
     event.stopPropagation();
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {SessionsService} from "./sessions.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
 
@@ -11,25 +11,29 @@ export class LoginService {
 
   constructor(private sessionService: SessionsService,
               private jwt: JwtHelperService,
-              ) { }
+  ) {
+  }
 
-  GetLogin() : loginUser {
+  GetLogin(): loginUser {
     return this.user;
   }
-  SetLogin() : void {
+
+  SetLogin(): void {
     this.session = this.jwt.decodeToken(this.sessionService.token || '');
     this.user = this.session.user;
   }
 
 }
+
 export interface loginUser {
   Id: number;
   Name: string;
   Surname: string;
   Email: string;
   Darkmode: boolean;
-  Create : string;
+  Create: string;
 }
+
 export interface session {
   exp: number;
   user: loginUser;

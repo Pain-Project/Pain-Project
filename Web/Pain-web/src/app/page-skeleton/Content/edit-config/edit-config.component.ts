@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 
 @Component({
@@ -8,7 +8,9 @@ import {FormGroup} from "@angular/forms";
 })
 export class EditConfigComponent implements OnInit {
   public form: FormGroup
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

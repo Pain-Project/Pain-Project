@@ -4,7 +4,6 @@
       <p>Le pain, a.s.</p>
     </div>
     <div class="col-6 ">
-<!--    <div class="col-6 offset-md-3">-->
       <mat-toolbar class="navbar">
         <a routerLinkActive="activeLink" routerLink="/ui/dashboard">Dashboard</a>
         <a routerLinkActive="activeLink" routerLink="/ui/configs">Configurations</a>
@@ -13,23 +12,23 @@
         <a routerLinkActive="activeLink" routerLink="/ui/users">Users</a>
       </mat-toolbar>
     </div>
-        <div class="col user">
-          <div class="row justify-content-end">
-            <div class="col-2 userIcon">
-              <i class="fa-solid fa-user"></i>
-            </div>
-            <div class="col-4 name">
-              <p>{{name}} {{surname}}</p>
-              <i class="fa-solid fa-arrow-right-from-bracket logOut"></i>
-              <a class="logOut" (click)="LogOut()"> Logout</a>
-            </div>
-            <div class="col-1 settings" >
-              <a (click)="openDialog()" >
-                <i  class="fa-solid fa-gear"></i>
-              </a>
-            </div>
-          </div>
+    <div class="col user">
+      <div class="row justify-content-end">
+        <div class="col-2 userIcon">
+          <i class="fa-solid fa-user"></i>
         </div>
+        <div class="col-4 name">
+          <p>{{name}} {{surname}}</p>
+          <i class="fa-solid fa-arrow-right-from-bracket logOut"></i>
+          <a class="logOut" (click)="LogOut()"> Logout</a>
+        </div>
+        <div class="col-1 settings">
+          <a (click)="openDialog()">
+            <i class="fa-solid fa-gear"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-  <mat-divider class="divider"></mat-divider>
+<mat-divider class="divider"></mat-divider>

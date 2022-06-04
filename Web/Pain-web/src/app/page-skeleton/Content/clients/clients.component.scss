@@ -3,8 +3,10 @@ body {
   padding-bottom: 5%;
   background-color: var(--Background-primary);
 }
+
 .ClientNameHeader {
   color: var(--Font-color);
+
   .name {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -13,6 +15,7 @@ body {
     margin-left: -2em;
   }
 }
+
 .ip, .mac {
   font-size: 20px;
 }
@@ -21,11 +24,13 @@ body {
   position: absolute;
   right: 20px;
   top: 150px;
+
   select {
     background-color: var(--Background-secondary);
     color: var(--Font-color);
     width: 120px;
   }
+
   .fa-magnifying-glass, .fa-filter {
     margin-left: -10px;
     margin-right: 2vw;
@@ -33,7 +38,8 @@ body {
     color: var(--Font-color);
   }
 }
-.InputSearch{
+
+.InputSearch {
   background-color: var(--Background-secondary);
   color: var(--Font-color);
   font-size: 20px;
@@ -41,15 +47,19 @@ body {
   box-shadow: var(--Shadow) 5px 5px 10px;
   margin-right: 1em;
   border-radius: 7px;
+
   &:focus {
     outline: none;
   }
 }
+
 .state {
   font-size: 0.7em;
+
   &.online {
     color: green;
   }
+
   &.offline {
     color: red;
   }
@@ -60,47 +70,57 @@ body {
   position: fixed;
   right: 30px;
   bottom: 50px;
+
   .buttonEDIT {
     width: 130px;
     font-size: 30px;
   }
 }
-.buttonEDIT{
+
+.buttonEDIT {
   margin-right: 30px;
   background-color: var(--Submit);
   color: white;
   border-radius: 10px;
+
   &:focus, &:hover {
     background-color: var(--SubmitFocus);
   }
 }
-.buttonREM{
+
+.buttonREM {
   background-color: var(--Cancel);
 
   color: white;
   border-radius: 10px;
+
   &:focus, &:hover {
     background-color: var(--CancelFocus);
   }
 }
-.configPanel{
+
+.configPanel {
   margin-bottom: 2%;
   color: var(--Font-color);
   background-color: var(--Background-secondary);
 
 }
-.configHeader{
+
+.configHeader {
   padding: 30px;
   font-size: 25px
 }
-.container.expand{
-  border-top:var(--Font-color) 1px solid;
+
+.container.expand {
+  border-top: var(--Font-color) 1px solid;
   margin-top: 15px;
   padding-top: 20px;
 }
+
 .configViewport {
   height: 300px;
   width: 100%;
+
   .configName {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -108,23 +128,32 @@ body {
     width: 9vw;
   }
 }
+
 .configLine {
   height: 50px;
 }
+
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
   opacity: 0.03 !important;
   background-color: var(--Submit);
 }
-::ng-deep .mat-ripple { display: none; }
-::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+
+::ng-deep .mat-ripple {
+  display: none;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
   background-color: var(--Submit);
 }
+
 ::ng-deep .mat-checkbox .mat-checkbox-background {
   border: var(--AddUserIcon) solid 1px;
 }
+
 .ActiveCheck {
   color: var(--Submit);
 }
+
 .InactiveCheck {
   color: var(--Cancel);
 }

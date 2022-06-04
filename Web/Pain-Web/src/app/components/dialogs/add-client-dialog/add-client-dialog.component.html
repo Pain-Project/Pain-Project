@@ -14,7 +14,7 @@
         <div class="col-1">
           <mat-checkbox #c [ngModel]="client.active" (change)="ConfigCheck(c.checked, client)"></mat-checkbox>
         </div>
-        <div class="col-2">
+        <div class="col-5">
           <p>{{client.name}}</p>
         </div>
       </div>
@@ -22,6 +22,6 @@
   </cdk-virtual-scroll-viewport>
 </div>
 <mat-dialog-actions class="Button">
-  <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="clients" >SAVE</button>
+  <button tabindex="-1" class="ButtonYES" mat-button [mat-dialog-close]="clients">SAVE</button>
   <button class="ButtonCANCEL" mat-button [mat-dialog-close]="false">CANCEL</button>
 </mat-dialog-actions>

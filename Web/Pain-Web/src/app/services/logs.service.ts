@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Log } from "../models/log.model";
+import {Injectable} from '@angular/core';
+import {Log} from "../models/log.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {SessionsService} from "./sessions.service";
@@ -13,13 +13,16 @@ import {environment} from "../../environments/environment";
 export class LogsService {
   constructor(private http: HttpClient,
               private router: Router,
-              private sessions: SessionsService,) { }
-  public get options(): {headers: HttpHeaders} {
+              private sessions: SessionsService,) {
+  }
+
+  public get options(): { headers: HttpHeaders } {
     return {
-      headers:  new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + this.sessions.token})
     };
   }
-  public findAllLogs():Observable<Log[]> {
+
+  public findAllLogs(): Observable<Log[]> {
     return this.http.get<Log[]>(environment.api + '/adminPage/allLogs', this.options).pipe(
       catchError(err => {
         this.unauthenticated(err);
@@ -27,7 +30,8 @@ export class LogsService {
       })
     )
   }
-  private unauthenticated(err: any) : void {
+
+  private unauthenticated(err: any): void {
     if (err.status === 401) {
       this.sessions.logout();
     }

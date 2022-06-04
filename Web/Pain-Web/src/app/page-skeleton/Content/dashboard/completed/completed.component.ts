@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as moment from "moment/moment";
-import {DasboardService, dashboardTask} from "../../../../services/dasboard.service";
+import {DashboardService, dashboardTask} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-completed',
@@ -8,16 +8,18 @@ import {DasboardService, dashboardTask} from "../../../../services/dasboard.serv
   styleUrls: ['./../dashboard.component.scss']
 })
 export class CompletedComponent implements OnInit {
-  completed : dashboardTask[] = [];
-  constructor(public service: DasboardService) {
+  completed: dashboardTask[] = [];
+
+  constructor(public service: DashboardService) {
     this.service.TodayTasks().subscribe(x => this.completed = x.filter(x => moment(x.date) <= moment(Date.now())))
   }
 
 
-  format_time(s : string) {
+  format_time(s: string) {
     let now = moment(s);
-    return ( now.format("HH:mm") );
+    return (now.format("HH:mm"));
   }
+
   ngOnInit(): void {
   }
 

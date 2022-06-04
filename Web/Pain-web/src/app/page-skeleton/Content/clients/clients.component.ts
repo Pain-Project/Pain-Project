@@ -5,10 +5,8 @@ import {ClientsService} from "../../../services/clients.service";
 import {MatDialog} from "@angular/material/dialog";
 import {RemoveDialogComponent} from "../../../components/dialogs/remove-dialog/remove-dialog.component";
 import {InterfaceClientsCanDeactivate} from "../../../Guards/interface-clients-can-deactivate";
-import {Config} from "../../../models/config.model";
 import {ConfigsService} from "../../../services/configs.service";
 import {Router} from "@angular/router";
-import {Key} from "@ng-bootstrap/ng-bootstrap/util/key";
 
 @Component({
   selector: 'app-clients',
@@ -34,10 +32,9 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
     // @ts-ignore
     this.changesClients[idClient] = !this.clients.find(x => x.id == idClient).active;
   }
-  saveActives():void {
+
+  saveActives(): void {
     this.isDirty = false;
-    // console.log(this.clients);
-    // console.log(this.changesClients);
     this.service.changeClients(this.changesClients).subscribe(() => this.Reload());
     this.changesClients = {};
   }
@@ -81,7 +78,7 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
       dialogRef.componentInstance.type = 'configFromClient';
       dialogRef.afterClosed().subscribe(result => {
         if (result == true)
-          this.configService.removeClientFromConfig(idConfig,idClient).subscribe(() => this.Reload())
+          this.configService.removeClientFromConfig(idConfig, idClient).subscribe(() => this.Reload())
       })
     }
   }
@@ -90,6 +87,6 @@ export class ClientsComponent implements OnInit, InterfaceClientsCanDeactivate {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
+    this.router.navigate([currentUrl]).then();
   }
 }

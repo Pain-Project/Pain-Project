@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {DasboardService} from "../../../../services/dasboard.service";
+import {Component, OnInit} from '@angular/core';
+import {DashboardService} from "../../../../services/dasboard.service";
 
 @Component({
   selector: 'app-graf',
@@ -8,7 +8,8 @@ import {DasboardService} from "../../../../services/dasboard.service";
 })
 export class GrafComponent implements OnInit {
   percent: string = '50';
-  constructor(public service: DasboardService) {
+
+  constructor(public service: DashboardService) {
     this.service.GetPercent().subscribe(x => this.percent = x.toFixed(0));
   }
 

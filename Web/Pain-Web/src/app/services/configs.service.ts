@@ -27,6 +27,7 @@ export class ConfigsService {
   public sendConfig(config: Config): Observable<any> {
     return this.http.post<any>(environment.api + '/adminPage/addConfig', config, this.options);
   }
+
   public updateConfig(config: Config): Observable<any> {
     return this.http.put<any>(environment.api + '/adminPage/updateConfig?id=' + config.id, config, this.options);
   }
@@ -40,7 +41,7 @@ export class ConfigsService {
     )
   }
 
-  public findConfigByID(id: number) : Observable<Config> {
+  public findConfigByID(id: number): Observable<Config> {
     return this.http.get<Config>(environment.api + '/AdminPage/getConfigByID?id=' + id, this.options);
   }
 
@@ -61,6 +62,7 @@ export class ConfigsService {
     });
     return this.http.put<any>(environment.api + '/adminPage/changeClientsOnConfig?idConfig=' + idConfig, dicClients, this.options);
   }
+
   public removeClientFromConfig(idConfig: number, idClient: number) {
     return this.http.delete<any>(environment.api + '/adminPage/removeClientFromConfig?idConfig=' + idConfig + '&idClient=' + idClient, this.options);
   }

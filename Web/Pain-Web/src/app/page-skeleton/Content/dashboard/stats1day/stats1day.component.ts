@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {DasboardService} from "../../../../services/dasboard.service";
+import {Component, OnInit} from '@angular/core';
+import {DashboardService} from "../../../../services/dasboard.service";
 import * as moment from "moment/moment";
 
 @Component({
@@ -12,11 +12,11 @@ export class Stats1dayComponent implements OnInit {
   noRun: number = 0;
   error: number = 0;
 
-  constructor(public service: DasboardService) {
+  constructor(public service: DashboardService) {
     this.service.TodayTasks().subscribe(x => {
       x.forEach(value => {
-        if(moment(value.date) < moment(Date.now())) {
-          if(value.state == 'Success')
+        if (moment(value.date) < moment(Date.now())) {
+          if (value.state == 'Success')
             this.success++;
           else if (value.state == "NoRun")
             this.noRun++;

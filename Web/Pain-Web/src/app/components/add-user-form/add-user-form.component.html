@@ -3,7 +3,7 @@
     <div class="row first">
       <div class="col login">
         <label class="form-label">Login name</label>
-        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('login') }" formControlName="login" >
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('login') }" formControlName="login">
         <div class="invalid-feedback">
           Login must be at least 5 letters long!
         </div>
@@ -15,9 +15,10 @@
           This field is required!
         </div>
       </div>
-      <div class="col surname" >
+      <div class="col surname">
         <label class="form-label">Surname</label>
-        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('surname') }" formControlName="surname">
+        <input type="text" class="form-control" [ngClass]="{ 'is-invalid': invalid('surname') }"
+               formControlName="surname">
         <div class="invalid-feedback">
           This field is required!
         </div>
@@ -33,14 +34,17 @@
       </div>
       <div class="col password">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control" [ngClass]="{ 'is-invalid': invalid('password') }" formControlName="password">
+        <input type="password" class="form-control" [ngClass]="{ 'is-invalid': invalid('password') }"
+               formControlName="password">
         <div class="invalid-feedback">
           Password must be at least 8 letters long!
         </div>
       </div>
       <div class="col passwordRepeat">
         <label class="form-label">Confirm password</label>
-        <input type="password" class="form-control" [ngClass]="{ 'is-invalid': !confirmPassword() || invalid('confirmPassword') }" formControlName="confirmPassword">
+        <input type="password" class="form-control"
+               [ngClass]="{ 'is-invalid': !confirmPassword() || invalid('confirmPassword') }"
+               formControlName="confirmPassword">
         <div class="invalid-feedback">
           Passwords dont match or field is empty!
         </div>
