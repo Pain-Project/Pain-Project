@@ -22,7 +22,7 @@ namespace EmailSender.Services
             string emails = await client.GetStringAsync(@"https://localhost:5001/Email/getEmails");
             emailSettings.SendTo = JsonConvert.DeserializeObject<List<string>>(emails);
 
-            if (Application.setinf != emailSettings)
+            if (JsonConvert.SerializeObject(Application.setinf) != JsonConvert.SerializeObject(emailSettings))
             {
                 await Application.Timer.SetUp(emailSettings);
             }

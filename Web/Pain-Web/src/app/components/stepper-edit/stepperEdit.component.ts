@@ -180,7 +180,13 @@ export class StepperEditComponent implements OnInit {
         });
         return
       }
-
+      if (config.sources.find(x => x == dest.path)) {
+        this.snackBar.open(`Destination can't be same as source!`, '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
+        return
+      }
       if (dest.path == '') {
         this.snackBar.open('Please enter valid destination!', '', {
           duration: 2000,

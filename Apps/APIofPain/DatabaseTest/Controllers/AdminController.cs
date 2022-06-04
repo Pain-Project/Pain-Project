@@ -550,6 +550,8 @@ namespace DatabaseTest.Controllers
         [HttpDelete("removeUser")]
         public JsonResult RemoveUser(int idUser)
         {
+            if (idUser == 1)
+                return new JsonResult("Cannot remove this user!") { StatusCode = (int)HttpStatusCode.BadRequest };
             Administrator admin = context.Administrators.Find(idUser);
             if (admin != null)
             {

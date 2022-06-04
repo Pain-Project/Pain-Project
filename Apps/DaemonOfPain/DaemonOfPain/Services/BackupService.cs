@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace DaemonOfPain.Services
 {
+    [DisallowConcurrentExecution]
     public class BackupService : IJob
     {
         private MetadataService MdataService = new MetadataService();
@@ -66,11 +67,6 @@ namespace DaemonOfPain.Services
             foreach (var item in config.Destinations)
             {
                 Service service = new Service(item);
-
-
-
-
-
                 Prepare(service, config, service._destPath);
             }
 
@@ -203,7 +199,7 @@ namespace DaemonOfPain.Services
                     if (Directory.Exists(@"..\..\..\temp"))
                         Directory.Delete(@"..\..\..\temp", true);
 
-                    Service tempServ = new Service(new Destination (@"..\..\..\temp", DestType.DRIVE ));
+                    Service tempServ = new Service(new Destination(@"..\..\..\temp", DestType.DRIVE));
                     if (!tempServ.DirExists(tempServ._destPath))
                         tempServ.CreateDir(tempServ._destPath);
 

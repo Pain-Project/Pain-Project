@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/user.model";
 import {UsersService} from "../../../services/users.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Router} from "@angular/router";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-user-dialog',
@@ -14,7 +17,10 @@ export class AddUserDialogComponent implements OnInit {
   public form: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private service: UsersService) {
+              private service: UsersService,
+              private snackBar: MatSnackBar,
+              private router: Router,
+              public dialogRef: MatDialogRef<AddUserDialogComponent>) {
   }
 
   ngOnInit(): void {
@@ -34,7 +40,24 @@ export class AddUserDialogComponent implements OnInit {
 
   public submit(): void {
     // noinspection JSDeprecatedSymbols
-    this.service.addUser(this.form.value).subscribe(() => alert('User has been successfully added!'), () => alert('User has not been added!')
+    this.service.addUser(this.form.value).subscribe(() => (this.snackBar.open('User has been successfully added!', '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      }),
+      this.Reload(),
+      this.dialogRef.close()
+      )
+      , () => this.snackBar.open(`User hasn't been added`, '', {
+        duration: 2000,
+        panelClass: ['snackbar']
+      })
     );
+
+  }
+  private Reload(): void {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]).then();
   }
 }

@@ -23,14 +23,6 @@ export class AddUserFormComponent implements OnInit {
   public submit(): void {
     if (this.form.valid && this.confirmPassword()) {
       this.FormEvent.emit();
-      this.form.reset({
-        name:'',
-        surname: '',
-        login: '',
-        email: '',
-        password: '',
-        confirmPassword:''
-      });
     }
   }
   public invalid(name: string): boolean {

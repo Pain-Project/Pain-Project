@@ -45,10 +45,10 @@
           <p>Frequency: </p>
           <mat-form-field class="DateInput">
             <mat-select tabindex="-1" formControlName="freq" class="SelectDate">
-              <mat-option value="0">Never</mat-option>
-              <mat-option value="1">Daily</mat-option>
-              <mat-option value="2">Weekly</mat-option>
-              <mat-option value="3">Monthly</mat-option>
+              <mat-option [value]="0">Never</mat-option>
+              <mat-option [value]="1">Daily</mat-option>
+              <mat-option [value]="2">Weekly</mat-option>
+              <mat-option [value]="3">Monthly</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

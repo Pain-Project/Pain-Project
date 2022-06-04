@@ -165,7 +165,15 @@ export class StepperComponent implements OnInit {
         });
         return
       }
-      if (config.destinations.find(x => x == dest.path)) {
+      if (config.sources.find(x => x == dest.path)) {
+        this.snackBar.open(`Destination can't be same as source!`, '', {
+          duration: 2000,
+          panelClass: ['snackbar']
+        });
+        return
+      }
+
+      if (config.destinations.find(x => x.path == dest.path)) {
         this.snackBar.open('All destinations must be unique!', '', {
           duration: 2000,
           panelClass: ['snackbar']

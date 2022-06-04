@@ -43,7 +43,7 @@ export class SettingsComponent implements OnInit {
     this.form = this.fb.group({
       port: [this.data.port, Validators.required],
       smtp: [this.data.smtp, Validators.required],
-      freq: [this.data.freq, Validators.required],
+      freq: [1, Validators.required],
       sender: [this.data.sender, Validators.required],
       password: [this.data.password, Validators.required],
       ssl: [this.data.ssl, Validators.required],

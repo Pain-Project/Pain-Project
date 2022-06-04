@@ -10,13 +10,15 @@ namespace EmailSender
 {
     public class Application : IJob
     {
-        ApiService apiService { get; set; }
+        public static ApiService apiService { get; set; }
         public static SettingsInfo setinf { get; set; }
-        public static Timer Timer  { get; set; }
+        public static Timer Timer { get; set; }
         public Application()
         {
-            apiService = new ApiService();
-            Timer = new Timer();
+            if (apiService == null)
+                apiService = new ApiService();
+            if (Timer == null)
+                Timer = new Timer();
         }
         public async Task Start()
         {
@@ -29,7 +31,6 @@ namespace EmailSender
         }
         public async Task Execute(IJobExecutionContext context)
         {
-            apiService = new ApiService();
             setinf = await apiService.GetInfo();
         }
     }

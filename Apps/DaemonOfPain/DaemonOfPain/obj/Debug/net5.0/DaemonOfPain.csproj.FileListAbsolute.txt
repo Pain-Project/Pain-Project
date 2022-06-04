@@ -138,3 +138,5 @@ C:\Users\hasekfrantisek\Documents\GitHub\Pain-Project\Apps\DaemonOfPain\DaemonOf
 C:\Users\hasekfrantisek\Documents\GitHub\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.pdb
 C:\Users\hasekfrantisek\Documents\GitHub\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\obj\Debug\net5.0\DaemonOfPain.genruntimeconfig.cache
 D:\DATA\programy\Git Projekty\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\FluentFTP.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\FluentFTP.dll
+C:\Users\troli\Desktop\Pain Project\Pain-Project\Apps\DaemonOfPain\DaemonOfPain\bin\Debug\net5.0\BouncyCastle.Crypto.dll
