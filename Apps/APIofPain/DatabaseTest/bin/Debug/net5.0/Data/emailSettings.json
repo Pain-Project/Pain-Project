@@ -1,5 +1,5 @@
 {
-  "Port": 26,
+  "Port": 587,
   "SMTP": "smtp.gmail.com",
   "Freq": 1,
   "Sender": "test.lepain@gmail.com",
