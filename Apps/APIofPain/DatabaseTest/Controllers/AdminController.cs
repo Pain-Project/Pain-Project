@@ -338,6 +338,14 @@ namespace DatabaseTest.Controllers
         [HttpPut("updateConfig")]
         public JsonResult UpdateConfig(int id, DataConfig editedConfig)
         {
+            List<int> temp = context.Assignments.Where(x => x.IdConfig == id).Select(x => x.Id).ToList();
+            List<Task> tasks = new List<Task>();
+            List<Assignment> ass = context.Assignments.Where(x => x.IdConfig == id).ToList();
+
+            foreach (var item in context.Tasks.Where(x => temp.Contains(x.IdAssignment)))
+            {
+                tasks.Add(item);
+            }
             RemoveConfig(id);
             try
             {
@@ -366,13 +374,28 @@ namespace DatabaseTest.Controllers
                 {
                     newConfig.Destinations.Add(new Destination() { Config = newConfig, Path = dest.Path, DestType = dest.DestType });
                 }
-
+                context.Configs.Add(newConfig);
+                context.SaveChanges();
                 foreach (var client in editedConfig.ClientNames)
                 {
-                    Assignment assignment = new Assignment() { Config = newConfig, IdClient = client.Key };
-                    context.Assignments.Add(assignment);
+                    Assignment assignment = new Assignment() { IdConfig = newConfig.Id, IdClient = client.Key };
+                    if (ass.Where(x => x.IdConfig == assignment.IdConfig && x.IdClient == assignment.IdClient).Count() != 0)
+                    {
+                        foreach (var item in ass)
+                        {
+                            if (item.IdConfig == assignment.IdConfig && item.IdClient == assignment.IdClient)
+                                context.Assignments.Add(item);
+                        }
+                    }
+                    else
+                        context.Assignments.Add(assignment);
                 }
 
+                context.SaveChanges();
+                foreach (var item in tasks)
+                {
+                    context.Tasks.Add(item);
+                }
                 context.SaveChanges();
                 new Tasker().RegenerateTaskDatabaseTable();
                 return new JsonResult("Success") { StatusCode = (int)HttpStatusCode.OK };

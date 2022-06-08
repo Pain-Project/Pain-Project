@@ -1,6 +1,7 @@
 ﻿using DaemonOfPain.Components;
 using DaemonOfPain.Encryption;
 using DaemonOfPain.Services;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,13 +64,41 @@ namespace DaemonOfPain
             {
                 if (DataService.ConfigsWasChanged)
                 {
-                    DataService.ConfigsWasChanged = false;
-                    await Timer.SetUp(DataService.GetAllConfigs());
+                    string newId = await APIService.LoginToServer();
+                    DataService.WriteSettings(new Settings() { Id = newId });
+                    IdOfThisClient = newId;
+                    if (newId == null)
+                        throw new Exception();//nelze se spojit s databází
                 }
-                    
-                Thread.Sleep(5000);
+                else
+                {
+                    IdOfThisClient = set.Id;
+                }
+
+                await APIService.GetConfigs();
+
+                TaskManager.UpdateTaskList(DataService.GetAllConfigs());
+                await Timer.SetUp(DataService.GetAllConfigs());
+
+                while (true)
+                {
+                    if (DataService.ConfigsWasChanged)
+                    {
+                        DataService.ConfigsWasChanged = false;
+                        await Timer.SetUp(DataService.GetAllConfigs());
+                    }
+
+                    Thread.Sleep(5000);
+                }
             }
-                
+            catch (Exception)
+            {
+                Console.Clear();
+                Console.WriteLine("Couldn't connect to API service");
+                Console.WriteLine("Trying again in 5 seconds!");
+                Thread.Sleep(5000);
+                await StartApplication();
+            }
 
         }
     }

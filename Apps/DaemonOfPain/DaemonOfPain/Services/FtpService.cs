@@ -13,8 +13,16 @@ namespace DaemonOfPain.Services
         FtpClient client;
         public FtpService(FtpConfig config)
         {
-            this.client = new FtpClient(config.Host, config.Username, config.Password);
-            client.Connect();
+            try
+            {
+                this.client = new FtpClient(config.Host, config.Username, config.Password);
+                client.Connect();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Couldn't connect to FTP server!");
+            }
+
         }
         public void CopyFile(string source, string destination)
         {

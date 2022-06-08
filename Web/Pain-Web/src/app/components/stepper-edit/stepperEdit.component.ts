@@ -204,7 +204,6 @@ export class StepperEditComponent implements OnInit {
       let destination: Destination = {destType: dest.type, path: dest.path}
       config.destinations.push(destination);
     }
-
     this.configService.updateConfig(config).subscribe(() => (
       this.router.navigateByUrl('/ui/dashboard'),
         this.snackBar.open('Config was successfully saved!', '', {
