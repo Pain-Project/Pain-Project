@@ -24,21 +24,35 @@ namespace DaemonOfPain
         }
         public async Task StartApplication()
         {
-            EncryptionKeysManager.NewKeys();
-            EncryptionKeysManager.ServerKey = await APIService.GetServerPublicKey();
             Settings set = DataService.GetSettings();
             if (set == null)
-            {
-                string newId = await APIService.LoginToServer();
-                DataService.WriteSettings(new Settings() { Id = newId });
-                IdOfThisClient = newId;
-                if (newId == null)
-                    throw new Exception();//nelze se spojit s databází
-            }
+                Console.WriteLine("První spuštění!");
             else
             {
-                IdOfThisClient = set.Id;
+                EncryptionKeysManager.NewKeys();
+                EncryptionKeysManager.ServerKey = await APIService.GetServerPublicKey();
             }
+            while (set == null)
+            {
+                try
+                {
+                    Console.WriteLine("Navazuji spojení s databází...");
+                    EncryptionKeysManager.NewKeys();
+                    EncryptionKeysManager.ServerKey = await APIService.GetServerPublicKey();
+                    string newId = await APIService.LoginToServer();
+                    DataService.WriteSettings(new Settings() { Id = newId });
+                    IdOfThisClient = newId;
+                    set = DataService.GetSettings();
+                    Console.WriteLine("Připojeno.");
+                }
+                catch
+                {
+                    Console.WriteLine("Navázání spojení se serverem bylo neúspěšné!");
+                    Console.WriteLine("Další pokus za 15 sekund.");
+                    Thread.Sleep(15000);
+                }
+            }
+            IdOfThisClient = set.Id;
 
             await APIService.GetConfigs();
 
